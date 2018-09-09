@@ -16,4 +16,13 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GhostPanel.Core\GhostPanel.Core.csproj" />
+    <ProjectReference Include="..\GhostPanel.Db\GhostPanel.Db.csproj" />
+  </ItemGroup>
+
 </Project>

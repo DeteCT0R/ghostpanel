@@ -6,7 +6,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Text;
 
-namespace GameHostDemo.Models
+namespace GhostPanel.Core
 {
     class SteamCmd
     {

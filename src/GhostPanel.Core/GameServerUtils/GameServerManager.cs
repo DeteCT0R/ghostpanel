@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 
-namespace GameHostDemo.Models
+namespace GhostPanel.Core
 {
     class GameServerManager : IGameServerManager
     {

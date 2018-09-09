@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameHostDemo.Models
+namespace GhostPanel.Core.GameServerUtils
 {
     interface IGameServerManager
     {

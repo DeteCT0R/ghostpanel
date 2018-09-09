@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameHostDemo.Models
+namespace GhostPanel.Core.Data.Model
 {
-    class Game : IGame
+    class Game
     {
         public int Id { get; set; }
         public string Name { get; set; }

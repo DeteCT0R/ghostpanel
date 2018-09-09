@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using GameHostDemo.Models;
 using System.Net;
 using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
 
-namespace GameHostDemo
+namespace GhostPanel.Core.GameUtils
 {
     class GameInstaller
     {

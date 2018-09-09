@@ -1,11 +1,6 @@
-﻿using GameHostDemo.Models;
-using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace GameHostDemo
+namespace GameHostDemoGhostPanel.Db
 {
     class GameHostDemoContext : DbContext
     {

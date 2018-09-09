@@ -4,8 +4,9 @@ using Serilog;
 using System;
 using System.IO;
 using System.Linq;
+using GhostPanel.Db;
 
-namespace GameHostDemo
+namespace GhostPanel
 {
     class Program
     {

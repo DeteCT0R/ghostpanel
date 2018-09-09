@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using GhostPanel.Core.Games;
 
-namespace GameHostDemo.Models
+namespace GhostPanel.Core.Data.Model
 {
     class GameServer
     {
