@@ -22,7 +22,7 @@ namespace GameHostDemo
 
             var manager = new GameServerManager(server, steamCmd, context);
 
-            manager.ReinstallGameServer();
+            //manager.ReinstallGameServer();
             
             manager.StartServer();
             manager.StopServer();
