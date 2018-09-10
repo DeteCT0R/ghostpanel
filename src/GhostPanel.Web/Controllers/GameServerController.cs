@@ -16,10 +16,12 @@ namespace GhostPanel.Web.Controllers
     public class GameServerController : Controller
     {
         private readonly IRepository _repository;
+        private readonly IBackgroundService _backgroundService;
 
-        public GameServerController(IRepository repository)
+        public GameServerController(IRepository repository, IBackgroundService backgroundService)
         {
             _repository = repository;
+            _backgroundService = backgroundService;
         }
 
         // GET: api/<controller>
@@ -34,6 +36,7 @@ namespace GhostPanel.Web.Controllers
         [HttpGet("{id}")]
         public GameServer Get(int id)
         {
+            _backgroundService.AddTask(new TestTask());
             var result = _repository.Single(DataItemPolicy<GameServer>.ById(id));
             return result;
         }

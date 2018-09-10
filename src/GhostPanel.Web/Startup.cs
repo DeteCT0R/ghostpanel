@@ -9,6 +9,9 @@ using Autofac.Extensions.DependencyInjection;
 using GhostPanel.Core.Data;
 using System;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace GhostPanel.Web
 {
@@ -27,6 +30,7 @@ namespace GhostPanel.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDataContext>(ServiceLifetime.Transient);
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -40,7 +44,10 @@ namespace GhostPanel.Web
 
             builder.RegisterInstance(repository).SingleInstance();
 
+            builder.RegisterType<BackgroundService>().As<IBackgroundService>().SingleInstance();
+
             builder.RegisterType<BackgroundManager>().AsSelf().SingleInstance();
+            builder.RegisterType<BackgroundWorker>().As<IHostedService>();
 
             ApplicationContainer = builder.Build();
 

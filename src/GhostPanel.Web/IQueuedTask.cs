@@ -8,6 +8,6 @@ namespace GhostPanel.Web
     public interface IQueuedTask
     {
         void Invoke();
-        bool IsDone { get; }
+        bool IsDone;
     }
 }

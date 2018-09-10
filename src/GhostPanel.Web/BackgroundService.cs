@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// Automation System
 namespace GhostPanel.Web
 {
-    public class BackgroundService
+    public class BackgroundService : IBackgroundService
     {
         private readonly List<IQueuedTask> _tasks = new List<IQueuedTask>();
 
@@ -23,6 +24,8 @@ namespace GhostPanel.Web
                     await Task.Delay(TimeSpan.FromSeconds(2));
                 }
             });
+
+            await mainLoop;
         }
 
         private void RunPendingTasks()
@@ -43,5 +46,11 @@ namespace GhostPanel.Web
                 }
             }
         }
+
+        public void AddTask(IQueuedTask taskToAdd)
+        {
+            _tasks.Add(taskToAdd);
+        }
+
     }
 }
