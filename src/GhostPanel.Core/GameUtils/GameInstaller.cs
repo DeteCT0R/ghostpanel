@@ -6,6 +6,7 @@ using System.Net;
 using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
+using GhostPanel.Core.Data.Model;
 
 namespace GhostPanel.Core.GameUtils
 {

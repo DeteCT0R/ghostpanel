@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GameHostDemo.Migrations
+namespace GhostPanel.Db.Migrations
 {
-    public partial class CreateDb : Migration
+    public partial class InitialMIgration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,14 +12,17 @@ namespace GameHostDemo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     SteamAppId = table.Column<int>(nullable: false),
                     SteamUrl = table.Column<string>(nullable: true),
                     ExeName = table.Column<string>(nullable: true),
                     MaxSlots = table.Column<int>(nullable: false),
                     MinSlots = table.Column<int>(nullable: false),
-                    DefaultPath = table.Column<string>(nullable: true)
+                    DefaultSlots = table.Column<int>(nullable: false),
+                    DefaultPath = table.Column<string>(nullable: true),
+                    GamePort = table.Column<int>(nullable: false),
+                    QueryPort = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,14 +34,17 @@ namespace GameHostDemo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     GameId = table.Column<int>(nullable: false),
                     IpAddress = table.Column<string>(nullable: true),
                     Port = table.Column<int>(nullable: false),
                     ServerName = table.Column<string>(nullable: true),
                     IsEnabled = table.Column<bool>(nullable: false),
                     Version = table.Column<string>(nullable: true),
-                    StartPath = table.Column<string>(nullable: true)
+                    StartPath = table.Column<string>(nullable: true),
+                    HomeDirectory = table.Column<string>(nullable: true),
+                    CommandLine = table.Column<string>(nullable: true),
+                    LastPid = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

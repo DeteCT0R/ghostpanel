@@ -1,11 +1,8 @@
 ﻿
-using GhostPanel.Core.Games;
-
 namespace GhostPanel.Core.Data.Model
 {
-    class GameServer
+    public class GameServer : DataEntity
     {
-        public int Id { get; set; }
         public int GameId { get; set; }
         public string IpAddress { get; set; }
         public int Port { get; set; }
@@ -15,7 +12,9 @@ namespace GhostPanel.Core.Data.Model
         public string StartPath { get; set; }
         public string HomeDirectory { get; set; }
         public string CommandLine { get; set; }
-        public int? LastPid { get; set; }
+        public int? Pid { get; set; }
+        public ServerStatus Status { get; set; }
+        
         public Game Game { get; set; }
 
 

@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GhostPanel.Core.Data.Model;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace GhostPanel.Core
+namespace GhostPanel.Core.GameServerUtils
 {
-    class GameServerManager : IGameServerManager
+    public class GameServerManager : IGameServerManager
     {
 
         private GameServer gameServer;
@@ -19,7 +20,7 @@ namespace GhostPanel.Core
             GameServer = gameServer;
             SteamCmd = steamCmd;
             _dbContext = dbContext;
-            Pid = gameServer.LastPid;
+            Pid = gameServer.Pid;
         }
 
         public int ?Pid { get => pid; set => pid = value; }
@@ -68,6 +69,16 @@ namespace GhostPanel.Core
 
         }
 
+        public string RefreshStatus()
+        {
+            if (IsRunning())
+            {
+                
+            }
+
+            return "";
+        }
+
         public void ReinstallGameServer()
         {
             Log.Information("Reinstalling Game Server {id}", gameServer.Id);
@@ -85,11 +96,11 @@ namespace GhostPanel.Core
 
             ProcessStartInfo start = new ProcessStartInfo();
             start.Arguments = gameServer.CommandLine;
-            start.FileName = Path.Join(gameServer.HomeDirectory, gameServer.Game.ExeName);
+            start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;
             Process proc = Process.Start(start);
             pid = proc.Id;
-            gameServer.LastPid = pid;
+            gameServer.Pid = pid;
 
             _dbContext.SaveChanges();
 
@@ -97,7 +108,7 @@ namespace GhostPanel.Core
 
         public void StopServer()
         {
-
+            
             Log.Debug("Attempting to stop game server");
             if (!IsRunning())
             {
@@ -108,7 +119,7 @@ namespace GhostPanel.Core
             {
                 Process proc = Process.GetProcessById((int)pid);
                 proc.Kill();
-                gameServer.LastPid = 0;
+                gameServer.Pid = 0;
                 _dbContext.SaveChanges();
                 Log.Information("Killed game server with pid {pid}", Pid);
                 return;

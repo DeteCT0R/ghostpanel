@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.Core", "GhostPan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.Db", "GhostPanel.Db\GhostPanel.Db.csproj", "{9B1A2315-23D3-4F96-A81C-C9E6BC019535}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.Web", "GhostPanel.Web\GhostPanel.Web.csproj", "{F7504895-C91D-4DA0-961F-D27656054B01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9B1A2315-23D3-4F96-A81C-C9E6BC019535}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B1A2315-23D3-4F96-A81C-C9E6BC019535}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B1A2315-23D3-4F96-A81C-C9E6BC019535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7504895-C91D-4DA0-961F-D27656054B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7504895-C91D-4DA0-961F-D27656054B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7504895-C91D-4DA0-961F-D27656054B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7504895-C91D-4DA0-961F-D27656054B01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

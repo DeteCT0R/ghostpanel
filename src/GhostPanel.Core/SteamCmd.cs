@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GhostPanel.Core
 {
-    class SteamCmd
+    public class SteamCmd
     {
         private string _username;
         private string _password;
@@ -19,7 +19,7 @@ namespace GhostPanel.Core
         {
             _username = username;
             _password = password;
-            _steamCmdPath = Path.Join(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
+            _steamCmdPath = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
 
         }
 
@@ -48,8 +48,8 @@ namespace GhostPanel.Core
 
         private void installSteamCmd()
         {
-            string savePath = Path.Join(Directory.GetCurrentDirectory(), "steamcmd.zip");
-            string extractPath = Path.Join(Directory.GetCurrentDirectory(), "SteamCMD");
+            string savePath = Path.Combine(Directory.GetCurrentDirectory(), "steamcmd.zip");
+            string extractPath = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD");
             using (WebClient wc = new WebClient())
             {
                 wc.DownloadFile(steamCmdUrl, savePath);
@@ -68,7 +68,7 @@ namespace GhostPanel.Core
 
             ProcessStartInfo start = new ProcessStartInfo();
             start.Arguments = String.Format("+login {0} +force_install_dir \"{1}\" +app_update {2} +quit", GetCredentialString(), installDir, appId);
-            start.FileName = Path.Join(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
+            start.FileName = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
             int exitCode;
             using (Process proc = Process.Start(start))
             {

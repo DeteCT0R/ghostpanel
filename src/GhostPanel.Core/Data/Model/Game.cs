@@ -4,16 +4,18 @@ using System.Text;
 
 namespace GhostPanel.Core.Data.Model
 {
-    class Game
+    public class Game : DataEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int SteamAppId { get; set; }
         public string SteamUrl { get; set; }
         public string ExeName { get; set; }
         public int MaxSlots { get; set; }
         public int MinSlots { get; set; }
+        public int DefaultSlots { get; set; }
         public string DefaultPath { get; set; }
+        public int GamePort { get; set; }
+        public int QueryPort { get; set; }
         public List<GameServer> GameServers { get; set; }
 
     }
