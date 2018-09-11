@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,13 +10,15 @@ namespace GhostPanel.Web
     public class BackgroundService : IBackgroundService
     {
         private readonly List<IQueuedTask> _tasks = new List<IQueuedTask>();
-
-        public BackgroundService()
+        private readonly ILogger _logger;
+        public BackgroundService(ILogger logger)
         {
+            _logger = logger;
         }
 
         public async Task Start()
         {
+            _logger.LogDebug("Running BackgroundService loop");
             var mainLoop = Task.Run(async () =>
             {
                 while (true)
@@ -31,6 +34,7 @@ namespace GhostPanel.Web
 
         private void RunPendingTasks()
         {
+            _logger.LogDebug("Running Pending Tasks");
             foreach (var task in _tasks)
             {
                 task.Invoke();
@@ -43,6 +47,7 @@ namespace GhostPanel.Web
             {
                 if (task.IsDone())
                 {
+                    _logger.LogDebug("Removing Backgrond Task {task}", task);
                     _tasks.Remove(task);
                 }
             }
@@ -50,6 +55,7 @@ namespace GhostPanel.Web
 
         public void AddTask(IQueuedTask taskToAdd)
         {
+            _logger.LogInformation("Adding task to background queue. {task}", taskToAdd);
             _tasks.Add(taskToAdd);
         }
 

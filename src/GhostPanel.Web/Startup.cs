@@ -39,6 +39,8 @@ namespace GhostPanel.Web
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
+            builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>));
+
             var fullConfig = Configuration.Get<GhostPanelConfig>();
             IRepository repository = SetUpDatabase.SetUpRepository(fullConfig.DatabaseConnectionString);
 

@@ -8,6 +8,7 @@ using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.GameServerUtils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,12 +21,17 @@ namespace GhostPanel.Web.Controllers
         private readonly IRepository _repository;
         private readonly IBackgroundService _backgroundService;
         private readonly ServerManagerContainer _serverManagerContainer;
+        private ILogger _logger;
 
-        public GameServerController(IRepository repository, IBackgroundService backgroundService, ServerManagerContainer serverManagerContainer)
+        public GameServerController(IRepository repository, 
+            IBackgroundService backgroundService, 
+            ServerManagerContainer serverManagerContainer,
+            ILogger<GameServerController> logger)
         {
             _repository = repository;
             _backgroundService = backgroundService;
             _serverManagerContainer = serverManagerContainer;
+            _logger = logger;
         }
 
         // GET: api/<controller>
@@ -40,6 +46,7 @@ namespace GhostPanel.Web.Controllers
         [HttpGet("{id}")]
         public GameServerManager Get(int id)
         {
+            _logger.LogInformation("Running GET with ID {id}", id);
             //var result = _repository.Single(DataItemPolicy<GameServer>.ById(id));
             var result = _serverManagerContainer.GetManagerList().Where(s => s.gameServer.Id == id).SingleOrDefault();
             return result;

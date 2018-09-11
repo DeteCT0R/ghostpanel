@@ -6,7 +6,7 @@ namespace GhostPanel.Core.GameServerUtils
     public class GameServerStatus
     {
         private Process _serverProcess;
-        public ServerInstallStatus status;
+        public ServerStatusStates status;
 
         public Process ServerProcess { get => _serverProcess; set => _serverProcess = value; }
 

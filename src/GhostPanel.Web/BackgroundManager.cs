@@ -10,20 +10,23 @@ namespace GhostPanel.Web
 {
     public class BackgroundManager
     {
-        public BackgroundManager(IRepository repository, 
-            IBackgroundService backgroundService)
-        {
-            _repository = repository;
-            _backgroundService = backgroundService;
-            
-        }
-
         private readonly IRepository _repository;
         private readonly IBackgroundService _backgroundService;
         private ILogger _logger;
 
+        public BackgroundManager(IRepository repository, 
+            IBackgroundService backgroundService,
+            ILogger<BackgroundManager> logger)
+        {
+            _repository = repository;
+            _backgroundService = backgroundService;
+            _logger = logger;
+            
+        }        
+
         public async Task Run()
         {
+            _logger.LogInformation("Starting Background Manager");
             await _backgroundService.Start();
         }
 
