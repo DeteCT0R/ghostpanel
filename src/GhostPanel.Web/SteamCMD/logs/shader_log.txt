@@ -1,0 +1,54 @@
+
+
+[2018-09-10 07:57:01] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 07:57:01] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 07:57:01] Unknown shader cache type, ignoring.
+[2018-09-10 07:57:02] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 07:57:02] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 07:57:02] Unknown shader cache type, ignoring.
+[2018-09-10 07:57:02] Found 0 current buckets:
+
+
+[2018-09-10 07:58:09] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 07:58:09] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 07:58:09] Unknown shader cache type, ignoring.
+[2018-09-10 07:58:10] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 07:58:10] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 07:58:10] Unknown shader cache type, ignoring.
+[2018-09-10 07:58:10] Found 0 current buckets:
+
+
+[2018-09-10 09:18:12] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 09:18:12] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 09:18:12] Unknown shader cache type, ignoring.
+[2018-09-10 09:18:12] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 09:18:12] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 09:18:12] Unknown shader cache type, ignoring.
+[2018-09-10 09:18:13] Found 0 current buckets:
+
+
+[2018-09-10 23:14:30] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 23:14:30] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 23:14:30] Unknown shader cache type, ignoring.
+[2018-09-10 23:14:30] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 23:14:30] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 23:14:31] Unknown shader cache type, ignoring.
+[2018-09-10 23:14:31] Found 0 current buckets:
+
+
+[2018-09-10 23:17:29] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 23:17:29] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 23:17:29] Unknown shader cache type, ignoring.
+[2018-09-10 23:17:30] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 23:17:30] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 23:17:30] Unknown shader cache type, ignoring.
+[2018-09-10 23:17:30] Found 0 current buckets:
+
+
+[2018-09-10 23:23:18] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 23:23:18] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_64
+[2018-09-10 23:23:18] Unknown shader cache type, ignoring.
+[2018-09-10 23:23:18] Attempting to find current bucket; temporary dir: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 23:23:18] Creating shader cache directory: C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\shader_cache_temp_dir_gl_32
+[2018-09-10 23:23:18] Unknown shader cache type, ignoring.
+[2018-09-10 23:23:19] Found 0 current buckets:

@@ -21,6 +21,7 @@ namespace GhostPanel.Web
                 while (true)
                 {
                     RunPendingTasks();
+                    removeCompleteTasks();
                     await Task.Delay(TimeSpan.FromSeconds(2));
                 }
             });
@@ -40,7 +41,7 @@ namespace GhostPanel.Web
         {
             foreach (var task in _tasks)
             {
-                if (task.IsDone)
+                if (task.IsDone())
                 {
                     _tasks.Remove(task);
                 }

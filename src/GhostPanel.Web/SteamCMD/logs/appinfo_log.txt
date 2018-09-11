@@ -1,0 +1,66 @@
+
+
+[2018-09-10 07:57:03] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 07:57:04] Change number 0->5063788, apps: 0/0, packages: 0/0
+[2018-09-10 07:57:04] Requesting 1 apps, 1 packages (meta data, 1024 prev attempts)
+[2018-09-10 07:57:04] Requesting 1 apps, 1 packages (full data, 1024 prev attempts)
+[2018-09-10 07:57:04] UpdatesJob: finished OK, nAppsUpdated 1 (2 KB), nPackagesUpdated 1 (39 KB)
+[2018-09-10 07:57:04] Requesting 972 apps, 0 packages (meta data, 1024 prev attempts)
+[2018-09-10 07:57:05] Requested 478 access tokens, 40 received, 438 denied
+[2018-09-10 07:57:05] Updated SHAs with 40 new access tokens
+[2018-09-10 07:57:06] Downloaded 23 apps via HTTP, 627 KB (136 KB compressed)
+[2018-09-10 07:57:06] Requesting 949 apps, 0 packages (full data, 1024 prev attempts)
+[2018-09-10 07:57:08] UpdatesJob: finished OK, nAppsUpdated 972 (1923 KB), nPackagesUpdated 0 (0 KB)
+[2018-09-10 07:57:08] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 07:57:08] Requesting 1 apps, 0 packages (meta data, 1024 prev attempts)
+[2018-09-10 07:57:08] UpdatesJob: finished OK, nAppsUpdated 0 (0 KB), nPackagesUpdated 0 (0 KB)
+[2018-09-10 07:57:23] Starting async write C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD/appcache/appinfo.vdf (1449317 bytes)
+
+
+[2018-09-10 07:58:11] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 07:58:11] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 07:58:11] Change number 0->5063791, apps: 0/0, packages: 0/0
+[2018-09-10 07:58:11] Requesting 973 apps, 1 packages (meta data, 1024 prev attempts)
+[2018-09-10 07:58:12] Requested 438 access tokens, 0 received, 438 denied
+[2018-09-10 07:58:12] UpdatesJob: finished OK, nAppsUpdated 0 (0 KB), nPackagesUpdated 0 (0 KB)
+
+
+[2018-09-10 09:18:13] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 09:18:13] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 09:18:13] Change number 0->5064056, apps: 0/0, packages: 0/0
+[2018-09-10 09:18:13] Requesting 973 apps, 1 packages (meta data, 1024 prev attempts)
+[2018-09-10 09:18:14] Requested 438 access tokens, 0 received, 438 denied
+[2018-09-10 09:18:14] Downloaded 2 apps via HTTP, 24 KB (7 KB compressed)
+[2018-09-10 09:18:14] Requesting 3 apps, 0 packages (full data, 1024 prev attempts)
+[2018-09-10 09:18:14] UpdatesJob: finished OK, nAppsUpdated 5 (33 KB), nPackagesUpdated 0 (0 KB)
+
+
+[2018-09-10 23:14:31] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 23:14:31] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 23:14:32] Change number 0->5067267, apps: 0/0, packages: 0/0
+[2018-09-10 23:14:32] Requesting 973 apps, 1 packages (meta data, 1024 prev attempts)
+[2018-09-10 23:14:32] Requested 438 access tokens, 0 received, 438 denied
+[2018-09-10 23:14:33] Downloaded 7 apps via HTTP, 336 KB (62 KB compressed)
+[2018-09-10 23:14:33] Requesting 37 apps, 1 packages (full data, 1024 prev attempts)
+[2018-09-10 23:14:33] UpdatesJob: finished OK, nAppsUpdated 44 (465 KB), nPackagesUpdated 1 (39 KB)
+[2018-09-10 23:14:33] Requesting 441 apps, 0 packages (meta data, 1024 prev attempts)
+[2018-09-10 23:14:34] Requested 440 access tokens, 0 received, 440 denied
+[2018-09-10 23:14:34] Requesting 3 apps, 0 packages (full data, 1024 prev attempts)
+[2018-09-10 23:14:34] UpdatesJob: finished OK, nAppsUpdated 3 (7 KB), nPackagesUpdated 0 (0 KB)
+[2018-09-10 23:14:49] Starting async write C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD/appcache/appinfo.vdf (1455353 bytes)
+
+
+[2018-09-10 23:17:30] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 23:17:31] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 23:17:31] Change number 0->5067274, apps: 0/0, packages: 0/0
+[2018-09-10 23:17:31] Requesting 976 apps, 1 packages (meta data, 1024 prev attempts)
+[2018-09-10 23:17:31] Requested 440 access tokens, 0 received, 440 denied
+[2018-09-10 23:17:31] UpdatesJob: finished OK, nAppsUpdated 0 (0 KB), nPackagesUpdated 0 (0 KB)
+
+
+[2018-09-10 23:23:19] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 23:23:19] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-09-10 23:23:20] Change number 0->5067280, apps: 0/0, packages: 0/0
+[2018-09-10 23:23:20] Requesting 976 apps, 1 packages (meta data, 1024 prev attempts)
+[2018-09-10 23:23:20] Requested 440 access tokens, 0 received, 440 denied
+[2018-09-10 23:23:20] UpdatesJob: finished OK, nAppsUpdated 0 (0 KB), nPackagesUpdated 0 (0 KB)

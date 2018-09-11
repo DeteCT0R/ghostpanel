@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GhostPanel.Core;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
+using GhostPanel.Core.GameServerUtils;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,11 +19,13 @@ namespace GhostPanel.Web.Controllers
     {
         private readonly IRepository _repository;
         private readonly IBackgroundService _backgroundService;
+        private readonly ServerManagerContainer _serverManagerContainer;
 
-        public GameServerController(IRepository repository, IBackgroundService backgroundService)
+        public GameServerController(IRepository repository, IBackgroundService backgroundService, ServerManagerContainer serverManagerContainer)
         {
             _repository = repository;
             _backgroundService = backgroundService;
+            _serverManagerContainer = serverManagerContainer;
         }
 
         // GET: api/<controller>
@@ -34,18 +38,23 @@ namespace GhostPanel.Web.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public GameServer Get(int id)
+        public GameServerManager Get(int id)
         {
-            _backgroundService.AddTask(new TestTask());
-            var result = _repository.Single(DataItemPolicy<GameServer>.ById(id));
+            //var result = _repository.Single(DataItemPolicy<GameServer>.ById(id));
+            var result = _serverManagerContainer.GetManagerList().Where(s => s.gameServer.Id == id).SingleOrDefault();
             return result;
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post(GameServer gameServer)
-        {
+        public GameServer Post(GameServer gameServer)
+        {            
             _repository.Create(new List<GameServer>() { gameServer });
+            GameServerManager manager = new GameServerManager(gameServer, new SteamCmd("anonymous", ""), _repository);
+            _serverManagerContainer.AddServerManager(manager);
+            CreateServerTask task = new CreateServerTask(manager);
+            _backgroundService.AddTask(task);
+            return gameServer;
         }
 
         // PUT api/<controller>/5

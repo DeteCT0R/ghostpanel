@@ -39,6 +39,8 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("PortIncrement");
+
                     b.Property<int>("QueryPort");
 
                     b.Property<int>("SteamAppId");

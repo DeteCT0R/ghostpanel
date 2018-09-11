@@ -1,4 +1,5 @@
-﻿using GhostPanel.Core.Data.Model;
+﻿using GhostPanel.Core.Data;
+using GhostPanel.Core.Data.Model;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
@@ -10,51 +11,49 @@ namespace GhostPanel.Core.GameServerUtils
     public class GameServerManager : IGameServerManager
     {
 
-        private GameServer gameServer;
-        private SteamCmd steamCmd;
-        private int? pid;
-        private DbContext _dbContext;
+        public GameServer gameServer;
+        private readonly SteamCmd _steamCmd;
+        private readonly IRepository _repository;
+        public GameServerStatus gameServerStatus;
 
-        public GameServerManager(GameServer gameServer, SteamCmd steamCmd, DbContext dbContext)
+        public GameServerManager(GameServer gameServer, SteamCmd steamCmd, IRepository repository)
         {
-            GameServer = gameServer;
-            SteamCmd = steamCmd;
-            _dbContext = dbContext;
-            Pid = gameServer.Pid;
+            this.gameServer = gameServer;
+            _steamCmd = steamCmd;
+            _repository = repository;
+            gameServerStatus = new GameServerStatus() { status = ServerStatusStates.Unknown };
         }
-
-        public int ?Pid { get => pid; set => pid = value; }
-        internal GameServer GameServer { get => gameServer; set => gameServer = value; }
-        internal SteamCmd SteamCmd { get => steamCmd; set => steamCmd = value; }
 
         public void DeleteGameServer()
         {
-            Log.Information("Attempting to delete game server with ID {id}", gameServer.Id);
             try
             {
                 Directory.Delete(gameServer.HomeDirectory, true);
             } catch (Exception e)
             {
-                Log.Error("Failed to delete game directory");
+                Console.WriteLine("Failed to Delete Game Server");
             }
         }
 
         public void InstallGameServer()
         {
-            steamCmd.downloadGame(gameServer.HomeDirectory, gameServer.Game.SteamAppId);
+            // TODO - Check if there's an active install 
+            Process proc = _steamCmd.downloadGame(gameServer.HomeDirectory, gameServer.Game.SteamAppId);
+            gameServerStatus.ServerProcess = proc;
+            gameServerStatus.status = ServerStatusStates.Installing;
         }
 
         public bool IsRunning()
         {
-            if (pid == null || pid == 0)
+            if (gameServer.Pid == null || gameServer.Pid == 0)
             {
-                Log.Information("No PID currently set for server");
+                Console.WriteLine("No Pid Set");
                 return false;
             }
 
             try
             {
-                Process proc = Process.GetProcessById((int)pid);
+                Process proc = Process.GetProcessById((int)gameServer.Pid);
                 if (!proc.HasExited)
                 {
                     return true;
@@ -63,25 +62,14 @@ namespace GhostPanel.Core.GameServerUtils
                 
             } catch (ArgumentException e)
             {
-                Log.Error("Unable to locate PID {pid}", pid);
+                Console.WriteLine("Unable to locate PID " + gameServer.Pid);
                 return false;
             }
 
         }
 
-        public string RefreshStatus()
-        {
-            if (IsRunning())
-            {
-                
-            }
-
-            return "";
-        }
-
         public void ReinstallGameServer()
         {
-            Log.Information("Reinstalling Game Server {id}", gameServer.Id);
             DeleteGameServer();
             InstallGameServer();
         }
@@ -90,7 +78,7 @@ namespace GhostPanel.Core.GameServerUtils
         {
             if (IsRunning())
             {
-                Log.Information("Server is already running with PID {pid}", pid);
+                Console.WriteLine("Server is already running with PID " + gameServer.Pid);
                 return;
             }
 
@@ -99,10 +87,9 @@ namespace GhostPanel.Core.GameServerUtils
             start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;
             Process proc = Process.Start(start);
-            pid = proc.Id;
-            gameServer.Pid = pid;
+            gameServer.Pid = proc.Id;
 
-            _dbContext.SaveChanges();
+            _repository.Update(gameServer);
 
         }
 
@@ -117,18 +104,56 @@ namespace GhostPanel.Core.GameServerUtils
 
             try
             {
-                Process proc = Process.GetProcessById((int)pid);
+                Process proc = Process.GetProcessById((int)gameServer.Pid);
                 proc.Kill();
-                gameServer.Pid = 0;
-                _dbContext.SaveChanges();
-                Log.Information("Killed game server with pid {pid}", Pid);
+                gameServer.Pid = null;
+                _repository.Update(gameServer);
+                Console.WriteLine("Killed game server with pid " + gameServer.Pid);
                 return;
             }
             catch (ArgumentException e)
             {
-                Log.Error("Unable to locate PID {pid}", pid);
+                Console.WriteLine("Unable to locate PID " + gameServer.Pid);
                 return;
             }
+        }
+
+        public void SetServerStatus()
+        {
+            if (!IsRunning())
+            {
+                gameServerStatus.status = ServerStatusStates.Stopped;
+                return;
+            }
+
+            Process proc = Process.GetProcessById((int)gameServer.Pid);
+            if (proc.HasExited)
+            {
+                gameServer.Pid = null;
+                gameServerStatus.status = ServerStatusStates.Stopped;
+            } else
+            {
+                gameServerStatus.status = ServerStatusStates.Running;
+            }
+        }
+
+        // TODO - Remove me
+        public string InstallationStatus()
+        {
+            if (gameServerStatus == null)
+            {
+                return "Install has completed";
+            }
+
+            if (gameServerStatus.IsComplete())
+            {
+                return "Install has completed";
+            } else
+            {
+                return "Install is running";
+            }
+
+
         }
     }
 }

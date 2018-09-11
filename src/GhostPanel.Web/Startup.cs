@@ -49,6 +49,9 @@ namespace GhostPanel.Web
             builder.RegisterType<BackgroundManager>().AsSelf().SingleInstance();
             builder.RegisterType<BackgroundWorker>().As<IHostedService>();
 
+            ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
+            builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
+
             ApplicationContainer = builder.Build();
 
             return new AutofacServiceProvider(ApplicationContainer);

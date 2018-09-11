@@ -16,6 +16,7 @@ namespace GhostPanel.Web.Controllers
     {
 
         private readonly IRepository _repository;
+        
 
         public GameController(IRepository repository)
         {

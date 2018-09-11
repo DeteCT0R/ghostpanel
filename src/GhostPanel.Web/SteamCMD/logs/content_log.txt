@@ -1,0 +1,198 @@
+
+
+[2018-09-10 07:57:01] Loaded 0 apps from install folder "C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\steamapps\appmanifest_*.acf".
+[2018-09-10 07:57:04] Got 100 content servers from directory
+[2018-09-10 07:57:08] Loaded 0 apps from install folder "c:\dev\server2\steamapps\appmanifest_*.acf".
+[2018-09-10 07:57:08] AppID 740 state changed : Update Required,
+[2018-09-10 07:57:08] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=-2, appDisableSecondsRemaining=0
+[2018-09-10 07:57:08] AppID 740 state changed : Update Required,Update Queued,
+[2018-09-10 07:57:08] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=-2, appDisableSecondsRemaining=0
+[2018-09-10 07:57:08] AppID 740 state changed : Update Required,Update Queued,Update Running,
+[2018-09-10 07:57:08] AppID 740 update changed : Running,
+[2018-09-10 07:57:08] AppID 740 update changed : Running,Reconfiguring,
+[2018-09-10 07:57:09] Got 20 download sources and 0 caching proxies via "/serverlist/82/20/" from valve311.steamcontent.com
+[2018-09-10 07:57:09] Created download interface of type 'CS' (1) to host valve314.steamcontent.com (valve314.steamcontent.com)
+[2018-09-10 07:57:09] Created download interface of type 'CS' (1) to host valve308.steamcontent.com (valve308.steamcontent.com)
+[2018-09-10 07:57:09] Created download interface of type 'CS' (1) to host valve303.steamcontent.com (valve303.steamcontent.com)
+[2018-09-10 07:57:09] HTTP (CS,314) - valve314.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve314.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 07:57:09] HTTP (CS,314) - valve314.steamcontent.com (162.254.192.9:80 / 162.254.192.9:80, host: valve314.steamcontent.com): AuthenticateDepotID (740) - Success!
+[2018-09-10 07:57:09] HTTP (CS,314) - valve314.steamcontent.com (162.254.192.9:80 / 162.254.192.9:80, host: valve314.steamcontent.com): valve314.steamcontent.com/depot/740/manifest/2856843759953838769/5?l=11&e=1537185431&h=2d711808912103d0cc3bc225825b4bf45f388e75 - received 200 (OK) HTTP response
+[2018-09-10 07:57:10] HTTP (CS,314) - valve314.steamcontent.com (162.254.192.9:80 / 162.254.192.9:80, host: valve314.steamcontent.com): valve314.steamcontent.com/depot/731/manifest/8024904248193045429/5?l=11&e=1537185431&h=d31f174afa7c95d9bd16bb8a1365f6b4c66bd6cd - received 200 (OK) HTTP response
+[2018-09-10 07:57:10] AppID 740 update changed : Running,
+[2018-09-10 07:57:10] AppID 740 update changed : Running,Validating,
+[2018-09-10 07:57:10] Validating files (new target,full) ...
+[2018-09-10 07:57:10] File validation finished: 2814 files (18311937025 bytes) total, 2814 files (18311937025 bytes) mismatched (62 msec).
+[2018-09-10 07:57:10] AppID 740 update changed : Running,
+[2018-09-10 07:57:10] AppID 740 update changed : Running,Preallocating,
+[2018-09-10 07:57:11] AppID 740 update changed : Running,
+[2018-09-10 07:57:11] AppID 740 update started : download 0/8489545744, store 0/0, reuse 0/0, delta 0/0, stage 0/18311937025
+[2018-09-10 07:57:11] AppID 740 state changed : Update Required,Update Queued,Update Running,Update Started,
+[2018-09-10 07:57:11] AppID 740 update changed : Running,Downloading,
+[2018-09-10 07:57:11] AppID 740 update changed : Running,Downloading,Staging,
+[2018-09-10 07:57:11] Downloading 18422 chunks from depot 731
+[2018-09-10 07:57:11] HTTP (CS,308) - valve308.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve308.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 07:57:11] HTTP (CS,303) - valve303.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve303.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 07:57:21] Increasing target number of download connections to 4 (rate was 0.000, now 72.881)
+[2018-09-10 07:57:21] Created download interface of type 'CS' (1) to host valve319.steamcontent.com (valve319.steamcontent.com)
+[2018-09-10 07:57:21] HTTP (CS,319) - valve319.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve319.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 07:57:34] Increasing target number of download connections to 5 (rate was 72.881, now 104.984)
+[2018-09-10 07:57:34] Created download interface of type 'CS' (1) to host valve304.steamcontent.com (valve304.steamcontent.com)
+[2018-09-10 07:57:34] HTTP (CS,304) - valve304.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve304.steamcontent.com): AuthenticateDepotID (731) - Success!
+
+
+[2018-09-10 07:58:09] Loaded 0 apps from install folder "C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\steamapps\appmanifest_*.acf".
+[2018-09-10 07:58:11] Loaded 1 apps from install folder "c:\dev\server2\steamapps\appmanifest_*.acf".
+[2018-09-10 07:58:11] Got 100 content servers from directory
+[2018-09-10 07:58:12] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=1536580692, appDisableSecondsRemaining=0
+[2018-09-10 07:58:12] AppID 740 state changed : Update Required,Update Queued,Update Started,
+[2018-09-10 07:58:12] AppID 740 state changed : Update Required,Update Queued,Update Running,Update Started,
+[2018-09-10 07:58:12] AppID 740 update changed : Running,
+[2018-09-10 07:58:12] AppID 740 update changed : Running,Reconfiguring,
+[2018-09-10 07:58:12] AppID 740 update changed : Running,
+[2018-09-10 07:58:12] AppID 740 update started : download 518519888/8489545744, store 0/0, reuse 0/0, delta 0/0, stage 1796567067/18311937025
+[2018-09-10 07:58:12] AppID 740 update changed : Running,Downloading,
+[2018-09-10 07:58:12] AppID 740 update changed : Running,Downloading,Staging,
+[2018-09-10 07:58:12] Got 20 download sources and 0 caching proxies via "/serverlist/82/20/" from valve300.steamcontent.com
+[2018-09-10 07:58:12] Created download interface of type 'CS' (1) to host valve304.steamcontent.com (valve304.steamcontent.com)
+[2018-09-10 07:58:12] Created download interface of type 'CS' (1) to host valve316.steamcontent.com (valve316.steamcontent.com)
+[2018-09-10 07:58:12] Created download interface of type 'CS' (1) to host valve314.steamcontent.com (valve314.steamcontent.com)
+[2018-09-10 07:58:12] Downloading 16415 chunks from depot 731
+[2018-09-10 07:58:12] HTTP (CS,304) - valve304.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve304.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 07:58:12] HTTP (CS,316) - valve316.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve316.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 07:58:12] HTTP (CS,314) - valve314.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve314.steamcontent.com): AuthenticateDepotID (731) - Success!
+
+
+[2018-09-10 09:18:12] Loaded 0 apps from install folder "C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\steamapps\appmanifest_*.acf".
+[2018-09-10 09:18:13] Loaded 0 apps from install folder "c:\dev\server3\steamapps\appmanifest_*.acf".
+[2018-09-10 09:18:14] Got 100 content servers from directory
+[2018-09-10 09:18:14] AppID 740 state changed : Update Required,
+[2018-09-10 09:18:14] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=-2, appDisableSecondsRemaining=0
+[2018-09-10 09:18:14] AppID 740 state changed : Update Required,Update Queued,
+[2018-09-10 09:18:14] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=-2, appDisableSecondsRemaining=0
+[2018-09-10 09:18:14] AppID 740 state changed : Update Required,Update Queued,Update Running,
+[2018-09-10 09:18:14] AppID 740 update changed : Running,
+[2018-09-10 09:18:14] AppID 740 update changed : Running,Reconfiguring,
+[2018-09-10 09:18:14] AppID 740 update changed : Running,
+[2018-09-10 09:18:14] AppID 740 update changed : Running,Validating,
+[2018-09-10 09:18:14] Validating files (new target,full) ...
+[2018-09-10 09:18:15] File validation finished: 2814 files (18311937025 bytes) total, 2814 files (18311937025 bytes) mismatched (78 msec).
+[2018-09-10 09:18:15] AppID 740 update changed : Running,
+[2018-09-10 09:18:15] AppID 740 update changed : Running,Preallocating,
+[2018-09-10 09:18:16] AppID 740 update changed : Running,
+[2018-09-10 09:18:16] AppID 740 update started : download 0/8489545744, store 0/0, reuse 0/0, delta 0/0, stage 0/18311937025
+[2018-09-10 09:18:16] AppID 740 state changed : Update Required,Update Queued,Update Running,Update Started,
+[2018-09-10 09:18:16] AppID 740 update changed : Running,Downloading,
+[2018-09-10 09:18:16] AppID 740 update changed : Running,Downloading,Staging,
+[2018-09-10 09:18:16] Got 20 download sources and 0 caching proxies via "/serverlist/82/20/" from valve301.steamcontent.com
+[2018-09-10 09:18:16] Created download interface of type 'CS' (1) to host valve324.steamcontent.com (valve324.steamcontent.com)
+[2018-09-10 09:18:16] Created download interface of type 'CS' (1) to host valve321.steamcontent.com (valve321.steamcontent.com)
+[2018-09-10 09:18:16] Created download interface of type 'CS' (1) to host valve303.steamcontent.com (valve303.steamcontent.com)
+[2018-09-10 09:18:16] Downloading 18422 chunks from depot 731
+[2018-09-10 09:18:16] HTTP (CS,324) - valve324.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve324.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 09:18:16] HTTP (CS,321) - valve321.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve321.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 09:18:16] HTTP (CS,303) - valve303.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve303.steamcontent.com): AuthenticateDepotID (731) - Success!
+
+
+[2018-09-10 23:14:30] Loaded 0 apps from install folder "C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\steamapps\appmanifest_*.acf".
+[2018-09-10 23:14:31] Loaded 1 apps from install folder "c:\dev\server3\steamapps\appmanifest_*.acf".
+[2018-09-10 23:14:32] Got 100 content servers from directory
+[2018-09-10 23:14:33] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=1536635673, appDisableSecondsRemaining=0
+[2018-09-10 23:14:33] AppID 740 state changed : Update Required,Update Queued,Update Started,
+[2018-09-10 23:14:33] AppID 740 state changed : Update Required,Update Queued,Update Running,Update Started,
+[2018-09-10 23:14:33] AppID 740 update changed : Running,
+[2018-09-10 23:14:33] AppID 740 update changed : Running,Reconfiguring,
+[2018-09-10 23:14:33] Got 20 download sources and 0 caching proxies via "/serverlist/82/20/" from valve303.steamcontent.com
+[2018-09-10 23:14:33] Created download interface of type 'CS' (1) to host valve303.steamcontent.com (valve303.steamcontent.com)
+[2018-09-10 23:14:33] Created download interface of type 'CS' (1) to host valve304.steamcontent.com (valve304.steamcontent.com)
+[2018-09-10 23:14:33] Created download interface of type 'CS' (1) to host valve312.steamcontent.com (valve312.steamcontent.com)
+[2018-09-10 23:14:34] HTTP (CS,303) - valve303.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve303.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:14:34] HTTP (CS,304) - valve304.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve304.steamcontent.com): AuthenticateDepotID (740) - Success!
+[2018-09-10 23:14:34] HTTP (CS,303) - valve303.steamcontent.com (162.254.192.35:80 / 162.254.192.35:80, host: valve303.steamcontent.com): valve303.steamcontent.com/depot/731/manifest/4547488956456081264/5?l=11&e=1537240474&h=8eeb37024e8f3108812b9ff90a2fe49bf853fd48 - received 404 (Not Found) HTTP response
+[2018-09-10 23:14:34] HTTP (CS,303) - valve303.steamcontent.com (162.254.192.35:80 / 162.254.192.35:80, host: valve303.steamcontent.com): Received 404 (Not Found) HTTP response for depot 731
+[2018-09-10 23:14:34] HTTP (CS,304) - valve304.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve304.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:14:34] HTTP (CS,304) - valve304.steamcontent.com (162.254.192.4:80 / 162.254.192.4:80, host: valve304.steamcontent.com): valve304.steamcontent.com/depot/740/manifest/6656255079196487121/5?l=11&e=1537240474&h=fe09bbac02aed1d3025bb608c17feeeeb2c73537 - received 200 (OK) HTTP response
+[2018-09-10 23:14:34] HTTP (CS,304) - valve304.steamcontent.com (162.254.192.4:80 / 162.254.192.4:80, host: valve304.steamcontent.com): valve304.steamcontent.com/depot/731/manifest/4547488956456081264/5?l=11&e=1537240474&h=8eeb37024e8f3108812b9ff90a2fe49bf853fd48 - received 200 (OK) HTTP response
+[2018-09-10 23:14:35] AppID 740 update changed : Running,
+[2018-09-10 23:14:35] Error loading c:\dev\server3\steamapps\downloading\state_740_731.patch: manifest mismatch
+[2018-09-10 23:14:35] Error loading c:\dev\server3\steamapps\downloading\state_740_740.patch: manifest mismatch
+[2018-09-10 23:14:35] AppID 740 update changed : Running,Preallocating,
+[2018-09-10 23:14:40] AppID 740 update changed : Running,
+[2018-09-10 23:14:40] AppID 740 update started : download 0/8489631456, store 0/0, reuse 0/0, delta 0/0, stage 0/18313907329
+[2018-09-10 23:14:40] AppID 740 update changed : Running,Downloading,
+[2018-09-10 23:14:40] AppID 740 update changed : Running,Downloading,Staging,
+[2018-09-10 23:14:40] Downloading 18426 chunks from depot 731
+[2018-09-10 23:14:40] HTTP (CS,312) - valve312.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve312.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:14:46] Increasing target number of download connections to 4 (rate was 0.000, now 65.748)
+[2018-09-10 23:14:46] Created download interface of type 'CS' (1) to host valve311.steamcontent.com (valve311.steamcontent.com)
+[2018-09-10 23:14:46] HTTP (CS,311) - valve311.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve311.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:14:47] HTTP (CS,303) - valve303.steamcontent.com (162.254.192.35:80 / 162.254.192.35:80, host: valve303.steamcontent.com): Received 500 (Internal Server Error) HTTP response for depot 731
+[2018-09-10 23:14:47] HTTP (CS,303) - valve303.steamcontent.com (162.254.192.35:80 / 162.254.192.35:80, host: valve303.steamcontent.com): Closing connection
+[2018-09-10 23:14:47] Created download interface of type 'CS' (1) to host valve315.steamcontent.com (valve315.steamcontent.com)
+[2018-09-10 23:14:47] HTTP (CS,315) - valve315.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve315.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:14:58] Increasing target number of download connections to 5 (rate was 65.748, now 100.987)
+[2018-09-10 23:14:58] Created download interface of type 'CS' (1) to host valve318.steamcontent.com (valve318.steamcontent.com)
+[2018-09-10 23:14:58] HTTP (CS,318) - valve318.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve318.steamcontent.com): AuthenticateDepotID (731) - Success!
+
+
+[2018-09-10 23:17:29] Loaded 0 apps from install folder "C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\steamapps\appmanifest_*.acf".
+[2018-09-10 23:17:31] Loaded 1 apps from install folder "c:\dev\server3\steamapps\appmanifest_*.acf".
+[2018-09-10 23:17:31] Got 100 content servers from directory
+[2018-09-10 23:17:31] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=1536635851, appDisableSecondsRemaining=0
+[2018-09-10 23:17:31] AppID 740 state changed : Update Required,Update Queued,Update Started,
+[2018-09-10 23:17:31] AppID 740 state changed : Update Required,Update Queued,Update Running,Update Started,
+[2018-09-10 23:17:31] AppID 740 update changed : Running,
+[2018-09-10 23:17:31] AppID 740 update changed : Running,Reconfiguring,
+[2018-09-10 23:17:31] AppID 740 update changed : Running,
+[2018-09-10 23:17:31] AppID 740 update started : download 723283472/8489631456, store 0/0, reuse 0/0, delta 0/0, stage 2500925594/18313907329
+[2018-09-10 23:17:31] AppID 740 update changed : Running,Downloading,
+[2018-09-10 23:17:31] AppID 740 update changed : Running,Downloading,Staging,
+[2018-09-10 23:17:32] Got 20 download sources and 0 caching proxies via "/serverlist/82/20/" from valve303.steamcontent.com
+[2018-09-10 23:17:32] Created download interface of type 'CS' (1) to host valve303.steamcontent.com (valve303.steamcontent.com)
+[2018-09-10 23:17:32] Created download interface of type 'CS' (1) to host valve304.steamcontent.com (valve304.steamcontent.com)
+[2018-09-10 23:17:32] Created download interface of type 'CS' (1) to host valve323.steamcontent.com (valve323.steamcontent.com)
+[2018-09-10 23:17:32] Downloading 15626 chunks from depot 731
+[2018-09-10 23:17:32] HTTP (CS,303) - valve303.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve303.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:17:32] HTTP (CS,304) - valve304.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve304.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:17:32] HTTP (CS,323) - valve323.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve323.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:17:44] Increasing target number of download connections to 4 (rate was 0.000, now 96.214)
+[2018-09-10 23:17:44] Created download interface of type 'CS' (1) to host valve308.steamcontent.com (valve308.steamcontent.com)
+[2018-09-10 23:17:44] HTTP (CS,308) - valve308.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve308.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:17:44] HTTP (CS,303) - valve303.steamcontent.com (162.254.192.35:80 / 162.254.192.35:80, host: valve303.steamcontent.com): Received 500 (Internal Server Error) HTTP response for depot 731
+[2018-09-10 23:17:44] HTTP (CS,303) - valve303.steamcontent.com (162.254.192.35:80 / 162.254.192.35:80, host: valve303.steamcontent.com): Closing connection
+[2018-09-10 23:17:45] Created download interface of type 'CS' (1) to host valve311.steamcontent.com (valve311.steamcontent.com)
+[2018-09-10 23:17:45] HTTP (CS,311) - valve311.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve311.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:18:17] Increasing target number of download connections to 5 (rate was 96.214, now 115.864)
+[2018-09-10 23:18:17] Created download interface of type 'CS' (1) to host valve310.steamcontent.com (valve310.steamcontent.com)
+[2018-09-10 23:18:17] HTTP (CS,310) - valve310.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve310.steamcontent.com): AuthenticateDepotID (731) - Success!
+
+
+[2018-09-10 23:23:18] Loaded 0 apps from install folder "C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\steamapps\appmanifest_*.acf".
+[2018-09-10 23:23:19] Loaded 1 apps from install folder "c:\dev\server3\steamapps\appmanifest_*.acf".
+[2018-09-10 23:23:20] Got 100 content servers from directory
+[2018-09-10 23:23:20] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=1536636200, appDisableSecondsRemaining=0
+[2018-09-10 23:23:20] AppID 740 state changed : Update Required,Update Queued,Update Started,
+[2018-09-10 23:23:20] AppID 740 state changed : Update Required,Update Queued,Update Running,Update Started,
+[2018-09-10 23:23:20] AppID 740 update changed : Running,
+[2018-09-10 23:23:20] AppID 740 update changed : Running,Reconfiguring,
+[2018-09-10 23:23:20] AppID 740 update changed : Running,
+[2018-09-10 23:23:20] AppID 740 update started : download 1366168032/8489631456, store 0/0, reuse 0/0, delta 0/0, stage 4256281317/18313907329
+[2018-09-10 23:23:20] AppID 740 update changed : Running,Downloading,
+[2018-09-10 23:23:20] AppID 740 update changed : Running,Downloading,Staging,
+[2018-09-10 23:23:20] Got 20 download sources and 0 caching proxies via "/serverlist/82/20/" from valve303.steamcontent.com
+[2018-09-10 23:23:20] Created download interface of type 'CS' (1) to host valve303.steamcontent.com (valve303.steamcontent.com)
+[2018-09-10 23:23:20] Created download interface of type 'CS' (1) to host valve313.steamcontent.com (valve313.steamcontent.com)
+[2018-09-10 23:23:20] Created download interface of type 'CS' (1) to host valve311.steamcontent.com (valve311.steamcontent.com)
+[2018-09-10 23:23:20] Downloading 13728 chunks from depot 731
+[2018-09-10 23:23:21] HTTP (CS,303) - valve303.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve303.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:23:21] HTTP (CS,313) - valve313.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve313.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:23:21] HTTP (CS,311) - valve311.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve311.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:23:26] HTTP (CS,303) - valve303.steamcontent.com (162.254.192.35:80 / 162.254.192.35:80, host: valve303.steamcontent.com): Received 500 (Internal Server Error) HTTP response for depot 731
+[2018-09-10 23:23:26] HTTP (CS,303) - valve303.steamcontent.com (162.254.192.35:80 / 162.254.192.35:80, host: valve303.steamcontent.com): Closing connection
+[2018-09-10 23:23:26] Created download interface of type 'CS' (1) to host valve309.steamcontent.com (valve309.steamcontent.com)
+[2018-09-10 23:23:26] HTTP (CS,309) - valve309.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve309.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:23:33] Increasing target number of download connections to 4 (rate was 0.000, now 92.341)
+[2018-09-10 23:23:33] Created download interface of type 'CS' (1) to host valve312.steamcontent.com (valve312.steamcontent.com)
+[2018-09-10 23:23:33] HTTP (CS,312) - valve312.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve312.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-10 23:23:47] Increasing target number of download connections to 5 (rate was 92.341, now 110.922)
+[2018-09-10 23:23:47] Created download interface of type 'CS' (1) to host valve316.steamcontent.com (valve316.steamcontent.com)
+[2018-09-10 23:23:47] HTTP (CS,316) - valve316.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve316.steamcontent.com): AuthenticateDepotID (731) - Success!

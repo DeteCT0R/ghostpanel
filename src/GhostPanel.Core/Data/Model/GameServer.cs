@@ -13,7 +13,7 @@ namespace GhostPanel.Core.Data.Model
         public string HomeDirectory { get; set; }
         public string CommandLine { get; set; }
         public int? Pid { get; set; }
-        public ServerStatus Status { get; set; }
+        public ServerStatusStates Status { get; set; }
         
         public Game Game { get; set; }
 

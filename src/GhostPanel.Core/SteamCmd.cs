@@ -58,7 +58,7 @@ namespace GhostPanel.Core
             ZipFile.ExtractToDirectory(savePath, extractPath);
         }
 
-        public void downloadGame(string installDir, int appId)
+        public Process downloadGame(string installDir, int appId)
         {
 
             if (!detectSteamCmd())
@@ -69,13 +69,8 @@ namespace GhostPanel.Core
             ProcessStartInfo start = new ProcessStartInfo();
             start.Arguments = String.Format("+login {0} +force_install_dir \"{1}\" +app_update {2} +quit", GetCredentialString(), installDir, appId);
             start.FileName = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
-            int exitCode;
-            using (Process proc = Process.Start(start))
-            {
-                proc.WaitForExit();
-
-                exitCode = proc.ExitCode;
-            }
+            Process proc = Process.Start(start);
+            return proc;
         }
     }
 }
