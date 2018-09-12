@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using GhostPanel.Core;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
-using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.GameServerUtils;
+using GhostPanel.Management.Server;
+using GhostPanel.Web.Background;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -57,7 +56,7 @@ namespace GhostPanel.Web.Controllers
         public GameServer Post(GameServer gameServer)
         {            
             _repository.Create(new List<GameServer>() { gameServer });
-            GameServerManager manager = new GameServerManager(gameServer, new SteamCmd("anonymous", ""), _repository);
+            GameServerManager manager = new GameServerManager(gameServer, new SteamCmd("anonymous", ""), _repository, _logger);
             _serverManagerContainer.AddServerManager(manager);
             CreateServerTask task = new CreateServerTask(manager);
             _backgroundService.AddTask(task);

@@ -3,13 +3,13 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GhostPanel.Web
+namespace GhostPanel.Web.Background
 {
-    public class BackgroundWorker : IHostedService
+    public class PanelBackgroundWorker : IHostedService
     {
         private readonly BackgroundManager _backgroundManager;
 
-        public BackgroundWorker(BackgroundManager backgroundManager)
+        public PanelBackgroundWorker(BackgroundManager backgroundManager)
         {
             _backgroundManager = backgroundManager;
         }

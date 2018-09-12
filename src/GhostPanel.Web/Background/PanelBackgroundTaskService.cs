@@ -1,17 +1,18 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using GhostPanel.Management.Server;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 // Automation System
-namespace GhostPanel.Web
+namespace GhostPanel.Web.Background
 {
-    public class BackgroundService : IBackgroundService
+    public class PanelBackgroundTaskService : IBackgroundService
     {
         private readonly List<IQueuedTask> _tasks = new List<IQueuedTask>();
         private readonly ILogger _logger;
-        public BackgroundService(ILogger logger)
+        public PanelBackgroundTaskService(ILogger<PanelBackgroundTaskService> logger)
         {
             _logger = logger;
         }

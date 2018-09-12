@@ -2,21 +2,24 @@
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.GameServerUtils;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GhostPanel.Web
+namespace GhostPanel.Management.Server
 {
     public class ServerManagerContainer
     {
         private List<GameServerManager> _serverManagers = new List<GameServerManager>();
         private readonly IRepository _repository;
+        private readonly ILogger _logger;
 
-        public ServerManagerContainer(IRepository repository)
+        public ServerManagerContainer(IRepository repository, ILogger<ServerManagerContainer> logger)
         {
             _repository = repository;
+            _logger = logger;
             Initialize();
         }
 
@@ -24,7 +27,8 @@ namespace GhostPanel.Web
         {
            foreach (var server in _repository.List<GameServer>())
             {
-                _serverManagers.Add(new GameServerManager(server, new SteamCmd("anonymous", ""), _repository));
+                GameServerManager manager = new GameServerManager(server, new SteamCmd("anonymous", ""), _repository, _logger);
+                _serverManagers.Add(manager);
             }
         }
 

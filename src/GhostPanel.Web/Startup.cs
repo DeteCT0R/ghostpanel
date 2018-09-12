@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using GhostPanel.Management.Server;
+using GhostPanel.Web.Background;
 
 namespace GhostPanel.Web
 {
@@ -29,8 +31,7 @@ namespace GhostPanel.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDataContext>(ServiceLifetime.Transient);
-            
+            services.AddDbContext<AppDataContext>(ServiceLifetime.Transient);            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -45,14 +46,18 @@ namespace GhostPanel.Web
             IRepository repository = SetUpDatabase.SetUpRepository(fullConfig.DatabaseConnectionString);
 
             builder.RegisterInstance(repository).SingleInstance();
-
-            builder.RegisterType<BackgroundService>().As<IBackgroundService>().SingleInstance();
+            builder.RegisterType<ServerManagerContainer>().SingleInstance();
+            builder.RegisterType<PanelBackgroundTaskService>().As<IBackgroundService>().SingleInstance();
+            builder.RegisterType<ServerStatusUpdateService>().As<IBackgroundService>().SingleInstance();
 
             builder.RegisterType<BackgroundManager>().AsSelf().SingleInstance();
-            builder.RegisterType<BackgroundWorker>().As<IHostedService>();
+            builder.RegisterType<ServerStatusBackgroundManager>().AsSelf().SingleInstance();
+            builder.RegisterType<PanelBackgroundWorker>().As<IHostedService>();
+            builder.RegisterType<ServerStatusBackgroundWorker>().As<IHostedService>();
 
-            ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
-            builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
+            //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
+            //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
+            
 
             ApplicationContainer = builder.Build();
 

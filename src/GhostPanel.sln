@@ -5,13 +5,15 @@ VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Demo", "GhostPanel\GhostPanel.Demo.csproj", "{CC12D348-1389-4A26-A685-AC35798E23F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{8918FA30-6E3A-4967-9204-39E46F6D7580}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{8918FA30-6E3A-4967-9204-39E46F6D7580}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.Core", "GhostPanel.Core\GhostPanel.Core.csproj", "{645D84B8-1706-4B37-A39B-F92C27B100C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Core", "GhostPanel.Core\GhostPanel.Core.csproj", "{645D84B8-1706-4B37-A39B-F92C27B100C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.Db", "GhostPanel.Db\GhostPanel.Db.csproj", "{9B1A2315-23D3-4F96-A81C-C9E6BC019535}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Db", "GhostPanel.Db\GhostPanel.Db.csproj", "{9B1A2315-23D3-4F96-A81C-C9E6BC019535}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.Web", "GhostPanel.Web\GhostPanel.Web.csproj", "{F7504895-C91D-4DA0-961F-D27656054B01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Web", "GhostPanel.Web\GhostPanel.Web.csproj", "{F7504895-C91D-4DA0-961F-D27656054B01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.Management", "GhostPanel.Management\GhostPanel.Management.csproj", "{E59409BB-DAF6-43E2-B65F-52695771A3A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{F7504895-C91D-4DA0-961F-D27656054B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7504895-C91D-4DA0-961F-D27656054B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7504895-C91D-4DA0-961F-D27656054B01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E59409BB-DAF6-43E2-B65F-52695771A3A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E59409BB-DAF6-43E2-B65F-52695771A3A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E59409BB-DAF6-43E2-B65F-52695771A3A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E59409BB-DAF6-43E2-B65F-52695771A3A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

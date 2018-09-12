@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using GhostPanel.Management.Server;
+using System.Threading.Tasks;
 
-namespace GhostPanel.Web
+namespace GhostPanel.Web.Background
 {
     public interface IBackgroundService
     {

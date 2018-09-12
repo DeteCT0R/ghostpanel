@@ -1,7 +1,7 @@
 ﻿using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -15,12 +15,14 @@ namespace GhostPanel.Core.GameServerUtils
         private readonly SteamCmd _steamCmd;
         private readonly IRepository _repository;
         public GameServerStatus gameServerStatus;
+        private readonly ILogger _logger;
 
-        public GameServerManager(GameServer gameServer, SteamCmd steamCmd, IRepository repository)
+        public GameServerManager(GameServer gameServer, SteamCmd steamCmd, IRepository repository, ILogger logger)
         {
             this.gameServer = gameServer;
             _steamCmd = steamCmd;
             _repository = repository;
+            _logger = logger;
             gameServerStatus = new GameServerStatus() { status = ServerStatusStates.Unknown };
         }
 
@@ -96,7 +98,7 @@ namespace GhostPanel.Core.GameServerUtils
         public void StopServer()
         {
             
-            Log.Debug("Attempting to stop game server");
+            _logger.LogDebug("Attempting to stop game server");
             if (!IsRunning())
             {
                 return;
@@ -120,9 +122,14 @@ namespace GhostPanel.Core.GameServerUtils
 
         public void SetServerStatus()
         {
+            // TODO - Logic to detect crashes
             if (!IsRunning())
-            {
-                gameServerStatus.status = ServerStatusStates.Stopped;
+            {                
+                if (gameServerStatus.status != ServerStatusStates.Stopped)
+                {
+                    _logger.LogInformation("Settings status for game server {id} to stopped", gameServer.Id); ;
+                    gameServerStatus.status = ServerStatusStates.Stopped;                    
+                }
                 return;
             }
 
@@ -130,10 +137,20 @@ namespace GhostPanel.Core.GameServerUtils
             if (proc.HasExited)
             {
                 gameServer.Pid = null;
-                gameServerStatus.status = ServerStatusStates.Stopped;
+                if (gameServerStatus.status != ServerStatusStates.Stopped)
+                {
+                    _logger.LogInformation("Existing PID found for game server {id} but proces has exited", gameServer.Id);
+                    gameServerStatus.status = ServerStatusStates.Stopped;
+                }
+                    
             } else
             {
-                gameServerStatus.status = ServerStatusStates.Running;
+                if (gameServerStatus.status != ServerStatusStates.Running)
+                {
+                    _logger.LogInformation("Setting game server {id} to running state", gameServer.Id);
+                    gameServerStatus.status = ServerStatusStates.Running;
+                }
+                    
             }
         }
 

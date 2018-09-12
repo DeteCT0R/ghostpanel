@@ -1,10 +1,7 @@
 ﻿using GhostPanel.Core.GameServerUtils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace GhostPanel.Web
+namespace GhostPanel.Management.Server
 {
     public class CreateServerTask : IQueuedTask
     {
