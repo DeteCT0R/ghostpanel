@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GhostPanel.Management.Server
+namespace GhostPanel.Core.Managment
 {
     public class ServerManagerContainer
     {

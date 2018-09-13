@@ -1,5 +1,6 @@
 ﻿using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
+using GhostPanel.Core.Managment;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,51 +12,58 @@ namespace GhostPanel.Core.GameServerUtils
     public class GameServerManager : IGameServerManager
     {
 
-        public GameServer gameServer;
-        private readonly SteamCmd _steamCmd;
+        private GameServer _gameServer;
+        private readonly IGameFileManager _steamCmd;
         private readonly IRepository _repository;
         public GameServerStatus gameServerStatus;
         private readonly ILogger _logger;
 
-        public GameServerManager(GameServer gameServer, SteamCmd steamCmd, IRepository repository, ILogger logger)
+        public GameServerManager(IGameFileManager steamCmd, IRepository repository, ILogger logger)
         {
-            this.gameServer = gameServer;
             _steamCmd = steamCmd;
             _repository = repository;
             _logger = logger;
             gameServerStatus = new GameServerStatus() { status = ServerStatusStates.Unknown };
         }
 
+        /// <summary>
+        /// Allows the game server to be set after creation.  This lets the GameServerManager be created via dependancy injection
+        /// </summary>
+        /// <param name="gameServer"></param>
+        public void SetGameServer(GameServer gameServer)
+        {
+            _gameServer = gameServer;
+        }
+
         public void DeleteGameServer()
         {
             try
             {
-                Directory.Delete(gameServer.HomeDirectory, true);
+                Directory.Delete(_gameServer.HomeDirectory, true);
             } catch (Exception e)
             {
-                Console.WriteLine("Failed to Delete Game Server");
+                _logger.LogError("Failed to delete game server {id}", _gameServer.Id);
             }
         }
 
         public void InstallGameServer()
         {
             // TODO - Check if there's an active install 
-            Process proc = _steamCmd.downloadGame(gameServer.HomeDirectory, gameServer.Game.SteamAppId);
+            Process proc = _steamCmd.downloadGame(_gameServer.HomeDirectory, _gameServer.Game.SteamAppId);
             gameServerStatus.ServerProcess = proc;
             gameServerStatus.status = ServerStatusStates.Installing;
         }
 
         public bool IsRunning()
         {
-            if (gameServer.Pid == null || gameServer.Pid == 0)
+            if (_gameServer.Pid == null || _gameServer.Pid == 0)
             {
-                Console.WriteLine("No Pid Set");
                 return false;
             }
 
             try
             {
-                Process proc = Process.GetProcessById((int)gameServer.Pid);
+                Process proc = Process.GetProcessById((int)_gameServer.Pid);
                 if (!proc.HasExited)
                 {
                     return true;
@@ -64,7 +72,7 @@ namespace GhostPanel.Core.GameServerUtils
                 
             } catch (ArgumentException e)
             {
-                Console.WriteLine("Unable to locate PID " + gameServer.Pid);
+                _logger.LogDebug("Unable to locate PID {pid}", _gameServer.Pid);
                 return false;
             }
 
@@ -80,18 +88,18 @@ namespace GhostPanel.Core.GameServerUtils
         {
             if (IsRunning())
             {
-                Console.WriteLine("Server is already running with PID " + gameServer.Pid);
+                _logger.LogDebug("Server {id} is already running with PID {pid}", _gameServer.Id, _gameServer.Pid);
                 return;
             }
 
             ProcessStartInfo start = new ProcessStartInfo();
-            start.Arguments = gameServer.CommandLine;
-            start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
+            start.Arguments = _gameServer.CommandLine;
+            start.FileName = Path.Combine(_gameServer.HomeDirectory, _gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;
             Process proc = Process.Start(start);
-            gameServer.Pid = proc.Id;
+            _gameServer.Pid = proc.Id;
 
-            _repository.Update(gameServer);
+            _repository.Update(_gameServer);
 
         }
 
@@ -106,16 +114,16 @@ namespace GhostPanel.Core.GameServerUtils
 
             try
             {
-                Process proc = Process.GetProcessById((int)gameServer.Pid);
+                Process proc = Process.GetProcessById((int)_gameServer.Pid);
                 proc.Kill();
-                gameServer.Pid = null;
-                _repository.Update(gameServer);
-                Console.WriteLine("Killed game server with pid " + gameServer.Pid);
+                _gameServer.Pid = null;
+                _repository.Update(_gameServer);
+                _logger.LogInformation("Killed game server with pid {pid}", _gameServer.Pid);
                 return;
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine("Unable to locate PID " + gameServer.Pid);
+                _logger.LogError("Unable to locate PID {pid}", _gameServer.Pid);
                 return;
             }
         }
@@ -127,19 +135,20 @@ namespace GhostPanel.Core.GameServerUtils
             {                
                 if (gameServerStatus.status != ServerStatusStates.Stopped)
                 {
-                    _logger.LogInformation("Settings status for game server {id} to stopped", gameServer.Id); ;
+                    _logger.LogInformation("Settings status for game server {id} to stopped", _gameServer.Id); ;
                     gameServerStatus.status = ServerStatusStates.Stopped;                    
                 }
+                _repository.Update(_gameServer);
                 return;
             }
 
-            Process proc = Process.GetProcessById((int)gameServer.Pid);
+            Process proc = Process.GetProcessById((int)_gameServer.Pid);
             if (proc.HasExited)
             {
-                gameServer.Pid = null;
+                _gameServer.Pid = null;
                 if (gameServerStatus.status != ServerStatusStates.Stopped)
                 {
-                    _logger.LogInformation("Existing PID found for game server {id} but proces has exited", gameServer.Id);
+                    _logger.LogInformation("Existing PID found for game server {id} but proces has exited", _gameServer.Id);
                     gameServerStatus.status = ServerStatusStates.Stopped;
                 }
                     
@@ -147,11 +156,12 @@ namespace GhostPanel.Core.GameServerUtils
             {
                 if (gameServerStatus.status != ServerStatusStates.Running)
                 {
-                    _logger.LogInformation("Setting game server {id} to running state", gameServer.Id);
+                    _logger.LogInformation("Setting game server {id} to running state", _gameServer.Id);
                     gameServerStatus.status = ServerStatusStates.Running;
                 }
                     
             }
+            _repository.Update(_gameServer);
         }
 
         // TODO - Remove me

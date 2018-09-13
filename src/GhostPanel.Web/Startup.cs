@@ -12,8 +12,10 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
-using GhostPanel.Management.Server;
 using GhostPanel.Web.Background;
+using GhostPanel.Core.Managment;
+using GhostPanel.Core.Providers;
+using GhostPanel.Core;
 
 namespace GhostPanel.Web
 {
@@ -42,8 +44,11 @@ namespace GhostPanel.Web
 
             builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>));
 
-            var fullConfig = Configuration.Get<GhostPanelConfig>();
+            GhostPanelConfig fullConfig = Configuration.Get<GhostPanelConfig>();
             IRepository repository = SetUpDatabase.SetUpRepository(fullConfig.DatabaseConnectionString);
+
+            builder.RegisterType<SteamCredentialProvider>().As<ISteamCredentialProvider>().SingleInstance();
+            builder.RegisterType<SteamCmd>().As<SteamCmd>().SingleInstance();
 
             builder.RegisterInstance(repository).SingleInstance();
             builder.RegisterType<ServerManagerContainer>().SingleInstance();

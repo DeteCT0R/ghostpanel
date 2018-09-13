@@ -51,6 +51,32 @@ namespace GhostPanel.Web.Controllers
             return result;
         }
 
+        [HttpGet("{id:int}/{command}")]
+        public GameServerManager Get(int id, string command)
+        {
+            _logger.LogInformation("Running GameServer action with ID {id} and action {action}", id, command);
+            var result = _serverManagerContainer.GetManagerList().Where(s => s.gameServer.Id == id).SingleOrDefault();
+            if (result != null)
+            {
+                if (command.ToLower() == "start")
+                {
+                    result.StartServer();
+                } else if (command.ToLower() == "stop")
+                {
+                    result.StopServer();
+                } else if (command.ToLower() == "restart")
+                {
+                    result.StopServer();
+                    result.StartServer();
+                } else
+                {
+                    _logger.LogError("Unknown command {command}", command);
+                }
+                
+            }
+            return result;
+        }
+
         // POST api/<controller>
         [HttpPost]
         public GameServer Post(GameServer gameServer)
@@ -76,3 +102,4 @@ namespace GhostPanel.Web.Controllers
         }
     }
 }
+

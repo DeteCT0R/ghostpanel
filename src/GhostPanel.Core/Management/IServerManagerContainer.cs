@@ -1,6 +1,6 @@
 ﻿using GhostPanel.Core.GameServerUtils;
 
-namespace GhostPanel.Management.Server
+namespace GhostPanel.Core.Managment
 {
     public interface IServerManagerContainer
     {
