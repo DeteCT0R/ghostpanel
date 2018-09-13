@@ -16,10 +16,10 @@ namespace GhostPanel.Core.GameServerUtils
         private readonly IGameFileManager _gameFileManager;
         private readonly IRepository _repository;
         public GameServerStatus gameServerStatus;
-        private readonly ILogger _logger;
+        private readonly ILoggerFactory _logger;
         private readonly SteamCmd _steamCmd;
 
-        public GameServerManager(IRepository repository, SteamCmd steamCmd, ILogger<GameServerManager> logger)
+        public GameServerManager(IRepository repository, SteamCmd steamCmd, ILoggerFactory logger)
         {
             _repository = repository;
             _logger = logger;
@@ -30,9 +30,9 @@ namespace GhostPanel.Core.GameServerUtils
 
         private void InitGameFileManager()
         {
-            if (_gameServer.Game.SteamAppId)
+            if (_gameServer.Game.SteamAppId != null)
             {
-                _gameFileManager = new SteamCmdGameFiles(_gameServer.HomeDirectory, _gameServer.Game.SteamAppId, _steamCmd, _logger);
+                _gameFileManager = new SteamCmdGameFiles(_steamCmd, _logger);
             }
         }
 
@@ -43,6 +43,7 @@ namespace GhostPanel.Core.GameServerUtils
         public void SetGameServer(GameServer gameServer)
         {
             _gameServer = gameServer;
+            InitGameFileManager();
         }
 
         public void DeleteGameServer()

@@ -16,6 +16,8 @@ using GhostPanel.Web.Background;
 using GhostPanel.Core.Managment;
 using GhostPanel.Core.Providers;
 using GhostPanel.Core;
+using GhostPanel.Core.GameServerUtils;
+using GhostPanel.Core.Management;
 
 namespace GhostPanel.Web
 {
@@ -49,6 +51,8 @@ namespace GhostPanel.Web
 
             builder.RegisterType<SteamCredentialProvider>().As<ISteamCredentialProvider>().SingleInstance();
             builder.RegisterType<SteamCmd>().As<SteamCmd>().SingleInstance();
+            builder.RegisterType<GameServerManager>().As<IGameServerManager>();
+            builder.RegisterType<GameServerManagerFactory>().As<GameServerManagerFactory>().SingleInstance();
 
             builder.RegisterInstance(repository).SingleInstance();
             builder.RegisterType<ServerManagerContainer>().SingleInstance();

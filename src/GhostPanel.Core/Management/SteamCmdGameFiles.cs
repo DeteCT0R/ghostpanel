@@ -11,15 +11,11 @@ namespace GhostPanel.Core.Managment
     {
         private readonly string _steamCmdPath = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
         private readonly string steamCmdUrl = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
-        public readonly string _installDir;
         private SteamCmd _steamCmd;
-        private readonly int _steamAppId;
         private readonly ILogger _logger;
 
-        public SteamCmdGameFiles(string installDir, int steamAppId, SteamCmd steamCmd, ILogger<SteamCmdGameFiles> logger)
+        public SteamCmdGameFiles(SteamCmd steamCmd, ILogger<SteamCmdGameFiles> logger)
         {
-            _installDir = installDir;
-            _steamAppId = steamAppId;
             _logger = logger;
             _steamCmd = steamCmd;
         }
