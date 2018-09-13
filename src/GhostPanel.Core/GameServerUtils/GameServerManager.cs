@@ -13,17 +13,27 @@ namespace GhostPanel.Core.GameServerUtils
     {
 
         private GameServer _gameServer;
-        private readonly IGameFileManager _steamCmd;
+        private readonly IGameFileManager _gameFileManager;
         private readonly IRepository _repository;
         public GameServerStatus gameServerStatus;
         private readonly ILogger _logger;
+        private readonly SteamCmd _steamCmd;
 
-        public GameServerManager(IGameFileManager steamCmd, IRepository repository, ILogger logger)
+        public GameServerManager(IRepository repository, SteamCmd steamCmd, ILogger<GameServerManager> logger)
         {
-            _steamCmd = steamCmd;
             _repository = repository;
             _logger = logger;
+            _steamCmd = steamCmd;
             gameServerStatus = new GameServerStatus() { status = ServerStatusStates.Unknown };
+        }
+
+
+        private void InitGameFileManager()
+        {
+            if (_gameServer.Game.SteamAppId)
+            {
+                _gameFileManager = new SteamCmdGameFiles(_gameServer.HomeDirectory, _gameServer.Game.SteamAppId, _steamCmd, _logger);
+            }
         }
 
         /// <summary>
@@ -49,7 +59,7 @@ namespace GhostPanel.Core.GameServerUtils
         public void InstallGameServer()
         {
             // TODO - Check if there's an active install 
-            Process proc = _steamCmd.downloadGame(_gameServer.HomeDirectory, _gameServer.Game.SteamAppId);
+            Process proc = _gameFileManager.downloadGame(_gameServer.HomeDirectory, _gameServer.Game.SteamAppId);
             gameServerStatus.ServerProcess = proc;
             gameServerStatus.status = ServerStatusStates.Installing;
         }

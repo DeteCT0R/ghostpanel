@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GhostPanel.Core.GameServerUtils
 {
-    interface IGameServerManager
+    public interface IGameServerManager
     {
         void InstallGameServer();
         void DeleteGameServer();
