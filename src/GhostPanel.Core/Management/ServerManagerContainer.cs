@@ -1,13 +1,9 @@
-﻿using GhostPanel.Core;
-using GhostPanel.Core.Data;
+﻿using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.GameServerUtils;
 using GhostPanel.Core.Management;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GhostPanel.Core.Managment
 {
@@ -15,10 +11,10 @@ namespace GhostPanel.Core.Managment
     {
         private List<GameServerManager> _serverManagers = new List<GameServerManager>();
         private readonly GameServerManagerFactory _serverManagerFactory;
-        private readonly ILogger _logger;
+        private readonly ILoggerFactory _logger;
         private readonly IRepository _repository;
 
-        public ServerManagerContainer(GameServerManagerFactory serverManagerFactory, IRepository repository, ILogger<ServerManagerContainer> logger)
+        public ServerManagerContainer(GameServerManagerFactory serverManagerFactory, IRepository repository, ILoggerFactory logger)
         {
             _serverManagerFactory = serverManagerFactory;
             _logger = logger;

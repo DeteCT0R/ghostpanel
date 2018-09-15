@@ -4,7 +4,7 @@ using GhostPanel.Core;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.GameServerUtils;
-using GhostPanel.Management.Server;
+using GhostPanel.Core.Managment;
 using GhostPanel.Web.Background;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -58,19 +58,22 @@ namespace GhostPanel.Web.Controllers
             var result = _serverManagerContainer.GetManagerList().Where(s => s.gameServer.Id == id).SingleOrDefault();
             if (result != null)
             {
-                if (command.ToLower() == "start")
+
+                switch (command.ToLower())
                 {
-                    result.StartServer();
-                } else if (command.ToLower() == "stop")
-                {
-                    result.StopServer();
-                } else if (command.ToLower() == "restart")
-                {
-                    result.StopServer();
-                    result.StartServer();
-                } else
-                {
-                    _logger.LogError("Unknown command {command}", command);
+                    case "start":
+                        result.StartServer();
+                        break;
+                    case "stop":
+                        result.StopServer();
+                        break;
+                    case "restart":
+                        result.StopServer();
+                        result.StartServer();
+                        break;
+                    case "reinstall":
+                        result.InstallGameServer();
+                        break;
                 }
                 
             }
@@ -80,12 +83,13 @@ namespace GhostPanel.Web.Controllers
         // POST api/<controller>
         [HttpPost]
         public GameServer Post(GameServer gameServer)
-        {            
+        {           
+
             _repository.Create(new List<GameServer>() { gameServer });
-            GameServerManager manager = new GameServerManager(gameServer, new SteamCmd("anonymous", ""), _repository, _logger);
-            _serverManagerContainer.AddServerManager(manager);
-            CreateServerTask task = new CreateServerTask(manager);
-            _backgroundService.AddTask(task);
+            //GameServerManager manager = new GameServerManager(gameServer, new SteamCmd("anonymous", ""), _repository, _logger);
+            //_serverManagerContainer.AddServerManager(manager);
+            //CreateServerTask task = new CreateServerTask(manager);
+            //_backgroundService.AddTask(task);
             return gameServer;
         }
 

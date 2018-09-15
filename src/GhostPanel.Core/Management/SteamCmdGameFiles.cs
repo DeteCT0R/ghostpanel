@@ -11,18 +11,31 @@ namespace GhostPanel.Core.Managment
     {
         private readonly string _steamCmdPath = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
         private readonly string steamCmdUrl = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
-        private SteamCmd _steamCmd;
+        private SteamCredentialWrapper _steamCmd;
         private readonly ILogger _logger;
+        private readonly string _installDir;
+        private readonly int? _steamAppId;
 
-        public SteamCmdGameFiles(SteamCmd steamCmd, ILogger<SteamCmdGameFiles> logger)
+
+        public SteamCmdGameFiles(SteamCredentialWrapper steamCmd, ILoggerFactory logger, int? steamAppId, string installDir)
         {
-            _logger = logger;
+            _logger = logger.CreateLogger<SteamCmdGameFiles>();
             _steamCmd = steamCmd;
+            _steamAppId = steamAppId;
+            _installDir = installDir;
         }
 
         public void DeleteGameServerFiles(string dir)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Deleting game server files in {path}", _installDir);
+            try
+            {
+                Directory.Delete(_installDir, true);
+            }
+            catch (IOException)
+            {
+                _logger.LogError("Failed to delete game server files in {path}", _installDir);
+            }
         }
 
         /// <summary>
@@ -30,7 +43,7 @@ namespace GhostPanel.Core.Managment
         /// Return the SteamCMD process for tracking
         /// </summary>
         /// <returns>Process</returns>
-        public Process DownloadGameServerFiles()
+        public void DownloadGameServerFiles()
         {
 
             if (!DetectSteamCmd())
@@ -42,12 +55,12 @@ namespace GhostPanel.Core.Managment
             start.Arguments = String.Format("+login {0} +force_install_dir \"{1}\" +app_update {2} +quit", _steamCmd.GetCredentialString(), _installDir, _steamAppId);
             start.FileName = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
             Process proc = Process.Start(start);
-            return proc;
+            //return proc;
         }
 
-        public Process UpdateGameServerFiles()
+        public void UpdateGameServerFiles()
         {
-            return DownloadGameServerFiles();
+            DownloadGameServerFiles();
         }
 
         /// <summary>

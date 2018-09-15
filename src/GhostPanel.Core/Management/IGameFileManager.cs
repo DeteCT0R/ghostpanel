@@ -7,9 +7,9 @@ namespace GhostPanel.Core.Managment
 {
     public interface IGameFileManager
     {
-        Process DownloadGameServerFiles();
+        void DownloadGameServerFiles();
         void DeleteGameServerFiles(string dir);
-        Process UpdateGameServerFiles();
+        void UpdateGameServerFiles();
 
     }
 }

@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GhostPanel.Db\GhostPanel.Db.csproj" />
-    <ProjectReference Include="..\GhostPanel.Management\GhostPanel.Management.csproj" />
+    
   </ItemGroup>
 
   <ItemGroup>

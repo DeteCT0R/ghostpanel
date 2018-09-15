@@ -1,4 +1,6 @@
-﻿namespace GhostPanel.Core.Providers
+﻿using GhostPanel.Core.Config;
+
+namespace GhostPanel.Core.Providers
 {
     public class SteamCredentialProvider : ISteamCredentialProvider
     {
@@ -11,12 +13,12 @@
 
         public string GetPassword()
         {
-            return _config.SteamPassword;
+            return _config.SteamSettings.Password;
         }
 
         public string GetUsername()
         {
-            return _config.SteamUserName;
+            return _config.SteamSettings.Username;
         }
     }
 }

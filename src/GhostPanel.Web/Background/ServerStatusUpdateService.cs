@@ -1,9 +1,7 @@
 ﻿using GhostPanel.Core.GameServerUtils;
-using GhostPanel.Management.Server;
+using GhostPanel.Core.Managment;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GhostPanel.Web.Background

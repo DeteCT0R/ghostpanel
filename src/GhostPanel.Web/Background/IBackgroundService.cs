@@ -1,4 +1,4 @@
-﻿using GhostPanel.Management.Server;
+﻿using GhostPanel.Core.Managment;
 using System.Threading.Tasks;
 
 namespace GhostPanel.Web.Background

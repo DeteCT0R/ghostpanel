@@ -25,6 +25,8 @@ namespace GhostPanel.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ArchiveName");
+
                     b.Property<string>("DefaultPath");
 
                     b.Property<int>("DefaultSlots");
@@ -43,7 +45,7 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<int>("QueryPort");
 
-                    b.Property<int>("SteamAppId");
+                    b.Property<int?>("SteamAppId");
 
                     b.Property<string>("SteamUrl");
 
@@ -75,8 +77,6 @@ namespace GhostPanel.Db.Migrations
                     b.Property<string>("ServerName");
 
                     b.Property<string>("StartPath");
-
-                    b.Property<int>("Status");
 
                     b.Property<string>("Version");
 

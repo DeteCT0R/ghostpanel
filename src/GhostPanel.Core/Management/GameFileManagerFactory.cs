@@ -17,7 +17,7 @@ namespace GhostPanel.Core.Management
 
         public IGameFileManager GetGameFileManager(string installDir, int appId)
         {
-            return new SteamCmdGameFiles()
+            throw new NotImplementedException();
         }
     }
 }

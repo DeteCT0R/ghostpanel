@@ -8,7 +8,8 @@ namespace GhostPanel.Core.Data.Model
     public class Game : DataEntity
     {
         public string Name { get; set; }
-        public int SteamAppId { get; set; }
+        public int? SteamAppId { get; set; }
+        public string ArchiveName { get; set; }
         public string SteamUrl { get; set; }
         public string ExeName { get; set; }
         public int MaxSlots { get; set; }

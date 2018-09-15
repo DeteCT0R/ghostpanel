@@ -14,10 +14,11 @@ using Microsoft.Extensions.Hosting;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using GhostPanel.Web.Background;
 using GhostPanel.Core.Managment;
-using GhostPanel.Core.Providers;
 using GhostPanel.Core;
 using GhostPanel.Core.GameServerUtils;
 using GhostPanel.Core.Management;
+using GhostPanel.Core.Providers;
+using GhostPanel.Core.Config;
 
 namespace GhostPanel.Web
 {
@@ -47,10 +48,11 @@ namespace GhostPanel.Web
             builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>));
 
             GhostPanelConfig fullConfig = Configuration.Get<GhostPanelConfig>();
+            builder.RegisterInstance(fullConfig).AsSelf().SingleInstance();
             IRepository repository = SetUpDatabase.SetUpRepository(fullConfig.DatabaseConnectionString);
 
             builder.RegisterType<SteamCredentialProvider>().As<ISteamCredentialProvider>().SingleInstance();
-            builder.RegisterType<SteamCmd>().As<SteamCmd>().SingleInstance();
+            builder.RegisterType<SteamCredentialWrapper>().As<SteamCredentialWrapper>().SingleInstance();
             builder.RegisterType<GameServerManager>().As<IGameServerManager>();
             builder.RegisterType<GameServerManagerFactory>().As<GameServerManagerFactory>().SingleInstance();
 
