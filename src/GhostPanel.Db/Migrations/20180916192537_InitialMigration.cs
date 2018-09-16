@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GhostPanel.Db.Migrations
 {
-    public partial class InitialMIgration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,8 @@ namespace GhostPanel.Db.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    SteamAppId = table.Column<int>(nullable: false),
+                    SteamAppId = table.Column<int>(nullable: true),
+                    ArchiveName = table.Column<string>(nullable: true),
                     SteamUrl = table.Column<string>(nullable: true),
                     ExeName = table.Column<string>(nullable: true),
                     MaxSlots = table.Column<int>(nullable: false),
@@ -22,7 +23,8 @@ namespace GhostPanel.Db.Migrations
                     DefaultSlots = table.Column<int>(nullable: false),
                     DefaultPath = table.Column<string>(nullable: true),
                     GamePort = table.Column<int>(nullable: false),
-                    QueryPort = table.Column<int>(nullable: false)
+                    QueryPort = table.Column<int>(nullable: false),
+                    PortIncrement = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,9 +44,10 @@ namespace GhostPanel.Db.Migrations
                     IsEnabled = table.Column<bool>(nullable: false),
                     Version = table.Column<string>(nullable: true),
                     StartPath = table.Column<string>(nullable: true),
-                    HomeDirectory = table.Column<string>(nullable: true),
+                    RelativePath = table.Column<string>(nullable: true),
+                    AbsolutePath = table.Column<string>(nullable: true),
                     CommandLine = table.Column<string>(nullable: true),
-                    LastPid = table.Column<int>(nullable: true)
+                    Pid = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

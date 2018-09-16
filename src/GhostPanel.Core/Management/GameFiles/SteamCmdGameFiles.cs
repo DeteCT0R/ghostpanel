@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using GhostPanel.Core.Management.GameFiles;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
 
-namespace GhostPanel.Core.Managment
+namespace GhostPanel.Core.Managment.GameFiles
 {
-    public class SteamCmdGameFiles : IGameFileManager
+    public class SteamCmdGameFiles : GameFilesBase, IGameFileManager
     {
         private readonly string _steamCmdPath = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
         private readonly string steamCmdUrl = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
@@ -17,7 +18,10 @@ namespace GhostPanel.Core.Managment
         private readonly int? _steamAppId;
 
 
-        public SteamCmdGameFiles(SteamCredentialWrapper steamCmd, ILoggerFactory logger, int? steamAppId, string installDir)
+        public SteamCmdGameFiles(SteamCredentialWrapper steamCmd, 
+            ILoggerFactory logger, 
+            int? steamAppId, 
+            string installDir) : base(logger, installDir)
         {
             _logger = logger.CreateLogger<SteamCmdGameFiles>();
             _steamCmd = steamCmd;
@@ -25,18 +29,7 @@ namespace GhostPanel.Core.Managment
             _installDir = installDir;
         }
 
-        public void DeleteGameServerFiles(string dir)
-        {
-            _logger.LogInformation("Deleting game server files in {path}", _installDir);
-            try
-            {
-                Directory.Delete(_installDir, true);
-            }
-            catch (IOException)
-            {
-                _logger.LogError("Failed to delete game server files in {path}", _installDir);
-            }
-        }
+        
 
         /// <summary>
         /// Uses SteamCMD to download the game server files for the provided Steam App ID
@@ -96,8 +89,9 @@ namespace GhostPanel.Core.Managment
             ZipFile.ExtractToDirectory(savePath, extractPath);
         }
 
-        
-
-
+        public int GetInstallProgress()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

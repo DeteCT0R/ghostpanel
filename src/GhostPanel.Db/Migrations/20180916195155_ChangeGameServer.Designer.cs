@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GhostPanel.Db.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20180909224538_InitialMIgration")]
-    partial class InitialMIgration
+    [Migration("20180916195155_ChangeGameServer")]
+    partial class ChangeGameServer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,8 @@ namespace GhostPanel.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ArchiveName");
+
                     b.Property<string>("DefaultPath");
 
                     b.Property<int>("DefaultSlots");
@@ -41,9 +43,11 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("PortIncrement");
+
                     b.Property<int>("QueryPort");
 
-                    b.Property<int>("SteamAppId");
+                    b.Property<int?>("SteamAppId");
 
                     b.Property<string>("SteamUrl");
 
@@ -68,13 +72,13 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<bool>("IsEnabled");
 
-                    b.Property<int?>("LastPid");
+                    b.Property<int?>("Pid");
 
                     b.Property<int>("Port");
 
                     b.Property<string>("ServerName");
 
-                    b.Property<string>("StartPath");
+                    b.Property<string>("StartDirectory");
 
                     b.Property<string>("Version");
 

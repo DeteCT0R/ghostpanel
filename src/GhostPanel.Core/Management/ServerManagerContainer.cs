@@ -2,6 +2,7 @@
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.GameServerUtils;
 using GhostPanel.Core.Management;
+using GhostPanel.Core.Management.GameFiles;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
@@ -26,9 +27,7 @@ namespace GhostPanel.Core.Managment
         {
            foreach (var server in _repository.List<GameServer>())
             {
-                GameServerManager manager = _serverManagerFactory.GetGameServerManager();
-                manager.SetGameServer(server);
-                _serverManagers.Add(manager);
+                AddAndCreateServerManager(server);
             }
         }
 
@@ -42,9 +41,17 @@ namespace GhostPanel.Core.Managment
             _serverManagers.Add(manager);
         }
 
+        public IGameServerManager AddAndCreateServerManager(GameServer server)
+        {
+            GameServerManager manager = _serverManagerFactory.GetGameServerManager();
+            manager.SetGameServer(server);
+            _serverManagers.Add(manager);
+            return manager;
+        }
+
         public void RemoveServerManager(GameServerManager manager)
         {
-            
+            _serverManagers.Remove(manager);
         }
     }
 }

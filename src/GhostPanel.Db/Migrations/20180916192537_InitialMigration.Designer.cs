@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GhostPanel.Db.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20180909232815_AddServerStatusToGameServer")]
-    partial class AddServerStatusToGameServer
+    [Migration("20180916192537_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,8 @@ namespace GhostPanel.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ArchiveName");
+
                     b.Property<string>("DefaultPath");
 
                     b.Property<int>("DefaultSlots");
@@ -41,9 +43,11 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("PortIncrement");
+
                     b.Property<int>("QueryPort");
 
-                    b.Property<int>("SteamAppId");
+                    b.Property<int?>("SteamAppId");
 
                     b.Property<string>("SteamUrl");
 
@@ -58,11 +62,11 @@ namespace GhostPanel.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AbsolutePath");
+
                     b.Property<string>("CommandLine");
 
                     b.Property<int>("GameId");
-
-                    b.Property<string>("HomeDirectory");
 
                     b.Property<string>("IpAddress");
 
@@ -72,11 +76,11 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<int>("Port");
 
+                    b.Property<string>("RelativePath");
+
                     b.Property<string>("ServerName");
 
                     b.Property<string>("StartPath");
-
-                    b.Property<int>("Status");
 
                     b.Property<string>("Version");
 

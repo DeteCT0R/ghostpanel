@@ -1,6 +1,6 @@
-﻿using GhostPanel.Core.Managment;
+﻿using GhostPanel.Core.Managment.GameFiles;
 
-namespace GhostPanel.Core.Management
+namespace GhostPanel.Core.Management.GameFiles
 {
     public interface IGameFileManagerFactory
     {

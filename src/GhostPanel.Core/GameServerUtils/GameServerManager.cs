@@ -1,12 +1,16 @@
 ﻿using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Management;
+using GhostPanel.Core.Management.GameFiles;
 using GhostPanel.Core.Managment;
+using GhostPanel.Core.Managment.GameFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using GhostPanel.Core.Config;
 
 namespace GhostPanel.Core.GameServerUtils
 {
@@ -20,14 +24,16 @@ namespace GhostPanel.Core.GameServerUtils
         private readonly ILogger _logger;
         private readonly ILoggerFactory _logfactory;
         private readonly SteamCredentialWrapper _steamCmd;
+        private readonly GhostPanelConfig _config;
 
-        public GameServerManager(IRepository repository, SteamCredentialWrapper steamCmd, ILoggerFactory logger)
+        public GameServerManager(IRepository repository, SteamCredentialWrapper steamCmd, ILoggerFactory logger, GhostPanelConfig config)
         {
             _repository = repository;
             _logger = logger.CreateLogger<GameServerManager>();
             _logfactory = logger;
             _steamCmd = steamCmd;
             gameServerStatus = new GameServerStatus() { status = ServerStatusStates.Unknown };
+            _config = config;
         }
 
 
@@ -38,7 +44,7 @@ namespace GhostPanel.Core.GameServerUtils
                 _gameFileManager = new SteamCmdGameFiles(_steamCmd, _logfactory, gameServer.Game.SteamAppId, gameServer.HomeDirectory);
             } else
             {
-                _gameFileManager = new FileServerGameFiles(gameServer.HomeDirectory, gameServer.Game.ArchiveName);
+                _gameFileManager = new FileServerGameFiles(gameServer.HomeDirectory, gameServer.Game.ArchiveName, _logfactory);
             }
         }
 
@@ -48,6 +54,10 @@ namespace GhostPanel.Core.GameServerUtils
         /// <param name="gameServer"></param>
         public void SetGameServer(GameServer gameServer)
         {
+            if (gameServer.Id == 0)
+            {
+                CreateGameServer(gameServer);
+            }
             this.gameServer = gameServer;
             InitGameFileManager();
         }
@@ -62,11 +72,19 @@ namespace GhostPanel.Core.GameServerUtils
             {
                 _logger.LogError("Failed to delete game server {id}", gameServer.Id);
             }
+
+            _repository.Remove(gameServer);
         }
 
         public void InstallGameServer()
         {
-            // TODO - Check if there's an active install             
+            // TODO - Check if there's an active install   
+            if (gameServer == null)
+            {
+                _logger.LogError("Failed to install game server.  This manager has no game server set");
+                gameServerStatus.status = ServerStatusStates.Error;
+                return;
+            }
             gameServerStatus.status = ServerStatusStates.Installing;
             _gameFileManager.DownloadGameServerFiles();
         }
@@ -114,10 +132,14 @@ namespace GhostPanel.Core.GameServerUtils
             start.Arguments = gameServer.CommandLine;
             start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;
+            start.RedirectStandardOutput = true;
+            start.UseShellExecute = false;
             Process proc = Process.Start(start);
             gameServer.Pid = proc.Id;
 
             _repository.Update(gameServer);
+
+            gameServerStatus.ServerProcess = proc;
 
         }
 
@@ -136,6 +158,7 @@ namespace GhostPanel.Core.GameServerUtils
                 proc.Kill();
                 gameServer.Pid = null;
                 _repository.Update(gameServer);
+                gameServerStatus.ServerProcess = null;
                 _logger.LogInformation("Killed game server with pid {pid}", gameServer.Pid);
                 return;
             }
@@ -197,6 +220,41 @@ namespace GhostPanel.Core.GameServerUtils
             {
                 return "Install is running";
             }
+
+
+        }
+
+        public int? GetGameServerId()
+        {
+
+            if (gameServer == null)
+            {
+                return null;
+            }
+            else
+            {
+                return gameServer.Id;
+            }
+
+        }
+
+        public string ToString()
+        {
+            return "Server Manager For Game Server " + gameServer.Id.ToString();
+        }
+
+        public void CreateGameServer(GameServer gameServer)
+        {
+            if (gameServer != null && gameServer.Id != 0)
+            {
+                _logger.LogError("Unable to create game server with this manager, game server {id} already assigned", gameServer.Id);
+                return;
+            }
+
+            _repository.Create(gameServer);
+            gameServer.HomeDirectory = Path.Combine(_config.BaseDirectory, gameServer.Id.ToString());
+            gameServer.StartDirectory = Path.Combine(_config.BaseDirectory, gameServer.Id.ToString());
+
 
 
         }

@@ -11,7 +11,7 @@ namespace GhostPanel.Core.Data.Model
         public string ServerName { get; set; }
         public bool IsEnabled { get; set; }
         public string Version { get; set; }
-        public string StartPath { get; set; }
+        public string StartDirectory { get; set; }
         public string HomeDirectory { get; set; }
         public string CommandLine { get; set; }
         public int? Pid { get; set; }

@@ -72,7 +72,7 @@ namespace GhostPanel.Web
                     Port = 29365,
                     ServerName = "Test Server",
                     IsEnabled = true,
-                    HomeDirectory = @"C:\dev\game servers",
+                    HomeDirectory = @"C:\dev\Server1",
                     CommandLine = "-game csgo -console -usercon"
                 }
             };

@@ -1,26 +1,23 @@
-﻿using GhostPanel.Core.Managment;
+﻿using GhostPanel.Core.Managment.GameFiles;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 
-namespace GhostPanel.Core.Management
+namespace GhostPanel.Core.Management.GameFiles
 {
-    class FileServerGameFiles : IGameFileManager
-    {
+    class FileServerGameFiles : GameFilesBase, IGameFileManager
+    {   
         private readonly string _installDir;
         private readonly string _archiveName;
+        private readonly ILogger _logger;
         private readonly string _filePath = @"W:\Server Files";
 
-        public FileServerGameFiles(string installDir, string archiveName)
+        public FileServerGameFiles(string installDir, string archiveName, ILoggerFactory logger) : base(logger, installDir)
         {
             _installDir = installDir;
             _archiveName = archiveName;
-        }
-
-        public void DeleteGameServerFiles(string dir)
-        {
-            throw new NotImplementedException();
+            _logger = logger.CreateLogger<FileServerGameFiles>();
         }
 
         public void DownloadGameServerFiles()
@@ -32,6 +29,11 @@ namespace GhostPanel.Core.Management
             {
                 ZipFile.ExtractToDirectory(fullDestPath, _installDir);
             }
+        }
+
+        public int GetInstallProgress()
+        {
+            throw new NotImplementedException();
         }
 
         public void UpdateGameServerFiles()

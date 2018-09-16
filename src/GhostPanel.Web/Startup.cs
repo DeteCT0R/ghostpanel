@@ -19,6 +19,7 @@ using GhostPanel.Core.GameServerUtils;
 using GhostPanel.Core.Management;
 using GhostPanel.Core.Providers;
 using GhostPanel.Core.Config;
+using GhostPanel.Core.Management.GameFiles;
 
 namespace GhostPanel.Web
 {

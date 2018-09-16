@@ -1,5 +1,6 @@
 ﻿using GhostPanel.Core.GameServerUtils;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.Core.Managment
 {
@@ -7,17 +8,19 @@ namespace GhostPanel.Core.Managment
     {
         public bool IsDone;
         public int Pid;
-        private GameServerManager _gameServerManager;
+        private IGameServerManager _gameServerManager;
+        private readonly ILogger _logger;
 
-        public CreateServerTask(GameServerManager gameServerManager)
+        public CreateServerTask(IGameServerManager gameServerManager, ILoggerFactory logger)
         {
             IsDone = false;
+            _logger = logger.CreateLogger<CreateServerTask>();
             _gameServerManager = gameServerManager;
         }
 
         public void Invoke()
         {
-            Console.WriteLine("Running new task");
+            _logger.LogInformation("Running install task for game server ID {id}", _gameServerManager.GetGameServerId());
             _gameServerManager.InstallGameServer();
             IsDone = true;
         }

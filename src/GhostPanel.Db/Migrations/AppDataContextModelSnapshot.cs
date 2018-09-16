@@ -76,7 +76,7 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<string>("ServerName");
 
-                    b.Property<string>("StartPath");
+                    b.Property<string>("StartDirectory");
 
                     b.Property<string>("Version");
 
