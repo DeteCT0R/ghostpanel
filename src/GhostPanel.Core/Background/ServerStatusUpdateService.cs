@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace GhostPanel.Web.Background
+namespace GhostPanel.Core.Background
 {
     public class ServerStatusUpdateService : IBackgroundService
     {

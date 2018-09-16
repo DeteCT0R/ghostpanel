@@ -7,14 +7,12 @@ namespace GhostPanel.Core.GameServerUtils
 {
     public interface IGameServerManager
     {
-        void InstallGameServer();
-        void DeleteGameServer();
-        void ReinstallGameServer();
+        void InstallGameServer(GameServer gameServer);
+        void DeleteGameServer(GameServer gameServer);
+        void ReinstallGameServer(GameServer gameServer);
         int? GetGameServerId();
-        bool IsRunning();
         void StartServer();
         void StopServer();
-        void SetGameServer(GameServer gameServer);
-        void CreateGameServer(GameServer gameServer);
+
     }
 }

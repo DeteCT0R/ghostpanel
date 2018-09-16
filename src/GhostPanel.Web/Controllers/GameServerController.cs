@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GhostPanel.Core;
+using GhostPanel.Core.Background;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.GameServerUtils;
 using GhostPanel.Core.Managment;
-using GhostPanel.Web.Background;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,19 +18,13 @@ namespace GhostPanel.Web.Controllers
     public class GameServerController : Controller
     {
         private readonly IRepository _repository;
-        private readonly IBackgroundService _backgroundService;
-        private readonly ServerManagerContainer _serverManagerContainer;
         private ILogger _logger;
         private readonly ILoggerFactory _logFactory;
+        private readonly IGameServerManager _serverManager;
 
-        public GameServerController(IRepository repository, 
-            IBackgroundService backgroundService, 
-            ServerManagerContainer serverManagerContainer,
-            ILoggerFactory logger)
+        public GameServerController(IRepository repository, ServerManagerContainer serverManagerContainer, ILoggerFactory logger, IGameServerManager serverManager)
         {
             _repository = repository;
-            _backgroundService = backgroundService;
-            _serverManagerContainer = serverManagerContainer;
             _logger = logger.CreateLogger<GameServerController>();
             _logFactory = logger;
         }
@@ -87,12 +81,7 @@ namespace GhostPanel.Web.Controllers
         public RequestResponse Post(GameServer gameServer)
         {
 
-            //GameServer gameServerEntity = _repository.Create(gameServer);
             
-            var manager = _serverManagerContainer.AddAndCreateServerManager(gameServer);
-            manager.SetGameServer(gameServer);
-            CreateServerTask task = new CreateServerTask(manager, _logFactory);
-            _backgroundService.AddTask(task);
             return new RequestResponse()
             {
                 message = "Game server now installing",

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 // BotMain
-namespace GhostPanel.Web.Background
+namespace GhostPanel.Core.Background
 {
     public class BackgroundManager
     {
