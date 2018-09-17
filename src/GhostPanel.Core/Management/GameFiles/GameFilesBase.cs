@@ -25,9 +25,13 @@ namespace GhostPanel.Core.Management.GameFiles
             }
             try
             {
-                Directory.Delete(gameServer.HomeDirectory, true);
+                if (Directory.Exists(gameServer.HomeDirectory))
+                {
+                    Directory.Delete(gameServer.HomeDirectory, true);
+                }
+                
             }
-            catch (IOException)
+            catch (IOException ex)
             {
                 _logger.LogError("Failed to delete game server files in {path}", gameServer.HomeDirectory);
                 throw;

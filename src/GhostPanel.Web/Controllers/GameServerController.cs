@@ -71,7 +71,7 @@ namespace GhostPanel.Web.Controllers
                         _serverManager.RestartServer(gameServer);
                         break;
                     case "reinstall":
-                        _serverManager.InstallGameServer(gameServer);
+                        _serverManager.ReinstallGameServer(gameServer);
                         break;
                 }
                 
@@ -84,11 +84,7 @@ namespace GhostPanel.Web.Controllers
         [HttpPost]
         public RequestResponse Post(GameServer gameServer)
         {
-            gameServer.Status = ServerStatusStates.Installing;
-            _repository.Create(gameServer);
-            gameServer.HomeDirectory = Path.Combine(_defaultDirs.GetBaseInstallDirectory(), gameServer.Id.ToString());
-            _repository.Update(gameServer);
-            _serverManager.InstallGameServer(gameServer);
+            _serverManager.CreateGameServer(gameServer);
             
             return new RequestResponse()
             {
@@ -111,7 +107,7 @@ namespace GhostPanel.Web.Controllers
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(id));
             if (gameServer != null)
             {
-                _serverManager.DeleteGameServer(gameServer);
+                _serverManager.RemoveGameServer(gameServer);
             }
             
         }
