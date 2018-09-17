@@ -39,6 +39,7 @@ namespace GhostPanel.Core.GameServerUtils
 
         private void InitGameFileManager()
         {
+            /*
             if (gameServer.Game.SteamAppId != null)
             {
                 _gameFileManager = new SteamCmdGameFiles(_steamCmd, _logfactory, gameServer.Game.SteamAppId, gameServer.HomeDirectory);
@@ -46,6 +47,7 @@ namespace GhostPanel.Core.GameServerUtils
             {
                 _gameFileManager = new FileServerGameFiles(gameServer.HomeDirectory, gameServer.Game.ArchiveName, _logfactory);
             }
+            */
         }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace GhostPanel.Core.GameServerUtils
                 return;
             }
             gameServerStatus.status = ServerStatusStates.Installing;
-            _gameFileManager.DownloadGameServerFiles();
+            //_gameFileManager.DownloadGameServerFiles();
         }
 
         public bool IsRunning()
@@ -238,10 +240,7 @@ namespace GhostPanel.Core.GameServerUtils
 
         }
 
-        public string ToString()
-        {
-            return "Server Manager For Game Server " + gameServer.Id.ToString();
-        }
+        public string ToString => "Server Manager For Game Server " + gameServer.Id.ToString();
 
         public void CreateGameServer(GameServer gameServer)
         {
@@ -257,6 +256,21 @@ namespace GhostPanel.Core.GameServerUtils
 
 
 
+        }
+
+        public void InstallGameServer(GameServer gameServer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteGameServer(GameServer gameServer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReinstallGameServer(GameServer gameServer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

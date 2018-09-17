@@ -6,7 +6,7 @@ namespace GhostPanel.Core.Managment.GameFiles
     {
         void DownloadGameServerFiles(GameServer gameServer);
         void DeleteGameServerFiles(GameServer gameServer);
-        void UpdateGameServerFiles();
+        void UpdateGameServerFiles(GameServer gameServer);
 
     }
 }
