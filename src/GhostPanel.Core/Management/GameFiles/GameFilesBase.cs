@@ -16,6 +16,7 @@ namespace GhostPanel.Core.Management.GameFiles
         public void DeleteGameServerFiles(GameServer gameServer)
         {
             _logger.LogInformation("Deleting game server files in {path}", gameServer.HomeDirectory);
+
             // TODO - Add better checking here
             if (gameServer.HomeDirectory == "/")
             {
@@ -29,6 +30,7 @@ namespace GhostPanel.Core.Management.GameFiles
             catch (IOException)
             {
                 _logger.LogError("Failed to delete game server files in {path}", gameServer.HomeDirectory);
+                throw;
             }
         }
 

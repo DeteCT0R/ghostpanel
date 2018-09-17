@@ -10,9 +10,9 @@ namespace GhostPanel.Core.GameServerUtils
         void InstallGameServer(GameServer gameServer);
         void DeleteGameServer(GameServer gameServer);
         void ReinstallGameServer(GameServer gameServer);
-        int? GetGameServerId();
-        void StartServer();
-        void StopServer();
+        void StartServer(GameServer gameServer);
+        void StopServer(GameServer gameServer);
+        void RestartServer(GameServer gameServer);
 
     }
 }

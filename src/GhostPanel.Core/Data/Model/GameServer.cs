@@ -7,7 +7,8 @@ namespace GhostPanel.Core.Data.Model
     {
         public int GameId { get; set; }
         public string IpAddress { get; set; }
-        public int Port { get; set; }
+        public int GamePort { get; set; }
+        public int QueryPort { get; set; }
         public string ServerName { get; set; }
         public bool IsEnabled { get; set; }
         public string Version { get; set; }

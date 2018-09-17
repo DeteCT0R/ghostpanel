@@ -53,31 +53,30 @@ namespace GhostPanel.Web.Controllers
         [HttpGet("{id:int}/{command}")]
         public GameServerManager Get(int id, string command)
         {
-            /*
+
             _logger.LogInformation("Running GameServer action with ID {id} and action {action}", id, command);
-            var result = _serverManagerContainer.GetManagerList().Where(s => s.gameServer.Id == id).SingleOrDefault();
-            if (result != null)
+            var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(id));
+            if (gameServer != null)
             {
 
                 switch (command.ToLower())
                 {
                     case "start":
-                        result.StartServer();
+                        _serverManager.StartServer(gameServer);
                         break;
                     case "stop":
-                        result.StopServer();
+                        _serverManager.StopServer(gameServer);
                         break;
                     case "restart":
-                        result.StopServer();
-                        result.StartServer();
+                        _serverManager.RestartServer(gameServer);
                         break;
                     case "reinstall":
-                        result.InstallGameServer();
+                        _serverManager.InstallGameServer(gameServer);
                         break;
                 }
                 
             }
-            */
+
             return null;
         }
 

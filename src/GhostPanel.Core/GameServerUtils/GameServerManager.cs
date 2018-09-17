@@ -272,5 +272,20 @@ namespace GhostPanel.Core.GameServerUtils
         {
             throw new NotImplementedException();
         }
+
+        public void StartServer(GameServer gameServer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopServer(GameServer gameServer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RestartServer(GameServer gameServer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

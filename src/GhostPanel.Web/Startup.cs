@@ -21,6 +21,7 @@ using GhostPanel.Core.Config;
 using GhostPanel.Core.Management.GameFiles;
 using GhostPanel.Core.Managment.GameFiles;
 using GhostPanel.Core.Background;
+using GhostPanel.Core.Management;
 
 namespace GhostPanel.Web
 {
@@ -75,6 +76,8 @@ namespace GhostPanel.Web
             //builder.RegisterType<ServerStatusBackgroundWorker>().As<IHostedService>();
 
             builder.RegisterType<GameServerManagerRefac>().As<IGameServerManager>().SingleInstance();
+            builder.RegisterType<ServerProcessManagerWin>().As<IServerProcessManager>().SingleInstance();
+            builder.RegisterType<ServerProcessManagerProvider>().As<IServerProcessManagerProvider>().SingleInstance();
 
             //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
             //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
