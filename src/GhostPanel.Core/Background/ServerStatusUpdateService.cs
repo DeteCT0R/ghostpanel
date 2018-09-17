@@ -3,18 +3,24 @@ using GhostPanel.Core.Managment;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using GhostPanel.Core.Data;
+using GhostPanel.Core.Data.Model;
+using GhostPanel.Core.Management;
+using GhostPanel.Core.Providers;
 
 namespace GhostPanel.Core.Background
 {
     public class ServerStatusUpdateService : IBackgroundService
     {
         private readonly ILogger _logger;
-        private readonly ServerManagerContainer _managerContainer;
+        private readonly IServerProcessManager _procManager;
+        private readonly IRepository _repository;
 
-        public ServerStatusUpdateService(ILogger<ServerStatusUpdateService> logger, ServerManagerContainer managerContainer)
+        public ServerStatusUpdateService(ILogger<ServerStatusUpdateService> logger, IRepository repository, IServerProcessManagerProvider procManager)
         {
             _logger = logger;
-            _managerContainer = managerContainer;
+            _repository = repository;
+            _procManager = procManager.GetProcessManagerProvider();
         }
 
         public void AddTask(IQueuedTask taskToAdd)
@@ -29,11 +35,42 @@ namespace GhostPanel.Core.Background
             {
                 while (true)
                 {
-                    foreach (GameServerManager manager in _managerContainer.GetManagerList())
+                    var servers = _repository.List<GameServer>();
+                    foreach (GameServer gameServer in servers)
                     {
-                        manager.SetServerStatus();
+                        if (gameServer.Pid == null && gameServer.Status != ServerStatusStates.Stopped)
+                        {
+                            _logger.LogDebug("Game server {id} has no PID and state is not stopped.  Setting state to stopped", gameServer.Id);
+                            gameServer.Status = ServerStatusStates.Stopped;
+                            _repository.Update(gameServer);
+                            continue;
+                        }
+
+                        if (_procManager.IsRunning(gameServer.Pid))
+                        {
+                            if (gameServer.Status != ServerStatusStates.Running)
+                            {
+                                _logger.LogDebug("Game server {id} is running but status doesn't match.  Setting status to running", gameServer.Id);
+                                gameServer.Status = ServerStatusStates.Running;
+                                _repository.Update(gameServer);
+                                continue;
+
+                            }
+                            
+                        }
+                        else
+                        {
+                            if (gameServer.Status != ServerStatusStates.Crashed)
+                            {
+                                _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);
+                                gameServer.Status = ServerStatusStates.Crashed;
+                                _repository.Update(gameServer);
+                                continue;
+                            }
+                        }
+
                     }
-                    await Task.Delay(TimeSpan.FromSeconds(4));
+                    await Task.Delay(TimeSpan.FromSeconds(10));
                 }
             });
 
