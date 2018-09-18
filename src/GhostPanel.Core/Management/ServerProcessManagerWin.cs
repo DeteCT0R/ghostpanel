@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
+using GhostPanel.Core.Management.Server;
 using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.Core.Management
@@ -14,11 +15,13 @@ namespace GhostPanel.Core.Management
     {
         private readonly ILogger _logger;
         private readonly IRepository _repository;
+        private readonly ICommandlineProcessor _commandlineProcessor;
 
-        public ServerProcessManagerWin(ILogger<ServerProcessManagerWin> logger, IRepository repository)
+        public ServerProcessManagerWin(ILogger<ServerProcessManagerWin> logger, IRepository repository, ICommandlineProcessor commandlineProcessor)
         {
             _logger = logger;
             _repository = repository;
+            _commandlineProcessor = commandlineProcessor;
         }
 
         public void StopServer(GameServer gameServer)
@@ -55,7 +58,12 @@ namespace GhostPanel.Core.Management
             }
 
             ProcessStartInfo start = new ProcessStartInfo();
-            start.Arguments = gameServer.CommandLine;
+            start.Arguments = _commandlineProcessor.InterpolateCommandline(gameServer);
+            if (gameServer.CustomCommandLineArgs != null)
+            {
+                start.Arguments = start.Arguments + " " +
+                                  _commandlineProcessor.InterpolateCustomCommandline(start.Arguments, gameServer.CustomCommandLineArgs);
+            }
             start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;
             Process proc = Process.Start(start);

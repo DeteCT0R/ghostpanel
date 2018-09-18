@@ -44,6 +44,9 @@ namespace GhostPanel.Core.Background
                             gameServer.Status = ServerStatusStates.Stopped;
                             _repository.Update(gameServer);
                             continue;
+                        } else if (gameServer.Pid == null && gameServer.Status == ServerStatusStates.Stopped)
+                        {
+                            continue;
                         }
 
                         if (_procManager.IsRunning(gameServer.Pid))

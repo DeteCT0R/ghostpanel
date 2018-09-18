@@ -22,6 +22,7 @@ using GhostPanel.Core.Management.GameFiles;
 using GhostPanel.Core.Managment.GameFiles;
 using GhostPanel.Core.Background;
 using GhostPanel.Core.Management;
+using GhostPanel.Core.Management.Server;
 
 namespace GhostPanel.Web
 {
@@ -69,13 +70,14 @@ namespace GhostPanel.Web
             builder.RegisterInstance(repository).SingleInstance();
             //builder.RegisterType<ServerManagerContainer>().SingleInstance();
             builder.RegisterType<PanelBackgroundTaskService>().As<IBackgroundService>().SingleInstance();
-            //builder.RegisterType<ServerStatusUpdateService>().As<IBackgroundService>().SingleInstance();
+            builder.RegisterType<ServerStatusUpdateService>().As<IBackgroundService>().SingleInstance();
 
             builder.RegisterType<BackgroundManager>().AsSelf().SingleInstance();
-            //builder.RegisterType<ServerStatusBackgroundManager>().AsSelf().SingleInstance();
+            builder.RegisterType<ServerStatusBackgroundManager>().AsSelf().SingleInstance();
             builder.RegisterType<PanelBackgroundWorker>().As<IHostedService>();
-            //builder.RegisterType<ServerStatusBackgroundWorker>().As<IHostedService>();
+            builder.RegisterType<ServerStatusBackgroundWorker>().As<IHostedService>();
 
+            builder.RegisterType<CommandlineProcessor>().As<ICommandlineProcessor>().SingleInstance();
             builder.RegisterType<GameServerManagerRefac>().As<IGameServerManager>().SingleInstance();
             builder.RegisterType<ServerProcessManagerWin>().As<IServerProcessManager>().SingleInstance();
             builder.RegisterType<ServerProcessManagerProvider>().As<IServerProcessManagerProvider>().SingleInstance();

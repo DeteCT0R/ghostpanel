@@ -1,7 +1,9 @@
-﻿using GhostPanel.Core.Data.Model;
+﻿using System.Collections.Generic;
+using GhostPanel.Core.Data.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace GhostPanel.Db
 {
@@ -25,6 +27,17 @@ namespace GhostPanel.Db
                 new ConfigurationBuilder().AddJsonFile("appsettings.json").Build()["DatabaseConnectionString"];
             optionsBuilder.UseSqlServer(connectionString);
             base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<GameServer>()
+                .Property(gs => gs.CustomCommandLineArgs)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
         }
 
         public class AppDataContextFactory : IDesignTimeDbContextFactory<AppDataContext>
