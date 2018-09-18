@@ -6,7 +6,7 @@ namespace GhostPanel.Core.Management.Server
     public interface ICommandlineProcessor
     {
         string InterpolateCommandline(GameServer gameServer);
-        string InterpolateCustomCommandline(string existingArgs, Dictionary<string,string> customArgs);
+        string InterpolateCustomCommandline(Dictionary<string,string> customArgs);
         string InterpolateFullCommandline(GameServer gameServer);
     }
 }

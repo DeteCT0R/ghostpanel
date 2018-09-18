@@ -62,7 +62,7 @@ namespace GhostPanel.Core.Management
             if (gameServer.CustomCommandLineArgs != null)
             {
                 start.Arguments = start.Arguments + " " +
-                                  _commandlineProcessor.InterpolateCustomCommandline(start.Arguments, gameServer.CustomCommandLineArgs);
+                                  _commandlineProcessor.InterpolateCustomCommandline(gameServer.CustomCommandLineArgs);
             }
             start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;

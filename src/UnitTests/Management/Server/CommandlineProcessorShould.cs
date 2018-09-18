@@ -24,6 +24,20 @@ namespace UnitTests.Management.Server
             Assert.Equal(expectedResult, clprocess.InterpolateCommandline(gameServer));
         }
 
+        [Fact]
+        public void PerformCustomCommandlineInterpolation()
+        {
+            var gameServer = GetGameServerWithCustomCommandline();
+            var logger = Mock.Of<ILogger<CommandlineProcessor>>();
+            CommandlineProcessor clprocess = new CommandlineProcessor(logger);
+            var expectedResult = "-secure -threads 3";
+            var actualResult =
+                clprocess.InterpolateCustomCommandline(gameServer.CustomCommandLineArgs);
+
+            Assert.Equal(expectedResult, actualResult);
+
+        }
+
 
         private GameServer GetGameServerWithoutCustomCommandline()
         {

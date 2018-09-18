@@ -33,19 +33,19 @@ namespace GhostPanel.Core.Management.Server
             return outputCommandline;
         }
 
-        public string InterpolateCustomCommandline(string args, Dictionary<string, string> customArgs)
+        public string InterpolateCustomCommandline(Dictionary<string, string> customArgs)
         {
-            
+            string args = "";
             foreach (KeyValuePair<string, string> arg in customArgs)
             {
-                args += arg.Key;
+                args += " " + arg.Key;
                 if (arg.Value != "")
                 {
                     args = args + " " + arg.Value;
                 }
             }
 
-            return args;
+            return args.TrimEnd().TrimStart();
         }
 
         public string InterpolateFullCommandline(GameServer gameServer)
