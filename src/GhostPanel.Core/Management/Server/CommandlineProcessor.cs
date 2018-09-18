@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GhostPanel.Core.Management.Server
 {
@@ -18,9 +19,16 @@ namespace GhostPanel.Core.Management.Server
         {
             string outputCommandline = gameServer.CommandLine;
 
-            outputCommandline = outputCommandline
-                                .Replace("{ipAddress}", gameServer.IpAddress)
-                                .Replace("{gamePort}", gameServer.GamePort.ToString());
+            foreach (PropertyInfo prop in gameServer.GetType().GetProperties())
+            {
+                if (prop.GetValue(gameServer) == null)
+                {
+                    continue;
+                }
+                var propString = string.Format("{{{0}}}", prop.Name.ToString());
+                outputCommandline = outputCommandline.Replace(propString, prop.GetValue(gameServer).ToString());
+
+            }
 
             return outputCommandline;
         }
@@ -38,6 +46,11 @@ namespace GhostPanel.Core.Management.Server
             }
 
             return args;
+        }
+
+        public string InterpolateFullCommandline(GameServer gameServer)
+        {
+            throw new NotImplementedException();
         }
     }
     

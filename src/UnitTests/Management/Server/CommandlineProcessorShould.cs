@@ -2,7 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Xunit;
+using GhostPanel.Core.Management.Server;
 
 namespace UnitTests.Management.Server
 {
@@ -10,20 +14,42 @@ namespace UnitTests.Management.Server
     {
 
         [Fact]
-        public void ReturnCommandline()
+        public void PerformBaseCommandlineInterpolation()
         {
+            var gameServer = GetGameServerWithoutCustomCommandline();
+            var logger = Mock.Of <ILogger<CommandlineProcessor>>();
+            CommandlineProcessor clprocess = new CommandlineProcessor(logger);
 
+            var expectedResult = "-game csgo -console -ip 192.168.1.50 -port 27015";
+            Assert.Equal(expectedResult, clprocess.InterpolateCommandline(gameServer));
         }
 
 
-        private GameServer GetGameServer()
+        private GameServer GetGameServerWithoutCustomCommandline()
         {
             return new GameServer()
             {
                 GameId = 1,
-                CommandLine = "-game csgo -console -ip {ipAddress} -port {gamePort}",
+                CommandLine = "-game csgo -console -ip {IpAddress} -port {GamePort}",
                 GamePort = 27015,
                 IpAddress = "192.168.1.50"
+            };
+        }
+
+        private GameServer GetGameServerWithCustomCommandline()
+        {
+            return new GameServer()
+            {
+                GameId = 1,
+                CommandLine = "-game csgo -console -ip {IpAddress} -port {GamePort}",
+                GamePort = 27015,
+                IpAddress = "192.168.1.50",
+                CustomCommandLineArgs = new Dictionary<string, string>()
+                {
+                    {"-secure", ""},
+                    {"-threads", "3"}
+
+                }
             };
         }
 

@@ -7,5 +7,6 @@ namespace GhostPanel.Core.Management.Server
     {
         string InterpolateCommandline(GameServer gameServer);
         string InterpolateCustomCommandline(string existingArgs, Dictionary<string,string> customArgs);
+        string InterpolateFullCommandline(GameServer gameServer);
     }
 }
