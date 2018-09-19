@@ -51,7 +51,7 @@ namespace GhostPanel.Web.Controllers
 
 
         [HttpGet("{id:int}/{command}")]
-        public GameServerManager Get(int id, string command)
+        public void Get(int id, string command)
         {
 
             _logger.LogInformation("Running GameServer action with ID {id} and action {action}", id, command);
@@ -77,7 +77,7 @@ namespace GhostPanel.Web.Controllers
                 
             }
 
-            return null;
+
         }
 
         // POST api/<controller>
