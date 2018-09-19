@@ -17,7 +17,7 @@ namespace UnitTests.Management.Server
         public void PerformBaseCommandlineInterpolation()
         {
             var gameServer = GetGameServerWithoutCustomCommandline();
-            var logger = Mock.Of <ILogger<CommandlineProcessor>>();
+            var logger = Mock.Of<ILogger<CommandlineProcessor>>();
             CommandlineProcessor clprocess = new CommandlineProcessor(logger);
 
             var expectedResult = "-game csgo -console -ip 192.168.1.50 -port 27015";

@@ -8,6 +8,6 @@ namespace GhostPanel.Core.Providers
     {
         string GetBaseInstallDirectory();
         string GetGameFileDirectory();
-        string GetStreamCmdPath();
+        string GetSteamCmdDirectory();
     }
 }

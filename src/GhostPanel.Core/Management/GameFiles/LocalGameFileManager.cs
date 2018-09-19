@@ -13,13 +13,11 @@ namespace GhostPanel.Core.Management.GameFiles
     {   
         private readonly ILogger _logger;
         private readonly IDefaultDirectoryProvider _defaultDirs;
-        private readonly IRepository _repository;
 
-        public LocalGameFileManager(ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs, IRepository repository) : base(logger)
+        public LocalGameFileManager(ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs) : base(logger)
         {
             _logger = logger.CreateLogger<FileServerGameFiles>();
             _defaultDirs = defaultDirs;
-            _repository = repository;
         }
 
         public void DownloadGameServerFiles(GameServer gameServer)
@@ -38,11 +36,8 @@ namespace GhostPanel.Core.Management.GameFiles
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Error while trying to extract game files");
-                    gameServer.Status = ServerStatusStates.Error;
+                    throw;
                 }
-
-                // TODO: Don't like doing this here
-                _repository.Update(gameServer);
 
             }
             else

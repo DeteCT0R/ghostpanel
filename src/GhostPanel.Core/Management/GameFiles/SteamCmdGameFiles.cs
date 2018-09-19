@@ -15,10 +15,10 @@ namespace GhostPanel.Core.Managment.GameFiles
 
         private readonly string steamCmdUrl = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
         private readonly IDefaultDirectoryProvider _defaultDirs;
-        private SteamCredentialWrapper _steamCmd;
+        private ISteamCredentialProvider _steamCmd;
         private readonly ILogger _logger;
 
-        public SteamCmdGameFiles(SteamCredentialWrapper steamCmd, ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs) : base(logger)
+        public SteamCmdGameFiles(ISteamCredentialProvider steamCmd, ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs) : base(logger)
         {
             _logger = logger.CreateLogger<SteamCmdGameFiles>();
             _steamCmd = steamCmd;
@@ -59,14 +59,14 @@ namespace GhostPanel.Core.Managment.GameFiles
         /// <returns>boolean</returns>
         private bool DetectSteamCmd()
         {
-            if (File.Exists(Path.Combine(_defaultDirs.GetStreamCmdPath(), "steamcmd.exe")))
+            if (File.Exists(Path.Combine(_defaultDirs.GetSteamCmdDirectory(), "steamcmd.exe")))
             {
-                _logger.LogDebug("SteamCMD exists at path {path}", _defaultDirs.GetStreamCmdPath());
+                _logger.LogDebug("SteamCMD exists at path {path}", _defaultDirs.GetSteamCmdDirectory());
                 return true;
             }
             else
             {
-                _logger.LogDebug("SteamCMD does not exist at path {path}", _defaultDirs.GetStreamCmdPath());
+                _logger.LogDebug("SteamCMD does not exist at path {path}", _defaultDirs.GetSteamCmdDirectory());
                 return false;
             }
         }

@@ -6,7 +6,7 @@ namespace GhostPanel.Core.Providers
     {
         private readonly GhostPanelConfig _config;
         // TODO: Refactor to be smarter about searching for values instead of a method for each
-
+        // TODO: Make config and interface
         public DefaultDirectoryProvider(GhostPanelConfig config)
         {
             _config = config;
@@ -22,9 +22,9 @@ namespace GhostPanel.Core.Providers
             return _config.DefaultFilePaths.GameFileDirectory;
         }
 
-        public string GetStreamCmdPath()
+        public string GetSteamCmdDirectory()
         {
-            return _config.DefaultFilePaths.StreamCmdPath;
+            return _config.DefaultFilePaths.SteamCmdDirectory;
         }
     }
 }

@@ -17,4 +17,8 @@
     <ProjectReference Include="..\GhostPanel.Core\GhostPanel.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Fakes\" />
+  </ItemGroup>
+
 </Project>

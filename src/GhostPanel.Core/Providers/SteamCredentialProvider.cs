@@ -11,6 +11,20 @@ namespace GhostPanel.Core.Providers
             _config = config;
         }
 
+        public string GetCredentialString()
+        {
+            var username = GetUsername();
+            var password = GetPassword();
+            if (username == "anonymous")
+            {
+                return username;
+            }
+            else
+            {
+                return username + " " + password;
+            }
+        }
+
         public string GetPassword()
         {
             return _config.SteamSettings.Password;

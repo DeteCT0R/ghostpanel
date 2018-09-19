@@ -58,7 +58,7 @@ namespace GhostPanel.Web
             builder.RegisterType<SteamCredentialProvider>().As<ISteamCredentialProvider>().SingleInstance();
             builder.RegisterType<DefaultDirectoryProvider>().As<IDefaultDirectoryProvider>().SingleInstance();
             builder.RegisterType<PortAndIpProvider>().As<IPortAndIpProvider>().SingleInstance();
-            builder.RegisterType<SteamCredentialWrapper>().As<SteamCredentialWrapper>().SingleInstance();
+            //builder.RegisterType<SteamCredentialWrapper>().As<SteamCredentialWrapper>().SingleInstance();
             //builder.RegisterType<GameServerManager>().As<IGameServerManager>();
             //builder.RegisterType<GameServerManagerFactory>().As<GameServerManagerFactory>().SingleInstance();
 
