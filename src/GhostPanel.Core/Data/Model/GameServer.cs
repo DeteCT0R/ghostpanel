@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using GhostPanel.Core.GameServerUtils;
 
 namespace GhostPanel.Core.Data.Model
@@ -7,7 +8,8 @@ namespace GhostPanel.Core.Data.Model
     {
         public int GameId { get; set; }
         public string IpAddress { get; set; }
-        public int Port { get; set; }
+        public int GamePort { get; set; }
+        public int QueryPort { get; set; }
         public string ServerName { get; set; }
         public bool IsEnabled { get; set; }
         public string Version { get; set; }
@@ -15,6 +17,9 @@ namespace GhostPanel.Core.Data.Model
         public string HomeDirectory { get; set; }
         public string CommandLine { get; set; }
         public int? Pid { get; set; }
+        public int Slots { get; set; }
+        public ServerStatusStates Status { get; set; }
+        public Dictionary<string, string> CustomCommandLineArgs { get; set; }
         public Game Game { get; set; }
 
 

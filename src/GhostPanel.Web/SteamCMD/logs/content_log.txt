@@ -1,0 +1,37 @@
+
+
+[2018-09-17 07:15:10] Loaded 0 apps from install folder "C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\steamapps\appmanifest_*.acf".
+[2018-09-17 07:15:13] Got 100 content servers from directory
+[2018-09-17 07:15:17] Loaded 0 apps from install folder "g:\dev\gameservers\1014\steamapps\appmanifest_*.acf".
+[2018-09-17 07:15:18] AppID 740 state changed : Update Required,
+[2018-09-17 07:15:18] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=-1, appDisableSecondsRemaining=0
+[2018-09-17 07:15:18] AppID 740 state changed : Update Required,Update Queued,
+[2018-09-17 07:15:18] AppID 740 scheduler update : Priority First, legacy=no, restore="", timeSinceLastPlayed=-1, appDisableSecondsRemaining=0
+[2018-09-17 07:15:18] AppID 740 state changed : Update Required,Update Queued,Update Running,
+[2018-09-17 07:15:18] AppID 740 update changed : Running,
+[2018-09-17 07:15:18] AppID 740 update changed : Running,Reconfiguring,
+[2018-09-17 07:15:18] Got 20 download sources and 0 caching proxies via "/serverlist/82/20/" from valve300.steamcontent.com
+[2018-09-17 07:15:18] Created download interface of type 'CS' (1) to host valve315.steamcontent.com (valve315.steamcontent.com)
+[2018-09-17 07:15:18] Created download interface of type 'CS' (1) to host valve319.steamcontent.com (valve319.steamcontent.com)
+[2018-09-17 07:15:18] Created download interface of type 'CS' (1) to host valve304.steamcontent.com (valve304.steamcontent.com)
+[2018-09-17 07:15:18] HTTP (CS,315) - valve315.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve315.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-17 07:15:19] HTTP (CS,315) - valve315.steamcontent.com (162.254.192.41:80 / 162.254.192.41:80, host: valve315.steamcontent.com): AuthenticateDepotID (740) - Success!
+[2018-09-17 07:15:19] HTTP (CS,315) - valve315.steamcontent.com (162.254.192.41:80 / 162.254.192.41:80, host: valve315.steamcontent.com): valve315.steamcontent.com/depot/740/manifest/5678839100302461061/5?l=11&e=1537787720&h=9941560a45d0320fd553055adafaf1924e6f58d9 - received 200 (OK) HTTP response
+[2018-09-17 07:15:23] HTTP (CS,315) - valve315.steamcontent.com (162.254.192.41:80 / 162.254.192.41:80, host: valve315.steamcontent.com): valve315.steamcontent.com/depot/731/manifest/9004013918670280734/5?l=11&e=1537787720&h=840c445eff1f74ce43ccb6c12a3db5e772671f3a - received 200 (OK) HTTP response
+[2018-09-17 07:15:23] AppID 740 update changed : Running,
+[2018-09-17 07:15:23] AppID 740 update changed : Running,Validating,
+[2018-09-17 07:15:23] Validating files (new target,full) ...
+[2018-09-17 07:15:23] File validation finished: 2814 files (18316668662 bytes) total, 2814 files (18316668662 bytes) mismatched (108 msec).
+[2018-09-17 07:15:23] AppID 740 update changed : Running,
+[2018-09-17 07:15:23] AppID 740 update changed : Running,Preallocating,
+[2018-09-17 07:15:23] AppID 740 update changed : Running,
+[2018-09-17 07:15:23] AppID 740 update started : download 0/8489726320, store 0/0, reuse 0/0, delta 0/0, stage 0/18316668662
+[2018-09-17 07:15:23] AppID 740 state changed : Update Required,Update Queued,Update Running,Update Started,
+[2018-09-17 07:15:23] AppID 740 update changed : Running,Downloading,
+[2018-09-17 07:15:23] AppID 740 update changed : Running,Downloading,Staging,
+[2018-09-17 07:15:23] Downloading 18428 chunks from depot 731
+[2018-09-17 07:15:24] HTTP (CS,304) - valve304.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve304.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-17 07:15:24] HTTP (CS,319) - valve319.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve319.steamcontent.com): AuthenticateDepotID (731) - Success!
+[2018-09-17 07:15:31] Increasing target number of download connections to 4 (rate was 0.000, now 48.905)
+[2018-09-17 07:15:31] Created download interface of type 'CS' (1) to host valve326.steamcontent.com (valve326.steamcontent.com)
+[2018-09-17 07:15:31] HTTP (CS,326) - valve326.steamcontent.com (0.0.0.0:0 / 0.0.0.0:0, host: valve326.steamcontent.com): AuthenticateDepotID (731) - Success!

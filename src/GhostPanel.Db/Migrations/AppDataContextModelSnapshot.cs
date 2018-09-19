@@ -62,7 +62,11 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<string>("CommandLine");
 
+                    b.Property<string>("CustomCommandLineArgs");
+
                     b.Property<int>("GameId");
+
+                    b.Property<int>("GamePort");
 
                     b.Property<string>("HomeDirectory");
 
@@ -72,11 +76,15 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<int?>("Pid");
 
-                    b.Property<int>("Port");
+                    b.Property<int>("QueryPort");
 
                     b.Property<string>("ServerName");
 
+                    b.Property<int>("Slots");
+
                     b.Property<string>("StartDirectory");
+
+                    b.Property<int>("Status");
 
                     b.Property<string>("Version");
 

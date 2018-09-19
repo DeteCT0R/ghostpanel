@@ -1,0 +1,12 @@
+
+
+[2018-09-17 07:15:10] Failed to read store 'install' from 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf.tmp'
+[2018-09-17 07:15:10] Failed to read store 'install' from 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf.tmp'
+[2018-09-17 07:15:10] Failed to read store 'install' from 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf.tmp'
+[2018-09-17 07:15:11] Flushed store 'install' to 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf'
+[2018-09-17 07:15:12] Flushed store 'install' to 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf'
+[2018-09-17 07:15:12] Failed to read store 'userlocal' from 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\userdata\anonymous\config\localconfig.vdf.tmp'
+[2018-09-17 07:15:13] Flushed store 'install' to 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf'
+[2018-09-17 07:15:18] Flushed store 'install' to 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf'
+[2018-09-17 07:15:27] Flushed store 'install' to 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf'
+[2018-09-17 07:15:29] Flushed store 'install' to 'C:\Users\Barry\source\repos\ghostpanel\src\GhostPanel.Web\SteamCMD\config\config.vdf'

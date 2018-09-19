@@ -56,6 +56,7 @@ namespace GhostPanel.Web
                     MaxSlots = 32,
                     MinSlots = 8,
                     DefaultSlots = 8,
+                    PortIncrement = 10,
                     GamePort = 24836
                 }
             };
@@ -69,7 +70,7 @@ namespace GhostPanel.Web
                 {
                     GameId = 1,
                     IpAddress = "192.168.1.50",
-                    Port = 29365,
+                    GamePort = 29365,
                     ServerName = "Test Server",
                     IsEnabled = true,
                     HomeDirectory = @"C:\dev\Server1",

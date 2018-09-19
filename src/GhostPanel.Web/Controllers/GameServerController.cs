@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using GhostPanel.Core;
+using System.IO;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
+using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.GameServerUtils;
 using GhostPanel.Core.Managment;
-using GhostPanel.Web.Background;
+using GhostPanel.Core.Providers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,19 +18,16 @@ namespace GhostPanel.Web.Controllers
     public class GameServerController : Controller
     {
         private readonly IRepository _repository;
-        private readonly IBackgroundService _backgroundService;
-        private readonly ServerManagerContainer _serverManagerContainer;
         private ILogger _logger;
         private readonly ILoggerFactory _logFactory;
+        private readonly IGameServerManager _serverManager;
+        private readonly IDefaultDirectoryProvider _defaultDirs;
 
-        public GameServerController(IRepository repository, 
-            IBackgroundService backgroundService, 
-            ServerManagerContainer serverManagerContainer,
-            ILoggerFactory logger)
+        public GameServerController(IRepository repository, ILoggerFactory logger, IGameServerManager serverManager, IDefaultDirectoryProvider defaultDirs)
         {
             _repository = repository;
-            _backgroundService = backgroundService;
-            _serverManagerContainer = serverManagerContainer;
+            _defaultDirs = defaultDirs;
+            _serverManager = serverManager;
             _logger = logger.CreateLogger<GameServerController>();
             _logFactory = logger;
         }
@@ -45,54 +42,50 @@ namespace GhostPanel.Web.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public GameServerManager Get(int id)
+        public GameServer Get(int id)
         {
             _logger.LogInformation("Attempting for get server with ID {id}", id);
-            var result = _serverManagerContainer.GetManagerList().Where(s => s.gameServer.Id == id).SingleOrDefault();
+            var result = _repository.Single(DataItemPolicy<GameServer>.ById(id));
             return result;
         }
 
 
         [HttpGet("{id:int}/{command}")]
-        public GameServerManager Get(int id, string command)
+        public void Get(int id, string command)
         {
+
             _logger.LogInformation("Running GameServer action with ID {id} and action {action}", id, command);
-            var result = _serverManagerContainer.GetManagerList().Where(s => s.gameServer.Id == id).SingleOrDefault();
-            if (result != null)
+            var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(id));
+            if (gameServer != null)
             {
 
                 switch (command.ToLower())
                 {
                     case "start":
-                        result.StartServer();
+                        _serverManager.StartServer(gameServer);
                         break;
                     case "stop":
-                        result.StopServer();
+                        _serverManager.StopServer(gameServer);
                         break;
                     case "restart":
-                        result.StopServer();
-                        result.StartServer();
+                        _serverManager.RestartServer(gameServer);
                         break;
                     case "reinstall":
-                        result.InstallGameServer();
+                        _serverManager.ReinstallGameServer(gameServer);
                         break;
                 }
                 
             }
-            return result;
+
+
         }
 
         // POST api/<controller>
         [HttpPost]
         public RequestResponse Post(GameServer gameServer)
         {
-
-            //GameServer gameServerEntity = _repository.Create(gameServer);
+            _serverManager.CreateGameServer(gameServer);
             
-            var manager = _serverManagerContainer.AddAndCreateServerManager(gameServer);
-            manager.SetGameServer(gameServer);
-            CreateServerTask task = new CreateServerTask(manager, _logFactory);
-            _backgroundService.AddTask(task);
             return new RequestResponse()
             {
                 message = "Game server now installing",
@@ -111,11 +104,12 @@ namespace GhostPanel.Web.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _logger.LogInformation("Attempting for get server with ID {id}", id);
-            var manager = _serverManagerContainer.GetManagerList().Where(s => s.gameServer.Id == id).SingleOrDefault();
-            // TODO - Error check on return
-            manager.DeleteGameServer();
-            _serverManagerContainer.RemoveServerManager(manager);
+            var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(id));
+            if (gameServer != null)
+            {
+                _serverManager.RemoveGameServer(gameServer);
+            }
+            
         }
     }
 }

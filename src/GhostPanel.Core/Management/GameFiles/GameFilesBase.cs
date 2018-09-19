@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using GhostPanel.Core.Data.Model;
+using Microsoft.Extensions.Logging;
 using System.IO;
 
 namespace GhostPanel.Core.Management.GameFiles
@@ -6,24 +7,34 @@ namespace GhostPanel.Core.Management.GameFiles
     public class GameFilesBase
     {
         private readonly ILogger _logger;
-        private readonly string _installDir;
 
-        public GameFilesBase(ILoggerFactory logger, string installDir)
+        public GameFilesBase(ILoggerFactory logger)
         {
             _logger = logger.CreateLogger<GameFilesBase>();
-            _installDir = installDir;
         }
 
-        public void DeleteGameServerFiles()
+        public void DeleteGameServerFiles(GameServer gameServer)
         {
-            _logger.LogInformation("Deleting game server files in {path}", _installDir);
+            _logger.LogInformation("Deleting game server files in {path}", gameServer.HomeDirectory);
+
+            // TODO - Add better checking here
+            if (gameServer.HomeDirectory == "/")
+            {
+                _logger.LogError("Dangerous path detected for GameServer Home Directory.  Aboring delete");
+                return;
+            }
             try
             {
-                Directory.Delete(_installDir, true);
+                if (Directory.Exists(gameServer.HomeDirectory))
+                {
+                    Directory.Delete(gameServer.HomeDirectory, true);
+                }
+                
             }
-            catch (IOException)
+            catch (IOException ex)
             {
-                _logger.LogError("Failed to delete game server files in {path}", _installDir);
+                _logger.LogError("Failed to delete game server files in {path}", gameServer.HomeDirectory);
+                throw;
             }
         }
 

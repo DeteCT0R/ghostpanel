@@ -1,11 +1,12 @@
-﻿namespace GhostPanel.Core.Managment.GameFiles
+﻿using GhostPanel.Core.Data.Model;
+
+namespace GhostPanel.Core.Managment.GameFiles
 {
     public interface IGameFileManager
     {
-        void DownloadGameServerFiles();
-        void DeleteGameServerFiles();
-        void UpdateGameServerFiles();
-        int GetInstallProgress();
+        void DownloadGameServerFiles(GameServer gameServer);
+        void DeleteGameServerFiles(GameServer gameServer);
+        void UpdateGameServerFiles(GameServer gameServer);
 
     }
 }
