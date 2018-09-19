@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GhostPanel.Core.Data;
+﻿using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.Exceptions;

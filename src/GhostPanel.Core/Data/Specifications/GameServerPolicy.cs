@@ -4,7 +4,7 @@ using GhostPanel.Core.Data.Model;
 
 namespace GhostPanel.Core.Data.Specifications
 {
-    class GameServerPolicy : DataItemPolicy<GameServer>
+    public class GameServerPolicy : DataItemPolicy<GameServer>
     {
         protected GameServerPolicy(Expression<Func<GameServer, bool>> expression) : base(expression)
         {

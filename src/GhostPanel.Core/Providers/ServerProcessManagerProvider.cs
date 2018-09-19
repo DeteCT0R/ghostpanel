@@ -23,6 +23,7 @@ namespace GhostPanel.Core.Providers
 
         public IServerProcessManager GetProcessManagerProvider()
         {
+            // TODO: Detect operating system
             var provider = _procManagers.OfType<ServerProcessManagerWin>().FirstOrDefault();
             if (provider == null)
             {
