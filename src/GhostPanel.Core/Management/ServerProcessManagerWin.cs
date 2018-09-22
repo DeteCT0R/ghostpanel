@@ -68,7 +68,6 @@ namespace GhostPanel.Core.Management
             start.WindowStyle = ProcessWindowStyle.Hidden;
             Process proc = Process.Start(start);
             gameServer.Pid = proc.Id;
-            gameServer.Status = ServerStatusStates.Running;
             _repository.Update(gameServer);
             // TODO: Add check to see if process actually started
 
@@ -84,6 +83,7 @@ namespace GhostPanel.Core.Management
 
         public bool IsRunning(int? pid)
         {
+
             if (pid == null || pid == 0)
             {
                 return false;

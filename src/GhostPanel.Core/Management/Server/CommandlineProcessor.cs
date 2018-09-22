@@ -17,7 +17,7 @@ namespace GhostPanel.Core.Management.Server
 
         public string InterpolateCommandline(GameServer gameServer)
         {
-            string outputCommandline = gameServer.CommandLine;
+            string outputCommandline = gameServer.CommandLine.ToLower();
 
             foreach (PropertyInfo prop in gameServer.GetType().GetProperties())
             {
@@ -25,7 +25,7 @@ namespace GhostPanel.Core.Management.Server
                 {
                     continue;
                 }
-                var propString = string.Format("{{{0}}}", prop.Name.ToString());
+                var propString = string.Format("{{{0}}}", prop.Name.ToString().ToLower());
                 outputCommandline = outputCommandline.Replace(propString, prop.GetValue(gameServer).ToString());
 
             }
