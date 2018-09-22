@@ -54,6 +54,7 @@ namespace GhostPanel.Core.Background
                             if (gameServer.Status != ServerStatusStates.Running)
                             {
                                 _logger.LogDebug("Game server {id} is running but status doesn't match.  Setting status to running", gameServer.Id);
+                                gameServer.RestartAttempts = 0;
                                 gameServer.Status = ServerStatusStates.Running;
                                 _repository.Update(gameServer);
                                 continue;
@@ -68,7 +69,23 @@ namespace GhostPanel.Core.Background
                                 _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);
                                 gameServer.Status = ServerStatusStates.Crashed;
                                 _repository.Update(gameServer);
-                                continue;
+
+                            }
+
+                            if (gameServer.Status == ServerStatusStates.Crashed && gameServer.RestartAttempts < 3) // TODO: Move max restarts to config
+                            {
+                                 gameServer.RestartAttempts++;
+                                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.RestartAttempts, gameServer.Id);
+                                _procManager.StartServer(gameServer);
+                                _repository.Update(gameServer);
+                            }
+                            else
+                            {
+                                _logger.LogDebug("Server {id} has hit the max restart attempts.  Stopping server");
+                                gameServer.Status = ServerStatusStates.Stopped;
+                                gameServer.Pid = null;
+                                _procManager.StopServer(gameServer);
+                                _repository.Update(gameServer);
                             }
                         }
 
