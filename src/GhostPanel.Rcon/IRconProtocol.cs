@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GhostPanel.Rcon.Packets.Source
+namespace GhostPanel.Rcon
 {
-    public interface IQueryResponsePacket
+    interface IRconProtocol
     {
-
     }
 }

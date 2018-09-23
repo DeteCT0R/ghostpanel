@@ -1,10 +1,6 @@
-﻿using GhostPanel.Rcon.Packets;
-using System;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
+﻿using System;
+using GhostPanel.Core.Data.Model;
+using GhostPanel.Rcon.Source;
 
 namespace GhostPanel.Rcon.Demo
 {
@@ -12,9 +8,23 @@ namespace GhostPanel.Rcon.Demo
     {
         static void Main(string[] args)
         {
+
+            GameServer server = new GameServer()
+            {
+                IpAddress = "74.91.123.162",
+                QueryPort = 27015
+            };
+
+            SourceProtocol rcon = new SourceProtocol(server);
+
+            var result = rcon.GetServerPlayers();
+
+            Console.WriteLine();
+
+            /*
             UdpClient client = new UdpClient();
             var endpoint = new IPEndPoint(IPAddress.Parse("192.168.1.153"), 27015);
-            /*
+            
             var result =
                 client.Send(
                     new byte[]
@@ -22,7 +32,7 @@ namespace GhostPanel.Rcon.Demo
                         0xFF, 0xFF, 0xFF, 0xFF, 0x54, 0x53, 0x6F, 0x75, 0x72, 0x63, 0x65, 0x20, 0x45, 0x6E, 0x67, 0x69,
                         0x6E, 0x65, 0x20, 0x51, 0x75, 0x65, 0x72, 0x79, 0x00
                     }, 25, endpoint);
-            */
+            
 
             byte[] exampleQuery = new byte[]
             {
@@ -51,7 +61,7 @@ namespace GhostPanel.Rcon.Demo
             startOffset = endOffset + 1;
             endOffset = Array.IndexOf(response, (byte)0, startOffset);
             string game = Encoding.UTF8.GetString(response, startOffset, endOffset - startOffset);
-
+            */
 
             Console.WriteLine("");
         }

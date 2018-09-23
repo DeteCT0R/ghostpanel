@@ -38,14 +38,15 @@ namespace GhostPanel.Core.Background
                     var servers = _repository.List<GameServer>();
                     foreach (GameServer gameServer in servers)
                     {
-                        if (gameServer.Pid == null && gameServer.Status != ServerStatusStates.Stopped)
+                        if (gameServer.Pid == null)
                         {
-                            _logger.LogDebug("Game server {id} has no PID and state is not stopped.  Setting state to stopped", gameServer.Id);
-                            gameServer.Status = ServerStatusStates.Stopped;
-                            _repository.Update(gameServer);
-                            continue;
-                        } else if (gameServer.Pid == null && gameServer.Status == ServerStatusStates.Stopped)
-                        {
+                            if (gameServer.Status != ServerStatusStates.Stopped)
+                            {
+                                _logger.LogDebug("Game server {id} has no PID and state is not stopped.  Setting state to stopped", gameServer.Id);
+                                gameServer.Status = ServerStatusStates.Stopped;
+                                _repository.Update(gameServer);
+                            }
+
                             continue;
                         }
 
@@ -57,44 +58,48 @@ namespace GhostPanel.Core.Background
                                 gameServer.RestartAttempts = 0;
                                 gameServer.Status = ServerStatusStates.Running;
                                 _repository.Update(gameServer);
-                                continue;
-
-                            }
-                            
-                        }
-                        else
-                        {
-                            if (gameServer.Status != ServerStatusStates.Crashed)
-                            {
-                                _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);
-                                gameServer.Status = ServerStatusStates.Crashed;
-                                _repository.Update(gameServer);
-
                             }
 
-                            if (gameServer.Status == ServerStatusStates.Crashed && gameServer.RestartAttempts < 3) // TODO: Move max restarts to config
-                            {
-                                 gameServer.RestartAttempts++;
-                                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.RestartAttempts, gameServer.Id);
-                                _procManager.StartServer(gameServer);
-                                _repository.Update(gameServer);
-                            }
-                            else
-                            {
-                                _logger.LogDebug("Server {id} has hit the max restart attempts.  Stopping server");
-                                gameServer.Status = ServerStatusStates.Stopped;
-                                gameServer.Pid = null;
-                                _procManager.StopServer(gameServer);
-                                _repository.Update(gameServer);
-                            }
+                            continue;
                         }
 
+                        // If we get here there's a PID but server is not running
+                        HandleCrashedServer(gameServer);
                     }
+
+
                     await Task.Delay(TimeSpan.FromSeconds(10));
                 }
             });
 
             await mainLoop;
+        }
+
+        private void HandleCrashedServer(GameServer gameServer)
+        {
+            if (gameServer.Status != ServerStatusStates.Crashed)
+            {
+                _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);
+                gameServer.Status = ServerStatusStates.Crashed;
+                _repository.Update(gameServer);
+
+            }
+
+            if (gameServer.RestartAttempts < 3) // TODO: Move max restarts to config
+            {
+                gameServer.RestartAttempts++;
+                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.RestartAttempts, gameServer.Id);
+                _procManager.StartServer(gameServer);
+                _repository.Update(gameServer);
+            }
+            else
+            {
+                _logger.LogDebug("Server {id} has hit the max restart attempts.  Stopping server", gameServer.Id);
+                gameServer.Status = ServerStatusStates.Stopped;
+                gameServer.Pid = null;
+                _procManager.StopServer(gameServer);
+                _repository.Update(gameServer);
+            }
         }
     }
 }
