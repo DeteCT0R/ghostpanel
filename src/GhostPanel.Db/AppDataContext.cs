@@ -38,6 +38,12 @@ namespace GhostPanel.Db
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v),
                     v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
+
+
+            modelBuilder.Entity<GameServer>()
+                .HasOne(s => s.CurrentStats)
+                .WithOne(c => c.Server)
+                .HasForeignKey<GameServerCurrentStat>(gs => gs.ServerId);
         }
 
         public class AppDataContextFactory : IDesignTimeDbContextFactory<AppDataContext>

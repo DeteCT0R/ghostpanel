@@ -4,14 +4,16 @@ using GhostPanel.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GhostPanel.Db.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20180923180010_AddGameProcolTable")]
+    partial class AddGameProcolTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,9 +76,13 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<bool>("IsEnabled");
 
+                    b.Property<int?>("Pid");
+
                     b.Property<int>("QueryPort");
 
                     b.Property<string>("RconPassword");
+
+                    b.Property<int>("RestartAttempts");
 
                     b.Property<string>("ServerName");
 
@@ -95,49 +101,11 @@ namespace GhostPanel.Db.Migrations
                     b.ToTable("GameServers");
                 });
 
-            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CurrentPlayers");
-
-                    b.Property<string>("Map");
-
-                    b.Property<int>("MaxPlayers");
-
-                    b.Property<int>("Name");
-
-                    b.Property<int?>("Pid");
-
-                    b.Property<int>("RestartAttempts");
-
-                    b.Property<int>("ServerId");
-
-                    b.Property<int>("Status");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ServerId")
-                        .IsUnique();
-
-                    b.ToTable("GameServerCurrentStat");
-                });
-
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServer", b =>
                 {
                     b.HasOne("GhostPanel.Core.Data.Model.Game", "Game")
                         .WithMany("GameServers")
                         .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStat", b =>
-                {
-                    b.HasOne("GhostPanel.Core.Data.Model.GameServer", "Server")
-                        .WithOne("CurrentStats")
-                        .HasForeignKey("GhostPanel.Core.Data.Model.GameServerCurrentStat", "ServerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

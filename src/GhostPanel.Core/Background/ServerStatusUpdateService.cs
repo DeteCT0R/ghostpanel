@@ -38,7 +38,7 @@ namespace GhostPanel.Core.Background
                     var servers = _repository.List<GameServer>();
                     foreach (GameServer gameServer in servers)
                     {
-                        if (gameServer.Pid == null)
+                        if (gameServer.CurrentStats.Pid == null)
                         {
                             if (gameServer.Status != ServerStatusStates.Stopped)
                             {
@@ -50,12 +50,12 @@ namespace GhostPanel.Core.Background
                             continue;
                         }
 
-                        if (_procManager.IsRunning(gameServer.Pid))
+                        if (_procManager.IsRunning(gameServer.CurrentStats.Pid))
                         {
                             if (gameServer.Status != ServerStatusStates.Running)
                             {
                                 _logger.LogDebug("Game server {id} is running but status doesn't match.  Setting status to running", gameServer.Id);
-                                gameServer.RestartAttempts = 0;
+                                gameServer.CurrentStats.RestartAttempts = 0;
                                 gameServer.Status = ServerStatusStates.Running;
                                 _repository.Update(gameServer);
                             }
@@ -85,10 +85,10 @@ namespace GhostPanel.Core.Background
 
             }
 
-            if (gameServer.RestartAttempts < 3) // TODO: Move max restarts to config
+            if (gameServer.CurrentStats.RestartAttempts < 3) // TODO: Move max restarts to config
             {
-                gameServer.RestartAttempts++;
-                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.RestartAttempts, gameServer.Id);
+                gameServer.CurrentStats.RestartAttempts++;
+                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.CurrentStats.RestartAttempts, gameServer.Id);
                 _procManager.StartServer(gameServer);
                 _repository.Update(gameServer);
             }
@@ -96,7 +96,7 @@ namespace GhostPanel.Core.Background
             {
                 _logger.LogDebug("Server {id} has hit the max restart attempts.  Stopping server", gameServer.Id);
                 gameServer.Status = ServerStatusStates.Stopped;
-                gameServer.Pid = null;
+                gameServer.CurrentStats.Pid = null;
                 _procManager.StopServer(gameServer);
                 _repository.Update(gameServer);
             }

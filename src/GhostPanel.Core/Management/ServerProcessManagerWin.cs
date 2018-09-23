@@ -27,33 +27,33 @@ namespace GhostPanel.Core.Management
         public void StopServer(GameServer gameServer)
         {
             _logger.LogDebug("Attempting to stop game server");
-            if (!IsRunning(gameServer.Pid))
+            if (!IsRunning(gameServer.CurrentStats.Pid))
             {
                 return;
             }
 
             try
             {
-                Process proc = Process.GetProcessById((int)gameServer.Pid);
+                Process proc = Process.GetProcessById((int)gameServer.CurrentStats.Pid);
                 proc.Kill();
-                gameServer.Pid = null;
+                gameServer.CurrentStats.Pid = null;
                 _repository.Update(gameServer);
                 gameServer.Status = ServerStatusStates.Stopped;
-                _logger.LogInformation("Killed game server with pid {pid}", gameServer.Pid);
+                _logger.LogInformation("Killed game server with pid {pid}", gameServer.CurrentStats.Pid);
                 return;
             }
             catch (ArgumentException e)
             {
-                _logger.LogError("Unable to locate PID {pid}", gameServer.Pid);
+                _logger.LogError("Unable to locate PID {pid}", gameServer.CurrentStats.Pid);
                 return;
             }
         }
 
         public Process StartServer(GameServer gameServer)
         {
-            if (IsRunning(gameServer.Pid))
+            if (IsRunning(gameServer.CurrentStats.Pid))
             {
-                _logger.LogDebug("Server {id} is already running with PID {pid}", gameServer.Id, gameServer.Pid);
+                _logger.LogDebug("Server {id} is already running with PID {pid}", gameServer.Id, gameServer.CurrentStats.Pid);
                 return null;
             }
 
@@ -67,7 +67,7 @@ namespace GhostPanel.Core.Management
             start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;
             Process proc = Process.Start(start);
-            gameServer.Pid = proc.Id;
+            gameServer.CurrentStats.Pid = proc.Id;
             _repository.Update(gameServer);
             // TODO: Add check to see if process actually started
 

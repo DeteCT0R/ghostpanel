@@ -1,4 +1,5 @@
-﻿using GhostPanel.Rcon.Extensions;
+﻿using CoreRCON.PacketFormats;
+using GhostPanel.Rcon.Extensions;
 
 namespace GhostPanel.Rcon.Steam.Packets
 {

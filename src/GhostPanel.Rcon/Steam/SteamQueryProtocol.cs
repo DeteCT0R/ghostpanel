@@ -1,89 +1,80 @@
-﻿using System.Linq;
-using GhostPanel.Core.Data.Model;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading.Tasks;
-using GhostPanel.Rcon.Steam.Packets;
+using CoreRCON;
+using CoreRCON.PacketFormats;
 
 namespace GhostPanel.Rcon.Steam
 {
     public class SteamQueryProtocol : IQueryProtocol
     {
+        private IPEndPoint _endpoint;
 
-        private UdpClient _client { get; set; }
-        private IPEndPoint _endpoint { get; set; }
-
-
-        public SteamQueryProtocol(IPEndPoint endPoint)
+        public SteamQueryProtocol(IPEndPoint endpoint)
         {
-            _endpoint = endPoint;
-            _client = new UdpClient();
-        }
-
-        public SteamQueryProtocol(IPAddress ipAddress, int queryPort)
-        {
-            _endpoint = new IPEndPoint(ipAddress, queryPort);
-            _client = new UdpClient();
-        }
-
-        public SteamQueryProtocol(UdpClient client, IPEndPoint endpoint)
-        {
-            _client = client;
             _endpoint = endpoint;
         }
 
-        public As2InfoResponsePacket GetServerInfo()
+        public SteamQueryProtocol(IPAddress ipAddress, int port) : this(new IPEndPoint(ipAddress, port)) { }
+
+        public async Task<ServerInfoBase> GetServerInfoAsync()
         {
-            var endPoint = _endpoint;
-            var infoPacket = new As2InfoRequestPacket().ToBytes();
-            _client.Send(infoPacket, infoPacket.Length, endPoint);
-            byte[] response = _client.Receive(ref endPoint);
-            return As2InfoResponsePacket.FromBytes(response);
+            var result = await ServerQuery.Info(_endpoint, ServerQuery.ServerType.Source) as SourceQueryInfo;
+            return ConvertInfoResponse(result);
         }
 
-        public async Task<As2InfoResponsePacket> GetServerInfoAsync()
-        {
 
-            var infoPacket = new As2InfoRequestPacket().ToBytes();
-            await _client.SendAsync(infoPacket, infoPacket.Length, _endpoint);
-            var response = await _client.ReceiveAsync();
-            return As2InfoResponsePacket.FromBytes(response.Buffer);
+        public async Task<ServerPlayersBase[]> GetServerPlayersAsync()
+        {
+            var result = await ServerQuery.Players(_endpoint);
+            return ConvertPlayerResponse(result);
         }
 
-        public A2SPlayerResponsePacket[] GetServerPlayers()
+        /// <summary>
+        /// Convert a SourceQueryInfo object from CoreRcon to a SteamServerInfo object
+        /// </summary>
+        /// <param name="info">SourceQueryInfo</param>
+        /// <returns>SteamServerInfo</returns>
+        private SteamServerInfo ConvertInfoResponse(SourceQueryInfo info)
         {
-            var endPoint = _endpoint;
-            var playerRequest = new byte[] {0xFF, 0xFF, 0xFF, 0xFF, 0x55}
-                .Concat(GetChallange()).ToArray();
-            _client.Send(playerRequest, playerRequest.Length, endPoint);
-            var response = _client.Receive(ref endPoint);
-            return A2SPlayerResponsePacket.FromBytes(response);
+            return new SteamServerInfo()
+            {
+                Game = info.Game,
+                Map = info.Map,
+                MaxPlayers = info.MaxPlayers,
+                CurrentPlayers = info.Players,
+                Bots = info.Bots,
+                Environment = info.Environment,
+                Folder = info.Folder,
+                GameId = info.GameId,
+                Name = info.Name,
+                ProtocolVersion = info.ProtocolVersion,
+                Type = info.Type,
+                VAC = info.VAC,
+                Visibility = info.Visibility
+
+            };
         }
 
-        public async Task<A2SPlayerResponsePacket[]> GetServerPlayersAsync()
+        /// <summary>
+        /// Take an of SeverQueryPlayer from CoreRcon and convert to SteamServerPlayer[]
+        /// </summary>
+        /// <param name="players">ServerQueryPlayer[]</param>
+        /// <returns></returns>
+        private SteamServerPlayer[] ConvertPlayerResponse(ServerQueryPlayer[] players)
         {
-            var challange = await GetChallangeAsync();
-            var playerRequest = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0x55 }
-                .Concat(challange).ToArray();
-            await _client.SendAsync(playerRequest, playerRequest.Length, _endpoint);
-            var response = await _client.ReceiveAsync();
-            return A2SPlayerResponsePacket.FromBytes(response.Buffer);
-        }
+            List<SteamServerPlayer> final = new List<SteamServerPlayer>();
+            foreach (ServerQueryPlayer player in players)
+            {
+                final.Add(new SteamServerPlayer()
+                {
+                    Name = player.Name,
+                    Duration = player.Duration,
+                    Score = player.Score
+                });
+            }
 
-        private byte[] GetChallange()
-        {
-            var endPoint = _endpoint;
-            var challangePacket = ChallangePacket.GetChallangePacket();
-            _client.Send(challangePacket, challangePacket.Length, endPoint);
-            return ChallangePacket.CleanChallangeResponse(_client.Receive(ref endPoint));
-        }
-
-        private async Task<byte[]> GetChallangeAsync()
-        {
-            var challangePacket = ChallangePacket.GetChallangePacket();
-            await _client.SendAsync(challangePacket, challangePacket.Length, _endpoint);
-            var response = await _client.ReceiveAsync();
-            return ChallangePacket.CleanChallangeResponse(response.Buffer);
+            return final.ToArray();
         }
     }
 }

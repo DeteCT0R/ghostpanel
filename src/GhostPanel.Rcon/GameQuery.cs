@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
+
 
 namespace GhostPanel.Rcon
 {
-    public class GameQuery<T> where T : IQueryProtocol
+    public class GameQuery
     {
-        private T _queryProtocol;
+        private IQueryProtocol _serverQuery;
 
-        public GameQuery(T queryProtocol)
+        public GameQuery(IQueryProtocol serverQuery)
         {
-            _queryProtocol = queryProtocol;
+            _serverQuery = serverQuery;
+        }
+
+        public async Task<ServerInfoBase> GetServerInfo()
+        {
+            var result = await _serverQuery.GetServerInfoAsync();
+            return result;
         }
     }
 }
