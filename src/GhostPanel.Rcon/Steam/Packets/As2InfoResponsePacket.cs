@@ -1,6 +1,6 @@
 ﻿using GhostPanel.Rcon.Extensions;
 
-namespace GhostPanel.Rcon.Source.Packets
+namespace GhostPanel.Rcon.Steam.Packets
 {
     /// <summary>
     /// Taken from https://github.com/ScottKaye/CoreRCON/blob/master/src/CoreRCON/Extensions.cs
@@ -21,7 +21,7 @@ namespace GhostPanel.Rcon.Source.Packets
         public ServerVAC VAC { get; private set; }
         public ServerVisibility Visibility { get; private set; }
 
-        public static IQueryResponsePacket FromBytes(byte[] buffer)
+        public static As2InfoResponsePacket FromBytes(byte[] buffer)
         {
             int index = 6;
             return new As2InfoResponsePacket

@@ -1,11 +1,11 @@
 ﻿using GhostPanel.Rcon.Extensions;
 
-namespace GhostPanel.Rcon.Source.Packets
+namespace GhostPanel.Rcon.Steam.Packets
 {
     /// <summary>
     /// Taken from https://github.com/ScottKaye/CoreRCON/blob/master/src/CoreRCON/Extensions.cs
     /// </summary>
-    class A2SPlayerResponsePacket : IQueryResponsePacket
+    public class A2SPlayerResponsePacket : IQueryResponsePacket
     {
         public float Duration { get; private set; }
         public string Name { get; private set; }

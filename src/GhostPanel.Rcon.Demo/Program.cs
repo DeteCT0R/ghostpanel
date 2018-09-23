@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Net;
+using System.Threading.Tasks;
 using GhostPanel.Core.Data.Model;
-using GhostPanel.Rcon.Source;
+using GhostPanel.Rcon.Steam;
 
 namespace GhostPanel.Rcon.Demo
 {
@@ -9,19 +11,32 @@ namespace GhostPanel.Rcon.Demo
         static void Main(string[] args)
         {
 
-            GameServer server = new GameServer()
+            var task = Task.Run(async () =>
             {
-                IpAddress = "74.91.123.162",
-                QueryPort = 27015
-            };
+                GameServer server1 = new GameServer()
+                {
+                    IpAddress = "64.42.183.170",
+                    QueryPort = 2303
+                };
 
+                SteamQueryProtocol rcon1 = new SteamQueryProtocol(IPAddress.Parse("64.42.183.170"), 2303);
+
+                var info = await rcon1.GetServerInfoAsync();
+                var players = await rcon1.GetServerPlayersAsync();
+
+                Console.WriteLine($"Server Name Is {info.Name} and has {players.Length} players");
+            });
+            task.GetAwaiter().GetResult();
+            Console.ReadLine();
+
+            /*
             SourceProtocol rcon = new SourceProtocol(server);
 
             var result = rcon.GetServerPlayers();
 
             Console.WriteLine();
 
-            /*
+            
             UdpClient client = new UdpClient();
             var endpoint = new IPEndPoint(IPAddress.Parse("192.168.1.153"), 27015);
             
@@ -63,7 +78,7 @@ namespace GhostPanel.Rcon.Demo
             string game = Encoding.UTF8.GetString(response, startOffset, endOffset - startOffset);
             */
 
-            Console.WriteLine("");
+
         }
     }
 }

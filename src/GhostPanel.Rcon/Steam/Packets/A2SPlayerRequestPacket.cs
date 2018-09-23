@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GhostPanel.Rcon.Source.Packets
+namespace GhostPanel.Rcon.Steam.Packets
 {
-    public class RequestPacket : IRequestPacket
+    public class A2SPlayerRequestPacket : IRequestPacket
     {
-        public byte[] Header { get; set; }
-
         public byte[] ToBytes()
         {
             throw new NotImplementedException();

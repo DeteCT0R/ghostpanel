@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GhostPanel.Core\GhostPanel.Core.csproj" />
+    <ProjectReference Include="..\GhostPanel.Rcon\GhostPanel.Rcon.csproj" />
   </ItemGroup>
 
   <ItemGroup>

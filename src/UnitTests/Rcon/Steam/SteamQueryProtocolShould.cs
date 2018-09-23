@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xunit;
 
-namespace GhostPanel.Rcon
+namespace UnitTests.Rcon.Steam
 {
-    interface IRconProtocol
+    class SteamQueryProtocolShould
     {
+
+
     }
 }

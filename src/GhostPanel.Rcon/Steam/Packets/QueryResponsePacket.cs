@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GhostPanel.Rcon.Source.Packets
+﻿namespace GhostPanel.Rcon.Steam.Packets
 {
     public class QueryResponsePacket : IQueryResponsePacket
     {

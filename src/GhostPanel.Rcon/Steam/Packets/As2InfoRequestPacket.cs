@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 
-namespace GhostPanel.Rcon.Source.Packets
+namespace GhostPanel.Rcon.Steam.Packets
 {
     public class As2InfoRequestPacket : IRequestPacket
     {

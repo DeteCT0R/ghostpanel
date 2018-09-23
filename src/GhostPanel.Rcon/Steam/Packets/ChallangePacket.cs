@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace GhostPanel.Rcon.Source.Packets
+namespace GhostPanel.Rcon.Steam.Packets
 {
     public static class ChallangePacket
     {
