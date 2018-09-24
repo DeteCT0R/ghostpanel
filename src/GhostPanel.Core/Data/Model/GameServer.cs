@@ -22,6 +22,7 @@ namespace GhostPanel.Core.Data.Model
         public Dictionary<string, string> CustomCommandLineArgs { get; set; }
         public Game Game { get; set; }
         public GameServerCurrentStat CurrentStats { get; set; }
+        public GameProtocol Protocol { get; set; }
 
 
 

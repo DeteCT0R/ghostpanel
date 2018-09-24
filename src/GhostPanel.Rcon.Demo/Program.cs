@@ -16,9 +16,7 @@ namespace GhostPanel.Rcon.Demo
             {
                 UdpClient client = new UdpClient();
                 var steam = new SteamQueryProtocol(new IPEndPoint(IPAddress.Parse("74.91.123.188"), 27015));
-                var gquery = new GameQuery(steam);
-
-                var result = await gquery.GetServerInfo();
+                
 
                 Console.WriteLine("");
             });

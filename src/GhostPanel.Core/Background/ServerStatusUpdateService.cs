@@ -64,7 +64,7 @@ namespace GhostPanel.Core.Background
                         }
 
                         // If we get here there's a PID but server is not running
-                        HandleCrashedServer(gameServer);
+                        _procManager.HandleCrashedServer(gameServer);
                     }
 
 
@@ -75,31 +75,6 @@ namespace GhostPanel.Core.Background
             await mainLoop;
         }
 
-        private void HandleCrashedServer(GameServer gameServer)
-        {
-            if (gameServer.Status != ServerStatusStates.Crashed)
-            {
-                _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);
-                gameServer.Status = ServerStatusStates.Crashed;
-                _repository.Update(gameServer);
-
-            }
-
-            if (gameServer.CurrentStats.RestartAttempts < 3) // TODO: Move max restarts to config
-            {
-                gameServer.CurrentStats.RestartAttempts++;
-                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.CurrentStats.RestartAttempts, gameServer.Id);
-                _procManager.StartServer(gameServer);
-                _repository.Update(gameServer);
-            }
-            else
-            {
-                _logger.LogDebug("Server {id} has hit the max restart attempts.  Stopping server", gameServer.Id);
-                gameServer.Status = ServerStatusStates.Stopped;
-                gameServer.CurrentStats.Pid = null;
-                _procManager.StopServer(gameServer);
-                _repository.Update(gameServer);
-            }
-        }
+        
     }
 }

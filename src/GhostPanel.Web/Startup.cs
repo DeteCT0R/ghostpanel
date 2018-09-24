@@ -82,6 +82,8 @@ namespace GhostPanel.Web
             builder.RegisterType<ServerProcessManagerWin>().As<IServerProcessManager>().SingleInstance();
             builder.RegisterType<ServerProcessManagerProvider>().As<IServerProcessManagerProvider>().SingleInstance();
 
+            builder.RegisterType<GameServerProvider>().As<IGameServerProvider>().SingleInstance();
+
             //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
             //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
             

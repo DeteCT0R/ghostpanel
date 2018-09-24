@@ -9,5 +9,6 @@ namespace GhostPanel.Core.Management
         Process StartServer(GameServer gameServer);
         void StopServer(GameServer gameServer);
         bool IsRunning(int? pid);
+        GameServer HandleCrashedServer(GameServer gameServer);
     }
 }

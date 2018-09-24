@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Web", "GhostPane
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Rcon", "GhostPanel.Rcon\GhostPanel.Rcon.csproj", "{76D61DC4-8A75-47BE-A864-A53E3AD80043}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.Rcon.Demo", "GhostPanel.Rcon.Demo\GhostPanel.Rcon.Demo.csproj", "{4B8F4FED-352D-4C5E-8138-2FFD6ECB72B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Rcon.Demo", "GhostPanel.Rcon.Demo\GhostPanel.Rcon.Demo.csproj", "{4B8F4FED-352D-4C5E-8138-2FFD6ECB72B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.BackgroundServices", "GhostPanel.BackgroundServices\GhostPanel.BackgroundServices.csproj", "{2FD19E62-B741-43AD-B963-20EAB5425D28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{4B8F4FED-352D-4C5E-8138-2FFD6ECB72B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B8F4FED-352D-4C5E-8138-2FFD6ECB72B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B8F4FED-352D-4C5E-8138-2FFD6ECB72B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD19E62-B741-43AD-B963-20EAB5425D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD19E62-B741-43AD-B963-20EAB5425D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD19E62-B741-43AD-B963-20EAB5425D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD19E62-B741-43AD-B963-20EAB5425D28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

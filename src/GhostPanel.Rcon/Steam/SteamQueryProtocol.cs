@@ -6,7 +6,7 @@ using CoreRCON.PacketFormats;
 
 namespace GhostPanel.Rcon.Steam
 {
-    public class SteamQueryProtocol : IQueryProtocol
+    public class SteamQueryProtocol : GameQuery
     {
         private IPEndPoint _endpoint;
 
@@ -17,14 +17,14 @@ namespace GhostPanel.Rcon.Steam
 
         public SteamQueryProtocol(IPAddress ipAddress, int port) : this(new IPEndPoint(ipAddress, port)) { }
 
-        public async Task<ServerInfoBase> GetServerInfoAsync()
+        public override async Task<ServerInfoBase> GetServerInfoAsync()
         {
             var result = await ServerQuery.Info(_endpoint, ServerQuery.ServerType.Source) as SourceQueryInfo;
             return ConvertInfoResponse(result);
         }
 
 
-        public async Task<ServerPlayersBase[]> GetServerPlayersAsync()
+        public override async Task<ServerPlayersBase[]> GetServerPlayersAsync()
         {
             var result = await ServerQuery.Players(_endpoint);
             return ConvertPlayerResponse(result);

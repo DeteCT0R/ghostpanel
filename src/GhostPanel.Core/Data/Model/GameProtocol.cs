@@ -1,8 +1,9 @@
 ﻿namespace GhostPanel.Core.Data.Model
 {
-    class GameProtocol : DataEntity
+    public class GameProtocol : DataEntity
     {
         public string FullTypeName { get; set; }
         public string Name { get; set; }
+        public string ServerInfoType { get; set; }
     }
 }

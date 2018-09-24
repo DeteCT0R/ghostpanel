@@ -14,12 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GhostPanel.BackgroundServices\GhostPanel.BackgroundServices.csproj" />
     <ProjectReference Include="..\GhostPanel.Core\GhostPanel.Core.csproj" />
     <ProjectReference Include="..\GhostPanel.Rcon\GhostPanel.Rcon.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Fakes\" />
+    <Folder Include="Rcon\Steam\" />
   </ItemGroup>
 
 </Project>

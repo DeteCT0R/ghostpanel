@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Management.Server;
@@ -17,9 +15,9 @@ namespace GhostPanel.Core.Management
         private readonly IRepository _repository;
         private readonly ICommandlineProcessor _commandlineProcessor;
 
-        public ServerProcessManagerWin(ILogger<ServerProcessManagerWin> logger, IRepository repository, ICommandlineProcessor commandlineProcessor)
+        public ServerProcessManagerWin(ILoggerFactory logger, IRepository repository, ICommandlineProcessor commandlineProcessor)
         {
-            _logger = logger;
+            _logger = logger.CreateLogger<ServerProcessManagerWin>();
             _repository = repository;
             _commandlineProcessor = commandlineProcessor;
         }
@@ -104,6 +102,40 @@ namespace GhostPanel.Core.Management
                 _logger.LogDebug("Unable to locate PID {pid}", pid);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Handle a server that has a PID set but has no executable running.
+        /// Attempt to restart 3 times.  If it continues to fail stop the server
+        /// </summary>
+        /// <param name="gameServer"></param>
+        public GameServer HandleCrashedServer(GameServer gameServer)
+        {
+            if (gameServer.Status != ServerStatusStates.Crashed)
+            {
+                _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);
+                gameServer.Status = ServerStatusStates.Crashed;
+                _repository.Update(gameServer);
+
+            }
+
+            if (gameServer.CurrentStats.RestartAttempts < 3) // TODO: Move max restarts to config
+            {
+                gameServer.CurrentStats.RestartAttempts++;
+                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.CurrentStats.RestartAttempts, gameServer.Id);
+                StartServer(gameServer);
+                _repository.Update(gameServer);
+            }
+            else
+            {
+                _logger.LogDebug("Server {id} has hit the max restart attempts.  Stopping server", gameServer.Id);
+                gameServer.Status = ServerStatusStates.Stopped;
+                gameServer.CurrentStats.Pid = null;
+                StopServer(gameServer);
+                _repository.Update(gameServer);
+            }
+
+            return gameServer;
         }
     }
 }
