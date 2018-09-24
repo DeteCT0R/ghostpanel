@@ -4,9 +4,9 @@ using GhostPanel.Core.Data.Model;
 
 namespace GhostPanel.Rcon
 {
-    public static class GameQueryFactory
+    public class GameQueryFactory : IGameQueryFactory
     {
-        public static IQueryProtocol GetQueryProtocol(GameServer gameServer)
+        public IQueryProtocol GetQueryProtocol(GameServer gameServer)
         {
             var queryType = Type.GetType(gameServer.Protocol.FullTypeName);
             if (queryType == null)

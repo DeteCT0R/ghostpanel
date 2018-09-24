@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using GhostPanel.Core.Data;
@@ -16,12 +17,14 @@ namespace GhostPanel.BackgroundServices
         private readonly ILogger _logger;
         private readonly IServerProcessManager _procManager;
         private readonly IRepository _repository;
+        private readonly IGameQueryFactory _gameQueryFactory;
 
-        public ServerStatService(ILoggerFactory logger, IServerProcessManagerProvider procManager, IRepository repository)
+        public ServerStatService(ILoggerFactory logger, IServerProcessManagerProvider procManager, IRepository repository, IGameQueryFactory gameQueryFactory)
         {
             _logger = logger.CreateLogger<ServerStatService>();
             _procManager = procManager.GetProcessManagerProvider();
             _repository = repository;
+            _gameQueryFactory = gameQueryFactory;
         }
 
         public GameServer CheckServerProc(GameServer gameServer)
@@ -57,16 +60,23 @@ namespace GhostPanel.BackgroundServices
             return gameServer;
         }
 
-        public async Task UpdateServerQueryStats(GameServer gameServer)
+        public async Task<GameServer> UpdateServerQueryStats(GameServer gameServer)
         {
-            Type serverInfoType = Type.GetType(gameServer.Protocol.ServerInfoType);
-            var query = GameQueryFactory.GetQueryProtocol(gameServer);
-            var serverInfo = await query.GetServerInfoAsync() as serverInfoType;
+            var query = _gameQueryFactory.GetQueryProtocol(gameServer);
+            var serverInfo = await query.GetServerInfoAsync();
             var playerInfo = await query.GetServerInfoAsync();
-            gameServer.CurrentStats.Map = serverInfo.Map;
-            gameServer.CurrentStats.CurrentPlayerCount = serverInfo.CurrentPlayers;
-            gameServer.CurrentStats.MaxPlayers = serverInfo.MaxPlayers;
+
+            foreach (PropertyInfo serverInfoProp in serverInfo.GetType().GetProperties())
+            {
+                var currentStatsProp = gameServer.CurrentStats.GetType().GetProperty(serverInfoProp.Name);
+                if (currentStatsProp != null)
+                {
+                    currentStatsProp.SetValue(gameServer.CurrentStats, serverInfoProp.GetValue(serverInfo));
+                }
+            }
+
             _repository.Update(gameServer);
+            return gameServer;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace UnitTests.Rcon
         public void GetQueryProtocolSteam()
         {
             var gameServer = GetGameServer();
-            var result = GameQueryFactory.GetQueryProtocol(gameServer);
+            var result = new GameQueryFactory().GetQueryProtocol(gameServer);
             Assert.IsType<SteamQueryProtocol>(result);
 
         }

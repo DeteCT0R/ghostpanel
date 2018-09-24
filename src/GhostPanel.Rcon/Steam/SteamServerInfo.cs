@@ -2,7 +2,7 @@
 
 namespace GhostPanel.Rcon.Steam
 {
-    internal class SteamServerInfo : ServerInfoBase
+    public class SteamServerInfo : ServerInfoBase
     {
         public ServerEnvironment Environment { get; set; }
         public string Folder { get; set; }
