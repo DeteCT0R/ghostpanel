@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
 using System.Threading.Tasks;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
@@ -60,11 +57,10 @@ namespace GhostPanel.BackgroundServices
             return gameServer;
         }
 
-        public async Task<GameServer> UpdateServerQueryStats(GameServer gameServer)
+        public async Task<GameServer> UpdateServerQueryStatsAsync(GameServer gameServer)
         {
             var query = _gameQueryFactory.GetQueryProtocol(gameServer);
             var serverInfo = await query.GetServerInfoAsync();
-            var playerInfo = await query.GetServerInfoAsync();
 
             foreach (PropertyInfo serverInfoProp in serverInfo.GetType().GetProperties())
             {

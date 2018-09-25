@@ -8,6 +8,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using GhostPanel.Core.Data;
 using System;
+using GhostPanel.BackgroundServices;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +24,7 @@ using GhostPanel.Core.Managment.GameFiles;
 using GhostPanel.Core.Background;
 using GhostPanel.Core.Management;
 using GhostPanel.Core.Management.Server;
+using GhostPanel.Rcon;
 
 namespace GhostPanel.Web
 {
@@ -70,12 +72,12 @@ namespace GhostPanel.Web
             builder.RegisterInstance(repository).SingleInstance();
             //builder.RegisterType<ServerManagerContainer>().SingleInstance();
             builder.RegisterType<PanelBackgroundTaskService>().As<IBackgroundService>().SingleInstance();
-            builder.RegisterType<ServerStatusUpdateService>().As<IBackgroundService>().SingleInstance();
+            //builder.RegisterType<ServerStatusUpdateService>().As<IBackgroundService>().SingleInstance();
 
             builder.RegisterType<BackgroundManager>().AsSelf().SingleInstance();
-            builder.RegisterType<ServerStatusBackgroundManager>().AsSelf().SingleInstance();
+            //builder.RegisterType<ServerStatusBackgroundManager>().AsSelf().SingleInstance();
             builder.RegisterType<PanelBackgroundWorker>().As<IHostedService>();
-            builder.RegisterType<ServerStatusBackgroundWorker>().As<IHostedService>();
+            //builder.RegisterType<ServerStatusBackgroundWorker>().As<IHostedService>();
 
             builder.RegisterType<CommandlineProcessor>().As<ICommandlineProcessor>().SingleInstance();
             builder.RegisterType<GameServerManagerRefac>().As<IGameServerManager>().SingleInstance();
@@ -83,10 +85,12 @@ namespace GhostPanel.Web
             builder.RegisterType<ServerProcessManagerProvider>().As<IServerProcessManagerProvider>().SingleInstance();
 
             builder.RegisterType<GameServerProvider>().As<IGameServerProvider>().SingleInstance();
-
+            builder.RegisterType<GameQueryFactory>().As<IGameQueryFactory>().SingleInstance();
+            builder.RegisterType<ServerStatService>().As<IServerStatService>().SingleInstance();
+            builder.RegisterType<ServerStatsRefresh>().As<IHostedService>().SingleInstance();
             //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
             //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
-            
+
 
             ApplicationContainer = builder.Build();
 

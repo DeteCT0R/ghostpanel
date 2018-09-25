@@ -8,7 +8,7 @@ namespace GhostPanel.Core.Data.Model
     {
         public int? Pid { get; set; }
         public string Map { get; set; }
-        public int CurrentPlayer { get; set; }
+        public int CurrentPlayers { get; set; }
         public int MaxPlayers { get; set; }
         public string Name { get; set; }
         public ServerStatusStates Status { get; set; }

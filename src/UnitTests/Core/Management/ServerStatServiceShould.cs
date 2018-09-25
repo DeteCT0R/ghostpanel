@@ -44,23 +44,25 @@ namespace UnitTests.Core.Management
             _mockGameQuery
                 .Setup(gq => gq.GetServerInfoAsync())
                 .ReturnsAsync(GetSteamServerInfo());
-            var gameServer = GetGameServer();
-            _mockGameQueryFact
-                .Setup(gqf => gqf.GetQueryProtocol(gameServer))
-                .Returns(new SteamQueryProtocol(IPAddress.Parse("111.111.111.111"), 27015));
+            
         }
 
         [Fact]
-        public void ValidateUpdateQueryStats()
+        public async void ValidateUpdateQueryStats()
         {
-            var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
             var gameServer = GetGameServer();
-            var query = _mockGameQueryFact.Object.GetQueryProtocol(gameServer);
-            var result = statService.UpdateServerQueryStats(gameServer);
-            Assert.Equal("Test server", gameServer.CurrentStats.Name);
-            Assert.Equal("de_dust", gameServer.CurrentStats.Map);
-            Assert.Equal(32, gameServer.CurrentStats.MaxPlayers);
-            Assert.Equal(10, gameServer.CurrentStats.CurrentPlayer);
+
+            _mockGameQueryFact
+                .Setup(gqf => gqf.GetQueryProtocol(gameServer))
+                .Returns(_mockGameQuery.Object);
+
+            var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
+
+            var result = await statService.UpdateServerQueryStatsAsync(gameServer);
+            Assert.Equal("Test server", result.CurrentStats.Name);
+            Assert.Equal("de_dust", result.CurrentStats.Map);
+            Assert.Equal(32, result.CurrentStats.MaxPlayers);
+            Assert.Equal(10, result.CurrentStats.CurrentPlayers);
         }
 
         [Fact]

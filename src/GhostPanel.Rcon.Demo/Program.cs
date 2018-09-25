@@ -15,8 +15,8 @@ namespace GhostPanel.Rcon.Demo
             var task = Task.Run(async () =>
             {
                 UdpClient client = new UdpClient();
-                var steam = new SteamQueryProtocol(new IPEndPoint(IPAddress.Parse("74.91.123.188"), 27015));
-                
+                var steam = new SteamQueryProtocol(new IPEndPoint(IPAddress.Parse("192.168.1.153"), 27015), null);
+                var result = await steam.GetServerInfoAsync();
 
                 Console.WriteLine("");
             });

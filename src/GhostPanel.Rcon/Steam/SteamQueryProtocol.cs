@@ -1,26 +1,45 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using CoreRCON;
 using CoreRCON.PacketFormats;
+using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.Rcon.Steam
 {
     public class SteamQueryProtocol : GameQuery
     {
         private IPEndPoint _endpoint;
+        private readonly ILogger _logger; 
 
-        public SteamQueryProtocol(IPEndPoint endpoint)
+        public SteamQueryProtocol(IPEndPoint endpoint, ILoggerFactory logger)
         {
             _endpoint = endpoint;
+            _logger = logger.CreateLogger<SteamQueryProtocol>();
         }
 
-        public SteamQueryProtocol(IPAddress ipAddress, int port) : this(new IPEndPoint(ipAddress, port)) { }
+        public SteamQueryProtocol(IPAddress ipAddress, int port, ILoggerFactory logger) : this(new IPEndPoint(ipAddress, port), logger) { }
 
         public override async Task<ServerInfoBase> GetServerInfoAsync()
         {
-            var result = await ServerQuery.Info(_endpoint, ServerQuery.ServerType.Source) as SourceQueryInfo;
-            return ConvertInfoResponse(result);
+            ServerInfoBase result;
+            try
+            {
+                var steamResult = await ServerQuery.Info(_endpoint, ServerQuery.ServerType.Source) as SourceQueryInfo;
+                result = ConvertInfoResponse(steamResult);
+            }
+            catch (SocketException e)
+            {
+                _logger.LogError("Socket Exception while trying to query server {ip}:{port}", _endpoint.Address, _endpoint.Port);
+                result = new SteamServerInfo()
+                {
+                    MaxPlayers = 0,
+                    CurrentPlayers = 0
+                };
+            }
+            
+            return result;
         }
 
 
@@ -37,6 +56,7 @@ namespace GhostPanel.Rcon.Steam
         /// <returns>SteamServerInfo</returns>
         private SteamServerInfo ConvertInfoResponse(SourceQueryInfo info)
         {
+            _logger.LogDebug("Converting SourceQueryInfo to SteamServerInfo");
             return new SteamServerInfo()
             {
                 Game = info.Game,

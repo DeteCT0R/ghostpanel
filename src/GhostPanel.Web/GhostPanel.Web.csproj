@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GhostPanel.BackgroundServices\GhostPanel.BackgroundServices.csproj" />
     <ProjectReference Include="..\GhostPanel.Db\GhostPanel.Db.csproj" />
     
   </ItemGroup>
