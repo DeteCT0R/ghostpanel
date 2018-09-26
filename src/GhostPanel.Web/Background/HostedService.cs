@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 
@@ -11,14 +12,11 @@ namespace GhostPanel.Web.Background
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("----------> Start Sync For Background Worker");
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _executingTask = ExecuteAsync(_cts.Token);
-            if (_executingTask.IsCompleted)
-            {
-                return _executingTask;
-            }
+            return _executingTask.IsCompleted ? _executingTask : Task.CompletedTask;
 
-            return Task.CompletedTask;
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

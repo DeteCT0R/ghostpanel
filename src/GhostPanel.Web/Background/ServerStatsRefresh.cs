@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using GhostPanel.BackgroundServices;
 using GhostPanel.Core.Providers;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.Web.Background

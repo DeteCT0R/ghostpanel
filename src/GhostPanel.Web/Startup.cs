@@ -75,19 +75,21 @@ namespace GhostPanel.Web
             //builder.RegisterType<ServerStatusUpdateService>().As<IBackgroundService>().SingleInstance();
 
             builder.RegisterType<BackgroundManager>().AsSelf().SingleInstance();
+            builder.RegisterType<ServerProcessManagerWin>().As<IServerProcessManager>().SingleInstance();
+            builder.RegisterType<ServerProcessManagerProvider>().As<IServerProcessManagerProvider>().SingleInstance();
             //builder.RegisterType<ServerStatusBackgroundManager>().AsSelf().SingleInstance();
+            builder.RegisterType<GameServerProvider>().As<IGameServerProvider>().SingleInstance();
+            builder.RegisterType<GameQueryFactory>().As<IGameQueryFactory>().SingleInstance();
+            builder.RegisterType<ServerStatService>().As<IServerStatService>().SingleInstance();
+            builder.RegisterType<ServerStatsRefresh>().As<IHostedService>();
             builder.RegisterType<PanelBackgroundWorker>().As<IHostedService>();
             //builder.RegisterType<ServerStatusBackgroundWorker>().As<IHostedService>();
 
             builder.RegisterType<CommandlineProcessor>().As<ICommandlineProcessor>().SingleInstance();
             builder.RegisterType<GameServerManagerRefac>().As<IGameServerManager>().SingleInstance();
-            builder.RegisterType<ServerProcessManagerWin>().As<IServerProcessManager>().SingleInstance();
-            builder.RegisterType<ServerProcessManagerProvider>().As<IServerProcessManagerProvider>().SingleInstance();
+            
 
-            builder.RegisterType<GameServerProvider>().As<IGameServerProvider>().SingleInstance();
-            builder.RegisterType<GameQueryFactory>().As<IGameQueryFactory>().SingleInstance();
-            builder.RegisterType<ServerStatService>().As<IServerStatService>().SingleInstance();
-            builder.RegisterType<ServerStatsRefresh>().As<IHostedService>().SingleInstance();
+            
             //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
             //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
 

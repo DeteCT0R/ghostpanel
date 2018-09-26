@@ -19,7 +19,7 @@ namespace GhostPanel.Core.Background
 
         public async Task Start()
         {
-            _logger.LogDebug("Running BackgroundService loop");
+            //_logger.LogDebug("Running BackgroundService loop");
             var mainLoop = Task.Run(async () =>
             {
                 while (true)

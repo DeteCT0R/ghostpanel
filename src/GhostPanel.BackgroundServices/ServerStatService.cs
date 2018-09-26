@@ -26,6 +26,7 @@ namespace GhostPanel.BackgroundServices
 
         public GameServer CheckServerProc(GameServer gameServer)
         {
+            _logger.LogDebug("Updating server status for server {id}", gameServer.Id);
             if (gameServer.CurrentStats.Pid == null)
             {
                 if (gameServer.Status != ServerStatusStates.Stopped)
@@ -59,6 +60,8 @@ namespace GhostPanel.BackgroundServices
 
         public async Task<GameServer> UpdateServerQueryStatsAsync(GameServer gameServer)
         {
+
+            _logger.LogDebug("Updating query stats for server {id}", gameServer.Id);
             var query = _gameQueryFactory.GetQueryProtocol(gameServer);
             var serverInfo = await query.GetServerInfoAsync();
 
