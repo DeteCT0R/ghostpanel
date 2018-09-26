@@ -24,7 +24,7 @@ namespace GhostPanel.Core.Providers
 
         public string GetSteamCmdDirectory()
         {
-            return _config.DefaultFilePaths.SteamCmdDirectory;
+            return _config.DefaultFilePaths.StreamCmdPath;
         }
     }
 }

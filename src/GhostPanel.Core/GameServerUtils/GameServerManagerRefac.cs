@@ -4,6 +4,7 @@ using GhostPanel.Core.Background;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Management;
+using GhostPanel.Core.Managment.GameFiles;
 using GhostPanel.Core.Providers;
 using Microsoft.Extensions.Logging;
 
@@ -75,7 +76,7 @@ namespace GhostPanel.Core.GameServerUtils
 
         public void InstallGameServer(GameServer gameServer)
         {
-            
+
             var fileProvider = _fileProvider.GetGameFileManager(gameServer);
             Action action = () => fileProvider.DownloadGameServerFiles(gameServer);
             _backgroundService.AddTask(new GenericBackgroundTask(action, _logFactory, string.Format("Install Game Server {0}", gameServer.Game.Id)));

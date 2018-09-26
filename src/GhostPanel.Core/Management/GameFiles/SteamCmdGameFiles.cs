@@ -43,7 +43,7 @@ namespace GhostPanel.Core.Managment.GameFiles
 
             ProcessStartInfo start = new ProcessStartInfo();
             start.Arguments = String.Format("+login {0} +force_install_dir \"{1}\" +app_update {2} +quit", _steamCmd.GetCredentialString(), gameServer.HomeDirectory, gameServer.Game.SteamAppId);
-            start.FileName = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD", "steamcmd.exe");
+            start.FileName = Path.Combine(_defaultDirs.GetSteamCmdDirectory(), "steamcmd.exe");
             Process proc = Process.Start(start);
             //return proc;
         }
@@ -76,14 +76,23 @@ namespace GhostPanel.Core.Managment.GameFiles
         /// </summary>
         private void InstallSteamCmd()
         {
-            string savePath = Path.Combine(Directory.GetCurrentDirectory(), "steamcmd.zip");
-            string extractPath = Path.Combine(Directory.GetCurrentDirectory(), "SteamCMD");
+            string savePath = Path.Combine(_defaultDirs.GetSteamCmdDirectory(), "steamcmd.zip");
+            // TODO: Catch exception for dir issues
+            if (!Directory.Exists(_defaultDirs.GetSteamCmdDirectory()))
+            {
+                Directory.CreateDirectory(_defaultDirs.GetSteamCmdDirectory());
+            }
             using (WebClient wc = new WebClient())
             {
                 wc.DownloadFile(steamCmdUrl, savePath);
             }
 
-            ZipFile.ExtractToDirectory(savePath, extractPath);
+            ZipFile.ExtractToDirectory(savePath, _defaultDirs.GetSteamCmdDirectory());
+            if (File.Exists(Path.Combine(_defaultDirs.GetSteamCmdDirectory(), "steamcmd.exe")))
+            {
+                File.Delete(Path.Combine(_defaultDirs.GetSteamCmdDirectory(), "steamcmd.zip"));
+            }
+
         }
 
         public int GetInstallProgress()
