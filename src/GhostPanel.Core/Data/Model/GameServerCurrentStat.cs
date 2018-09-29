@@ -15,5 +15,6 @@ namespace GhostPanel.Core.Data.Model
         public int RestartAttempts { get; set; } = 0;
         public GameServer Server { get; set; }
         public int ServerId { get; set; }
+        public GameServer GameServer { get; set; }
     }
 }

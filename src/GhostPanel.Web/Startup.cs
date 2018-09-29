@@ -25,6 +25,7 @@ using GhostPanel.Core.Background;
 using GhostPanel.Core.Management;
 using GhostPanel.Core.Management.Server;
 using GhostPanel.Rcon;
+using GhostPanel.Web.Modules;
 
 namespace GhostPanel.Web
 {
@@ -93,6 +94,7 @@ namespace GhostPanel.Web
             //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
             //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
 
+            builder.RegisterModule(new MediatorModule());
 
             ApplicationContainer = builder.Build();
 

@@ -37,7 +37,8 @@ namespace GhostPanel.Web.Background
                     await Task.Delay(5000); // TODO: Set in config
 
                 }
-                
+
+                await Task.Delay(5000);
             }
         }
     }

@@ -27,7 +27,7 @@ namespace GhostPanel.BackgroundServices
         public GameServer CheckServerProc(GameServer gameServer)
         {
             _logger.LogDebug("Updating server status for server {id}", gameServer.Id);
-            if (gameServer.CurrentStats.Pid == null)
+            if (gameServer.GameServerCurrentStats.Pid == null)
             {
                 if (gameServer.Status != ServerStatusStates.Stopped)
                 {
@@ -39,12 +39,12 @@ namespace GhostPanel.BackgroundServices
                 return gameServer;
             }
 
-            if (_procManager.IsRunning(gameServer.CurrentStats.Pid))
+            if (_procManager.IsRunning(gameServer.GameServerCurrentStats.Pid))
             {
                 if (gameServer.Status != ServerStatusStates.Running)
                 {
                     _logger.LogDebug("Game server {id} is running but status doesn't match.  Setting status to running", gameServer.Id);
-                    gameServer.CurrentStats.RestartAttempts = 0;
+                    gameServer.GameServerCurrentStats.RestartAttempts = 0;
                     gameServer.Status = ServerStatusStates.Running;
                     _repository.Update(gameServer);
                 }
@@ -67,10 +67,10 @@ namespace GhostPanel.BackgroundServices
 
             foreach (PropertyInfo serverInfoProp in serverInfo.GetType().GetProperties())
             {
-                var currentStatsProp = gameServer.CurrentStats.GetType().GetProperty(serverInfoProp.Name);
+                var currentStatsProp = gameServer.GameServerCurrentStats.GetType().GetProperty(serverInfoProp.Name);
                 if (currentStatsProp != null)
                 {
-                    currentStatsProp.SetValue(gameServer.CurrentStats, serverInfoProp.GetValue(serverInfo));
+                    currentStatsProp.SetValue(gameServer.GameServerCurrentStats, serverInfoProp.GetValue(serverInfo));
                 }
             }
 

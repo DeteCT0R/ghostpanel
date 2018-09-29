@@ -16,7 +16,7 @@ namespace GhostPanel.Rcon
 
         public IQueryProtocol GetQueryProtocol(GameServer gameServer)
         {
-            var queryType = Type.GetType(gameServer.Protocol.FullTypeName);
+            var queryType = Type.GetType(gameServer.GameProtocol.FullTypeName);
             if (queryType == null)
             {
                 return null;

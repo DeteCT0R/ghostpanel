@@ -59,10 +59,10 @@ namespace UnitTests.Core.Management
             var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
 
             var result = await statService.UpdateServerQueryStatsAsync(gameServer);
-            Assert.Equal("Test server", result.CurrentStats.Name);
-            Assert.Equal("de_dust", result.CurrentStats.Map);
-            Assert.Equal(32, result.CurrentStats.MaxPlayers);
-            Assert.Equal(10, result.CurrentStats.CurrentPlayers);
+            Assert.Equal("Test server", result.GameServerCurrentStats.Name);
+            Assert.Equal("de_dust", result.GameServerCurrentStats.Map);
+            Assert.Equal(32, result.GameServerCurrentStats.MaxPlayers);
+            Assert.Equal(10, result.GameServerCurrentStats.CurrentPlayers);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace UnitTests.Core.Management
         public void CheckServerProcSetRunning()
         {
             var gameServer = GetGameServer();
-            gameServer.CurrentStats.Pid = 111;
+            gameServer.GameServerCurrentStats.Pid = 111;
             var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
             var result = statService.CheckServerProc(gameServer);
             Assert.Equal(ServerStatusStates.Running, result.Status);
@@ -90,8 +90,8 @@ namespace UnitTests.Core.Management
         {
             var gameServer = new GameServer();
             gameServer.Status = ServerStatusStates.Running;
-            gameServer.CurrentStats = new GameServerCurrentStat();
-            gameServer.Protocol = new GameProtocol()
+            gameServer.GameServerCurrentStats = new GameServerCurrentStat();
+            gameServer.GameProtocol = new GameProtocol()
             {
                 FullTypeName = "GhostPanel.Rcon.Steam.SteamQueryProtocol"
             };

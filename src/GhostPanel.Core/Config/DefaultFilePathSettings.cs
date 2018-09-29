@@ -4,6 +4,6 @@
     {
         public string BaseInstallDirectory { get; set; }
         public string GameFileDirectory { get; set; }
-        public string StreamCmdPath { get; set; }
+        public string SteamCmdDirectory { get; set; }
     }
 }

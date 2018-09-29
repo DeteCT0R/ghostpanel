@@ -8,6 +8,7 @@ using GhostPanel.Core.Managment.GameFiles;
 using Xunit;
 using System.Data;
 using GhostPanel.Core.Exceptions;
+using MediatR;
 
 namespace UnitTests.Core.ProviderTests
 {

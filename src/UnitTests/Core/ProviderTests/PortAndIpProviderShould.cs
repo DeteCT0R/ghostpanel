@@ -1,8 +1,6 @@
 ﻿using GhostPanel.Core.Data;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.Providers;
@@ -29,27 +27,14 @@ namespace UnitTests.Core.ProviderTests
             mockRepo
                 .Setup(x => x.List(It.IsAny<GameServerPolicy>()))
                 .Returns(GetGameServer());
-            mockRepo
-                .Setup(x => x.Single(It.IsAny<ISpecification<Game>>()))
-                .Returns(GetGame());
+
             IPortAndIpProvider portProvider = new PortAndIpProvider(mockRepo.Object, _logger);
 
-            var port = portProvider.GetNextAvailablePort(1, "192.168.1.1");
+            var port = portProvider.GetNextAvailablePort(27015, "192.168.1.1", 10);
             Assert.Equal(27015, port);
         }
 
-        [Fact]
-        public void ReturnsGameNotFoundException()
-        {
-            Mock<IRepository> mockRepo = new Mock<IRepository>();
-            mockRepo
-                .Setup(x => x.Single(It.IsAny<ISpecification<Game>>()))
-                .Returns((Game)null);
-
-            IPortAndIpProvider portProvider = new PortAndIpProvider(mockRepo.Object, _logger);
-            Assert.Throws<GameNotFoundException>(() => portProvider.GetNextAvailablePort(1, "192.168.1.1"));
-        }
-
+        
         public List<GameServer> GetGameServer()
         {
             return new List<GameServer>();

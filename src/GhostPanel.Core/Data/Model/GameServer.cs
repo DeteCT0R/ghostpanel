@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using GhostPanel.Core.GameServerUtils;
 
@@ -18,11 +19,12 @@ namespace GhostPanel.Core.Data.Model
         public string CommandLine { get; set; }
         public int Slots { get; set; }
         public string RconPassword { get; set; }
+        public Guid Guid { get; set; } = Guid.NewGuid();
         public ServerStatusStates Status { get; set; }
         public Dictionary<string, string> CustomCommandLineArgs { get; set; }
         public Game Game { get; set; }
-        public GameServerCurrentStat CurrentStats { get; set; }
-        public GameProtocol Protocol { get; set; }
+        public GameServerCurrentStat GameServerCurrentStats { get; set; }
+        public GameProtocol GameProtocol { get; set; }
 
 
 

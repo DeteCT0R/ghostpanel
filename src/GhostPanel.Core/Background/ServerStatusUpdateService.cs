@@ -38,7 +38,7 @@ namespace GhostPanel.Core.Background
                     var servers = _repository.List<GameServer>();
                     foreach (GameServer gameServer in servers)
                     {
-                        if (gameServer.CurrentStats.Pid == null)
+                        if (gameServer.GameServerCurrentStats.Pid == null)
                         {
                             if (gameServer.Status != ServerStatusStates.Stopped)
                             {
@@ -50,12 +50,12 @@ namespace GhostPanel.Core.Background
                             continue;
                         }
 
-                        if (_procManager.IsRunning(gameServer.CurrentStats.Pid))
+                        if (_procManager.IsRunning(gameServer.GameServerCurrentStats.Pid))
                         {
                             if (gameServer.Status != ServerStatusStates.Running)
                             {
                                 _logger.LogDebug("Game server {id} is running but status doesn't match.  Setting status to running", gameServer.Id);
-                                gameServer.CurrentStats.RestartAttempts = 0;
+                                gameServer.GameServerCurrentStats.RestartAttempts = 0;
                                 gameServer.Status = ServerStatusStates.Running;
                                 _repository.Update(gameServer);
                             }

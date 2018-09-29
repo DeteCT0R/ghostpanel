@@ -2,6 +2,6 @@
 {
     public interface IPortAndIpProvider
     {
-        int GetNextAvailablePort(int gameId, string targetIp);
+        int GetNextAvailablePort(int targetPort, string targetIp, int portIncrement);
     }
 }

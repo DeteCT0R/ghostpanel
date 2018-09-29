@@ -38,10 +38,7 @@ namespace GhostPanel.Web
                 repository.Create(GetInitialGame());
             }
 
-            if (!repository.List<GameServer>().Any())
-            {
-                repository.Create(GetInitialGameServer());
-            }
+
         }
 
         private static List<Game> GetInitialGame()
@@ -57,7 +54,7 @@ namespace GhostPanel.Web
                     MinSlots = 8,
                     DefaultSlots = 8,
                     PortIncrement = 10,
-                    GamePort = 24836
+                    GamePort = 27015
                 }
             };
         }

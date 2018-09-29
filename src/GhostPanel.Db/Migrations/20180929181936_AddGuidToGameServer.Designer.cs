@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GhostPanel.Db.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20180918030427_CustomCommandLineArgs")]
-    partial class CustomCommandLineArgs
+    [Migration("20180929181936_AddGuidToGameServer")]
+    partial class AddGuidToGameServer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,23 @@ namespace GhostPanel.Db.Migrations
                     b.ToTable("Games");
                 });
 
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameProtocol", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FullTypeName");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("ServerInfoType");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GameProtocol");
+                });
+
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServer", b =>
                 {
                     b.Property<int>("Id")
@@ -70,17 +87,23 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<int>("GamePort");
 
+                    b.Property<int?>("GameProtocolId");
+
+                    b.Property<Guid>("Guid");
+
                     b.Property<string>("HomeDirectory");
 
                     b.Property<string>("IpAddress");
 
                     b.Property<bool>("IsEnabled");
 
-                    b.Property<int?>("Pid");
-
                     b.Property<int>("QueryPort");
 
+                    b.Property<string>("RconPassword");
+
                     b.Property<string>("ServerName");
+
+                    b.Property<int>("Slots");
 
                     b.Property<string>("StartDirectory");
 
@@ -92,7 +115,43 @@ namespace GhostPanel.Db.Migrations
 
                     b.HasIndex("GameId");
 
+                    b.HasIndex("GameProtocolId");
+
                     b.ToTable("GameServers");
+                });
+
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CurrentPlayers");
+
+                    b.Property<int?>("GameServerId");
+
+                    b.Property<string>("Map");
+
+                    b.Property<int>("MaxPlayers");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("Pid");
+
+                    b.Property<int>("RestartAttempts");
+
+                    b.Property<int>("ServerId");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameServerId");
+
+                    b.HasIndex("ServerId")
+                        .IsUnique();
+
+                    b.ToTable("GameServerCurrentStat");
                 });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServer", b =>
@@ -100,6 +159,22 @@ namespace GhostPanel.Db.Migrations
                     b.HasOne("GhostPanel.Core.Data.Model.Game", "Game")
                         .WithMany("GameServers")
                         .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("GhostPanel.Core.Data.Model.GameProtocol", "GameProtocol")
+                        .WithMany("GameServers")
+                        .HasForeignKey("GameProtocolId");
+                });
+
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStat", b =>
+                {
+                    b.HasOne("GhostPanel.Core.Data.Model.GameServer", "GameServer")
+                        .WithMany()
+                        .HasForeignKey("GameServerId");
+
+                    b.HasOne("GhostPanel.Core.Data.Model.GameServer", "Server")
+                        .WithOne("GameServerCurrentStats")
+                        .HasForeignKey("GhostPanel.Core.Data.Model.GameServerCurrentStat", "ServerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

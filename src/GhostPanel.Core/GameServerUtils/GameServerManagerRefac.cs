@@ -18,16 +18,12 @@ namespace GhostPanel.Core.GameServerUtils
         private readonly ILogger _logger;
         private readonly IServerProcessManager _procManager;
         private readonly IRepository _repository;
-        private readonly IPortAndIpProvider _portProvider;
-        private readonly IDefaultDirectoryProvider _dirProvider;
 
         public GameServerManagerRefac(IGameFileManagerProvider fileProvider, 
             IBackgroundService backgroundService, 
             ILoggerFactory logFactory, 
             IServerProcessManagerProvider procManager, 
-            IRepository repository,
-            IPortAndIpProvider portProvider,
-            IDefaultDirectoryProvider dirProvider)
+            IRepository repository)
         {
             _fileProvider = fileProvider;
             _logFactory = logFactory;
@@ -35,20 +31,9 @@ namespace GhostPanel.Core.GameServerUtils
             _backgroundService = backgroundService;
             _repository = repository;
             _procManager = procManager.GetProcessManagerProvider();
-            _portProvider = portProvider;
-            _dirProvider = dirProvider;
-        }
 
-        public void CreateGameServer(GameServer gameServer)
-        {
-            gameServer.GamePort = _portProvider.GetNextAvailablePort(gameServer.GameId, gameServer.IpAddress);
-            gameServer.QueryPort = _portProvider.GetNextAvailablePort(gameServer.GameId, gameServer.IpAddress);
-            gameServer.Status = ServerStatusStates.Installing;
-            _repository.Create(gameServer); // Need ID for path
-            gameServer.HomeDirectory = Path.Combine(_dirProvider.GetBaseInstallDirectory(), gameServer.Id.ToString());
-            _repository.Update(gameServer);
-            InstallGameServer(gameServer);
         }
+        
 
         public void DeleteGameServerFiles(GameServer gameServer)
         {

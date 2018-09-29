@@ -1,21 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GhostPanel.Db.Migrations
 {
-    public partial class AddRconPassword2 : Migration
+    public partial class AddGuidToGameServer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "RconPassword",
+            migrationBuilder.AddColumn<Guid>(
+                name: "Guid",
                 table: "GameServers",
-                nullable: true);
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "RconPassword",
+                name: "Guid",
                 table: "GameServers");
         }
     }

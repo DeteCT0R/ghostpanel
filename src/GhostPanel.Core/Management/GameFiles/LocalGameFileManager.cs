@@ -6,6 +6,8 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using GhostPanel.Core.Data;
+using GhostPanel.Core.Notifications;
+using MediatR;
 
 namespace GhostPanel.Core.Management.GameFiles
 {
@@ -14,10 +16,12 @@ namespace GhostPanel.Core.Management.GameFiles
         private readonly ILogger _logger;
         private readonly IDefaultDirectoryProvider _defaultDirs;
 
+
         public LocalGameFileManager(ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs) : base(logger)
         {
             _logger = logger.CreateLogger<FileServerGameFiles>();
             _defaultDirs = defaultDirs;
+
         }
 
         public void DownloadGameServerFiles(GameServer gameServer)

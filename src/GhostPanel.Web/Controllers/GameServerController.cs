@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using GhostPanel.Core.Commands;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.GameServerUtils;
 using GhostPanel.Core.Managment;
 using GhostPanel.Core.Providers;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -22,11 +24,17 @@ namespace GhostPanel.Web.Controllers
         private readonly ILoggerFactory _logFactory;
         private readonly IGameServerManager _serverManager;
         private readonly IDefaultDirectoryProvider _defaultDirs;
+        private readonly IMediator _mediator;
 
-        public GameServerController(IRepository repository, ILoggerFactory logger, IGameServerManager serverManager, IDefaultDirectoryProvider defaultDirs)
+        public GameServerController(IRepository repository,
+            ILoggerFactory logger,
+            IGameServerManager serverManager,
+            IDefaultDirectoryProvider defaultDirs,
+            IMediator mediator)
         {
             _repository = repository;
             _defaultDirs = defaultDirs;
+            _mediator = mediator;
             _serverManager = serverManager;
             _logger = logger.CreateLogger<GameServerController>();
             _logFactory = logger;
@@ -50,6 +58,7 @@ namespace GhostPanel.Web.Controllers
         }
 
 
+
         [HttpGet("{id:int}/{command}")]
         public void Get(int id, string command)
         {
@@ -62,13 +71,13 @@ namespace GhostPanel.Web.Controllers
                 switch (command.ToLower())
                 {
                     case "start":
-                        _serverManager.StartServer(gameServer);
+                        _mediator.Send(new RestartServerCommand(gameServer));
                         break;
                     case "stop":
-                        _serverManager.StopServer(gameServer);
+                        _mediator.Send(new StopServerCommand(gameServer));
                         break;
                     case "restart":
-                        _serverManager.RestartServer(gameServer);
+                        _mediator.Send(new RestartServerCommand(gameServer));
                         break;
                     case "reinstall":
                         _serverManager.ReinstallGameServer(gameServer);
@@ -84,8 +93,8 @@ namespace GhostPanel.Web.Controllers
         [HttpPost]
         public RequestResponse Post(GameServer gameServer)
         {
-            _serverManager.CreateGameServer(gameServer);
-            
+            _mediator.Send(new CreateServerCommand(gameServer));
+
             return new RequestResponse()
             {
                 message = "Game server now installing",

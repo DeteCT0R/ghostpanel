@@ -17,16 +17,10 @@ namespace GhostPanel.Core.Providers
             _logger = logger;
         }
 
-        public int GetNextAvailablePort(int gameId, string targetIp)
+        public int GetNextAvailablePort(int targetPort, string targetIp, int portIncrement = 10)
         {
-            // TODO: Need to query with IP as well.  Can have same port on different IPs
-            var game = _repository.Single(DataItemPolicy<Game>.ById(gameId));
-            if (game == null)
-            {
-                throw new GameNotFoundException("No game found with ID " + gameId.ToString());
-            }
 
-            int testPort = game.GamePort;
+            int testPort = targetPort;
 
             // TODO: This seems like a terriable idea
             while (true)
@@ -36,7 +30,7 @@ namespace GhostPanel.Core.Providers
                 if (result.Count > 0)
                 {
                     _logger.LogDebug("Found game server using port {port}, skipping", testPort);
-                    testPort = testPort + game.PortIncrement;
+                    testPort = testPort + portIncrement;
                     continue;
                 }
 

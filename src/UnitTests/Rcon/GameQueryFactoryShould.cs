@@ -29,7 +29,7 @@ namespace UnitTests.Rcon
             {
                 IpAddress = "192.168.1.1",
                 QueryPort = 27015,
-                Protocol = protocol
+                GameProtocol = protocol
             };
         }
     }

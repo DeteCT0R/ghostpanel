@@ -25,33 +25,33 @@ namespace GhostPanel.Core.Management
         public void StopServer(GameServer gameServer)
         {
             _logger.LogDebug("Attempting to stop game server");
-            if (!IsRunning(gameServer.CurrentStats.Pid))
+            if (!IsRunning(gameServer.GameServerCurrentStats.Pid))
             {
                 return;
             }
 
             try
             {
-                Process proc = Process.GetProcessById((int)gameServer.CurrentStats.Pid);
+                Process proc = Process.GetProcessById((int)gameServer.GameServerCurrentStats.Pid);
                 proc.Kill();
-                gameServer.CurrentStats.Pid = null;
+                gameServer.GameServerCurrentStats.Pid = null;
                 _repository.Update(gameServer);
                 gameServer.Status = ServerStatusStates.Stopped;
-                _logger.LogInformation("Killed game server with pid {pid}", gameServer.CurrentStats.Pid);
+                _logger.LogInformation("Killed game server with pid {pid}", gameServer.GameServerCurrentStats.Pid);
                 return;
             }
             catch (ArgumentException e)
             {
-                _logger.LogError("Unable to locate PID {pid}", gameServer.CurrentStats.Pid);
+                _logger.LogError("Unable to locate PID {pid}", gameServer.GameServerCurrentStats.Pid);
                 return;
             }
         }
 
         public Process StartServer(GameServer gameServer)
         {
-            if (IsRunning(gameServer.CurrentStats.Pid))
+            if (IsRunning(gameServer.GameServerCurrentStats.Pid))
             {
-                _logger.LogDebug("Server {id} is already running with PID {pid}", gameServer.Id, gameServer.CurrentStats.Pid);
+                _logger.LogDebug("Server {id} is already running with PID {pid}", gameServer.Id, gameServer.GameServerCurrentStats.Pid);
                 return null;
             }
 
@@ -65,7 +65,7 @@ namespace GhostPanel.Core.Management
             start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;
             Process proc = Process.Start(start);
-            gameServer.CurrentStats.Pid = proc.Id;
+            gameServer.GameServerCurrentStats.Pid = proc.Id;
             _repository.Update(gameServer);
             // TODO: Add check to see if process actually started
 
@@ -119,10 +119,10 @@ namespace GhostPanel.Core.Management
 
             }
 
-            if (gameServer.CurrentStats.RestartAttempts < 3) // TODO: Move max restarts to config
+            if (gameServer.GameServerCurrentStats.RestartAttempts < 3) // TODO: Move max restarts to config
             {
-                gameServer.CurrentStats.RestartAttempts++;
-                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.CurrentStats.RestartAttempts, gameServer.Id);
+                gameServer.GameServerCurrentStats.RestartAttempts++;
+                _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.GameServerCurrentStats.RestartAttempts, gameServer.Id);
                 StartServer(gameServer);
                 _repository.Update(gameServer);
             }
@@ -130,7 +130,7 @@ namespace GhostPanel.Core.Management
             {
                 _logger.LogDebug("Server {id} has hit the max restart attempts.  Stopping server", gameServer.Id);
                 gameServer.Status = ServerStatusStates.Stopped;
-                gameServer.CurrentStats.Pid = null;
+                gameServer.GameServerCurrentStats.Pid = null;
                 StopServer(gameServer);
                 _repository.Update(gameServer);
             }
