@@ -1,4 +1,4 @@
-﻿namespace GhostPanel.Rcon
+﻿namespace GhostPanel.Communication.Query
 {
     public abstract class ServerInfoBase
     {

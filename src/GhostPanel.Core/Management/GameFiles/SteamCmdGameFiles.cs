@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.Net;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Providers;
+using MediatR;
 
 namespace GhostPanel.Core.Managment.GameFiles
 {
@@ -17,13 +18,14 @@ namespace GhostPanel.Core.Managment.GameFiles
         private readonly IDefaultDirectoryProvider _defaultDirs;
         private ISteamCredentialProvider _steamCmd;
         private readonly ILogger _logger;
+        private readonly IMediator _mediator;
 
-        public SteamCmdGameFiles(ISteamCredentialProvider steamCmd, ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs) : base(logger)
+        public SteamCmdGameFiles(ISteamCredentialProvider steamCmd, ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs, IMediator mediator) : base(logger, mediator)
         {
             _logger = logger.CreateLogger<SteamCmdGameFiles>();
             _steamCmd = steamCmd;
             _defaultDirs = defaultDirs;
-
+            _mediator = mediator;
         }
 
         

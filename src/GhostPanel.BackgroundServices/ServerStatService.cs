@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Threading.Tasks;
+using GhostPanel.Communication.Query;
 using GhostPanel.Core.Commands;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
@@ -72,8 +73,10 @@ namespace GhostPanel.BackgroundServices
 
             _logger.LogDebug("Updating query stats for server {id}", gameServer.Id);
             var query = _gameQueryFactory.GetQueryProtocol(gameServer);
+            var players = await query.GetServerPlayersAsync();
             var serverInfo = await query.GetServerInfoAsync();
-
+            var statsWrapper = new ServerStatsWrapper(serverInfo, players);
+            _mediator.Publish(new ServerStatsUpdateNotification(statsWrapper));
             foreach (PropertyInfo serverInfoProp in serverInfo.GetType().GetProperties())
             {
                 var currentStatsProp = gameServer.GameServerCurrentStats.GetType().GetProperty(serverInfoProp.Name);

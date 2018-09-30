@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using GhostPanel.Rcon.Steam.Packets;
 
-namespace GhostPanel.Rcon
+namespace GhostPanel.Communication.Query
 {
     public interface IQueryProtocol
     {

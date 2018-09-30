@@ -9,8 +9,9 @@ using GhostPanel.Core.Providers;
 using System.IO;
 using GhostPanel.Core.Notifications;
 using GhostPanel.Core.Data.Specifications;
+using GhostPanel.Core.Commands;
 
-namespace GhostPanel.Core.Commands
+namespace GhostPanel.Core.Handlers.Commands
 {
     public class CreateServerCommandHandler : IRequestHandler<CreateServerCommand, CommandResponseGameServer>
     {

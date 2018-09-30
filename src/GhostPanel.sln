@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Db", "GhostPanel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Web", "GhostPanel.Web\GhostPanel.Web.csproj", "{F7504895-C91D-4DA0-961F-D27656054B01}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Rcon", "GhostPanel.Rcon\GhostPanel.Rcon.csproj", "{76D61DC4-8A75-47BE-A864-A53E3AD80043}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Communication", "GhostPanel.Rcon\GhostPanel.Communication.csproj", "{76D61DC4-8A75-47BE-A864-A53E3AD80043}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.Rcon.Demo", "GhostPanel.Rcon.Demo\GhostPanel.Rcon.Demo.csproj", "{4B8F4FED-352D-4C5E-8138-2FFD6ECB72B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostPanel.BackgroundServices", "GhostPanel.BackgroundServices\GhostPanel.BackgroundServices.csproj", "{2FD19E62-B741-43AD-B963-20EAB5425D28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostPanel.BackgroundServices", "GhostPanel.BackgroundServices\GhostPanel.BackgroundServices.csproj", "{2FD19E62-B741-43AD-B963-20EAB5425D28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

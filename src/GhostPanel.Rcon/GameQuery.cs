@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 
-namespace GhostPanel.Rcon
+namespace GhostPanel.Communication.Query
 {
     public abstract class GameQuery : IQueryProtocol
     {

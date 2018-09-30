@@ -1,4 +1,4 @@
-﻿namespace GhostPanel.Rcon.Steam
+﻿namespace GhostPanel.Communication.Query.Steam
 {
     /// <summary>
     /// Taken from https://github.com/ScottKaye/CoreRCON/blob/master/src/CoreRCON/Extensions.cs

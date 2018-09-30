@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using GhostPanel.Core.Commands;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
+using GhostPanel.Core.Notifications;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace GhostPanel.Core.Commands
+namespace GhostPanel.Core.Handlers.Commands
 {
     public class ProcessCrashedServerCommandHandler : IRequestHandler<ProcessCrashedServerCommand, CommandResponseGameServer>
     {
@@ -51,6 +50,8 @@ namespace GhostPanel.Core.Commands
                 gameServer.GameServerCurrentStats.RestartAttempts++;
                 _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.GameServerCurrentStats.RestartAttempts, gameServer.Id);
                 _mediator.Send(new RestartServerCommand(request.gameServerId));
+                _mediator.Publish(new ServerCrashNotification(
+                    $"Server {gameServer.Id} has crashed.  Attempt {gameServer.GameServerCurrentStats.RestartAttempts} to restart the server"));
                 _repository.Update(gameServer);
             }
             else
@@ -60,6 +61,8 @@ namespace GhostPanel.Core.Commands
                 gameServer.GameServerCurrentStats.Pid = null;
                 _mediator.Send(new StopServerCommand(request.gameServerId));
                 _repository.Update(gameServer);
+                _mediator.Publish(new ServerCrashNotification(
+                    $"Server {gameServer.Id} has reached the max amount of restart attemps and will be stopped"));
             }
 
             return Task.FromResult(response);

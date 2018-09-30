@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GhostPanel.Rcon.Steam
+namespace GhostPanel.Communication.Query.Steam
 {
     class SteamServerPlayer : ServerPlayersBase
     {

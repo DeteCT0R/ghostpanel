@@ -5,9 +5,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.IO.Compression;
-using GhostPanel.Core.Data;
-using GhostPanel.Core.Notifications;
 using MediatR;
+using GhostPanel.Core.Notifications;
 
 namespace GhostPanel.Core.Management.GameFiles
 {
@@ -15,13 +14,13 @@ namespace GhostPanel.Core.Management.GameFiles
     {   
         private readonly ILogger _logger;
         private readonly IDefaultDirectoryProvider _defaultDirs;
+        private readonly IMediator _mediator;
 
-
-        public LocalGameFileManager(ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs) : base(logger)
+        public LocalGameFileManager(ILoggerFactory logger, IDefaultDirectoryProvider defaultDirs, IMediator mediator) : base(logger, mediator)
         {
-            _logger = logger.CreateLogger<FileServerGameFiles>();
+            _logger = logger.CreateLogger<LocalGameFileManager>();
             _defaultDirs = defaultDirs;
-
+            _mediator = mediator;
         }
 
         public void DownloadGameServerFiles(GameServer gameServer)
@@ -40,6 +39,8 @@ namespace GhostPanel.Core.Management.GameFiles
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Error while trying to extract game files");
+                    _mediator.Publish(new ServerInstallStatusNotification("Failed",
+                        $"Game server install failed during file extraction: {e.ToString()}"));
                     throw;
                 }
 
@@ -47,6 +48,8 @@ namespace GhostPanel.Core.Management.GameFiles
             else
             {
                 _logger.LogError("Unable to find install files at {path}", fullSourcePath);
+                _mediator.Publish(new ServerInstallStatusNotification("Failed",
+                    $"Unable to located game files {fullSourcePath}"));
                 return;
             }
         }

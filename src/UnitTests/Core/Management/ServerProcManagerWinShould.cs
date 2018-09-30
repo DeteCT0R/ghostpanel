@@ -33,7 +33,7 @@ namespace UnitTests.Core.Management
         public void MarkServerAsCrashed()
         {
             var gameServer = GetGameServer();
-            var procManager = new ServerProcessManagerWin(_logger, _mockRepo.Object, _clProces.Object);
+            var procManager = new ServerProcessManagerWin(_logger, _clProces.Object);
             gameServer.GameServerCurrentStats.Pid = Process.GetCurrentProcess().Id; ; // TODO: This is hacky and just prevnts the it attempting to start the server
             var result = procManager.HandleCrashedServer(gameServer);
             Assert.Equal(ServerStatusStates.Crashed, result.GameServerCurrentStats.Status);
@@ -43,7 +43,7 @@ namespace UnitTests.Core.Management
         public void MarkServerAsStoppedAfterThreeAttempts()
         {
             var gameServer = GetGameServer();
-            var procManager = new ServerProcessManagerWin(_logger, _mockRepo.Object, _clProces.Object);
+            var procManager = new ServerProcessManagerWin(_logger, _clProces.Object);
             gameServer.GameServerCurrentStats.RestartAttempts = 3;
             var result = procManager.HandleCrashedServer(gameServer);
             Assert.Equal(ServerStatusStates.Stopped, result.GameServerCurrentStats.Status);

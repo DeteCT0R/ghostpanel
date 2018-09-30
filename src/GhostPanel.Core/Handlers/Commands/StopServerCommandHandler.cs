@@ -1,29 +1,30 @@
-﻿using System;
+﻿using GhostPanel.Core.Management;
+using GhostPanel.Core.Providers;
+using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
-using GhostPanel.Core.Management;
-using GhostPanel.Core.Providers;
-using MediatR;
+using GhostPanel.Core.Commands;
 
-namespace GhostPanel.Core.Commands
+namespace GhostPanel.Core.Handlers.Commands
 {
-    public class RestartServerCommandHandler : IRequestHandler<RestartServerCommand, CommandResponseGameServer>
+    public class StopServerCommandHandler : IRequestHandler<StopServerCommand, CommandResponseGameServer>
     {
         private readonly IMediator _mediator;
         private readonly IServerProcessManager _procManager;
         private readonly IRepository _repository;
 
-        public RestartServerCommandHandler(IMediator mediator, IServerProcessManagerProvider procProvider, IRepository repository)
+        public StopServerCommandHandler(IMediator mediator, IServerProcessManagerProvider procProvider, IRepository repository)
         {
             _mediator = mediator;
             _repository = repository;
             _procManager = procProvider.GetProcessManagerProvider();
         }
 
-        public Task<CommandResponseGameServer> Handle(RestartServerCommand request, CancellationToken cancellationToken)
+        public Task<CommandResponseGameServer> Handle(StopServerCommand request, CancellationToken cancellationToken)
         {
             var response = new CommandResponseGameServer();
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(request.gameServerId));
@@ -34,26 +35,25 @@ namespace GhostPanel.Core.Commands
                 response.message = $"Unable located game server with ID {request.gameServerId}";
                 return Task.FromResult(response);
             }
-
             response.payload = gameServer;
             try
             {
-                var proc = _procManager.RestartServer(gameServer);
-                response.status = CommandResponseStatusEnum.Success;
-                gameServer.GameServerCurrentStats.Pid = proc.Id;
+                _procManager.StopServer(gameServer);
+                gameServer.GameServerCurrentStats.Status = ServerStatusStates.Stopped;
+                gameServer.GameServerCurrentStats.Pid = null;
                 _repository.Update(gameServer);
+                response.status = CommandResponseStatusEnum.Success;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 response.status = CommandResponseStatusEnum.Error;
                 response.message = e.ToString();
-                gameServer.GameServerCurrentStats.Status = ServerStatusStates.Error;
-                _repository.Update(gameServer);
             }
-
+            
             return Task.FromResult(response);
         }
-
     }
+
+
 }

@@ -12,13 +12,11 @@ namespace GhostPanel.Core.Management
     public class ServerProcessManagerWin : IServerProcessManager
     {
         private readonly ILogger _logger;
-        private readonly IRepository _repository;
         private readonly ICommandlineProcessor _commandlineProcessor;
 
-        public ServerProcessManagerWin(ILoggerFactory logger, IRepository repository, ICommandlineProcessor commandlineProcessor)
+        public ServerProcessManagerWin(ILoggerFactory logger, ICommandlineProcessor commandlineProcessor)
         {
             _logger = logger.CreateLogger<ServerProcessManagerWin>();
-            _repository = repository;
             _commandlineProcessor = commandlineProcessor;
         }
 
@@ -116,7 +114,7 @@ namespace GhostPanel.Core.Management
             {
                 _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);
                 gameServer.GameServerCurrentStats.Status = ServerStatusStates.Crashed;
-                _repository.Update(gameServer);
+
 
             }
 
@@ -125,7 +123,7 @@ namespace GhostPanel.Core.Management
                 gameServer.GameServerCurrentStats.RestartAttempts++;
                 _logger.LogDebug("Attempt #{attempt} to restart server {id}", gameServer.GameServerCurrentStats.RestartAttempts, gameServer.Id);
                 StartServer(gameServer);
-                _repository.Update(gameServer);
+
             }
             else
             {
@@ -133,7 +131,7 @@ namespace GhostPanel.Core.Management
                 gameServer.GameServerCurrentStats.Status = ServerStatusStates.Stopped;
                 gameServer.GameServerCurrentStats.Pid = null;
                 StopServer(gameServer);
-                _repository.Update(gameServer);
+
             }
 
             return gameServer;

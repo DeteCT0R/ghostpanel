@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GhostPanel.Rcon\GhostPanel.Rcon.csproj" />
+    <ProjectReference Include="..\GhostPanel.Rcon\GhostPanel.Communication.csproj" />
   </ItemGroup>
 
 </Project>

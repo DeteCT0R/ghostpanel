@@ -7,6 +7,7 @@ using GhostPanel.Core.Management;
 using GhostPanel.Core.Providers;
 using GhostPanel.Rcon;
 using GhostPanel.Rcon.Steam;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
@@ -20,6 +21,7 @@ namespace UnitTests.Core.Management
         private Mock<IRepository> _mockRepo;
         private Mock<IGameQueryFactory> _mockGameQueryFact;
         private Mock<IQueryProtocol> _mockGameQuery;
+        private Mock<IMediator> _mockMediator;
 
         public ServerStatServiceShould()
         {
@@ -44,6 +46,8 @@ namespace UnitTests.Core.Management
             _mockGameQuery
                 .Setup(gq => gq.GetServerInfoAsync())
                 .ReturnsAsync(GetSteamServerInfo());
+
+            _mockMediator = new Mock<IMediator>();
             
         }
 
@@ -56,7 +60,7 @@ namespace UnitTests.Core.Management
                 .Setup(gqf => gqf.GetQueryProtocol(gameServer))
                 .Returns(_mockGameQuery.Object);
 
-            var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
+            var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object, _mockMediator.Object);
 
             var result = await statService.UpdateServerQueryStatsAsync(gameServer);
             Assert.Equal("Test server", result.GameServerCurrentStats.Name);
@@ -69,7 +73,7 @@ namespace UnitTests.Core.Management
         public void CheckServerProcSetStopped()
         {
             var gameServer = GetGameServer();
-            var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
+            var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object, _mockMediator.Object);
             var result = statService.CheckServerProc(gameServer);
             Assert.Equal(ServerStatusStates.Stopped, result.GameServerCurrentStats.Status);
 
@@ -80,7 +84,7 @@ namespace UnitTests.Core.Management
         {
             var gameServer = GetGameServer();
             gameServer.GameServerCurrentStats.Pid = 111;
-            var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
+            var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object, _mockMediator.Object);
             var result = statService.CheckServerProc(gameServer);
             Assert.Equal(ServerStatusStates.Running, result.GameServerCurrentStats.Status);
 

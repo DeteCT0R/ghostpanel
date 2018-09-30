@@ -1,15 +1,13 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using GhostPanel.Core.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.Data.Model;
+using GhostPanel.Core.Commands;
 
-namespace GhostPanel.Core.Commands
+namespace GhostPanel.Core.Handlers.Commands
 {
     class UpdateServerStatusCommandHandler: IRequestHandler<UpdateServerStatusCommand, CommandResponseBase>
     {

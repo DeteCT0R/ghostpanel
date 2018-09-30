@@ -4,9 +4,10 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using CoreRCON;
 using CoreRCON.PacketFormats;
+
 using Microsoft.Extensions.Logging;
 
-namespace GhostPanel.Rcon.Steam
+namespace GhostPanel.Communication.Query.Steam
 {
     public class SteamQueryProtocol : GameQuery
     {
@@ -45,8 +46,18 @@ namespace GhostPanel.Rcon.Steam
 
         public override async Task<ServerPlayersBase[]> GetServerPlayersAsync()
         {
-            var result = await ServerQuery.Players(_endpoint);
-            return ConvertPlayerResponse(result);
+            try
+            {
+                var result = await ServerQuery.Players(_endpoint);
+                return ConvertPlayerResponse(result);
+            }
+            catch (SocketException e)
+            {
+                _logger.LogError($"Socket exception trying to get players from {_endpoint.Address}:{_endpoint.Port}");
+                return null;
+            }
+            
+            
         }
 
         /// <summary>

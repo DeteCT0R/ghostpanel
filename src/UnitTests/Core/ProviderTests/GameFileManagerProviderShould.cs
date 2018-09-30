@@ -8,6 +8,7 @@ using GhostPanel.Core.Managment.GameFiles;
 using Xunit;
 using System.Data;
 using GhostPanel.Core.Exceptions;
+using GhostPanel.Core.Notifications;
 using MediatR;
 
 namespace UnitTests.Core.ProviderTests
@@ -20,6 +21,7 @@ namespace UnitTests.Core.ProviderTests
         private IList<IGameFileManager> fileManagers;
         private IGameFileManagerProvider fileProvider;
 
+
         public GameFileManagerProviderShould()
         {
             var logger = new LoggerFactory();
@@ -29,8 +31,10 @@ namespace UnitTests.Core.ProviderTests
                 .Returns("C:\\Server Files");
 
             var mockSteamCredProvider = new Mock<ISteamCredentialProvider>();
-            IGameFileManager localFileManager = new LocalGameFileManager(logger, mockDirectoryProvider.Object);
-            IGameFileManager steamFileManager = new SteamCmdGameFiles(mockSteamCredProvider.Object, logger, mockDirectoryProvider.Object);
+            var mockMediator = new Mock<IMediator>();
+
+            IGameFileManager localFileManager = new LocalGameFileManager(logger, mockDirectoryProvider.Object, mockMediator.Object);
+            IGameFileManager steamFileManager = new SteamCmdGameFiles(mockSteamCredProvider.Object, logger, mockDirectoryProvider.Object, mockMediator.Object);
             fileManagers = new List<IGameFileManager>();
             fileManagers.Add(localFileManager);
             fileManagers.Add(steamFileManager);

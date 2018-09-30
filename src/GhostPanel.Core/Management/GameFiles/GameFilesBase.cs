@@ -1,16 +1,19 @@
 ﻿using GhostPanel.Core.Data.Model;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using MediatR;
 
 namespace GhostPanel.Core.Management.GameFiles
 {
     public class GameFilesBase
     {
         private readonly ILogger _logger;
+        private readonly IMediator _mediator;
 
-        public GameFilesBase(ILoggerFactory logger)
+        public GameFilesBase(ILoggerFactory logger, IMediator mediator)
         {
             _logger = logger.CreateLogger<GameFilesBase>();
+            _mediator = mediator;
         }
 
         public void DeleteGameServerFiles(GameServer gameServer)

@@ -1,6 +1,6 @@
 ﻿using CoreRCON.PacketFormats;
 
-namespace GhostPanel.Rcon.Steam
+namespace GhostPanel.Communication.Query.Steam
 {
     public class SteamServerInfo : ServerInfoBase
     {

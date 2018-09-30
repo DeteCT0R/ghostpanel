@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GhostPanel.Core.Notifications;
 using MediatR;
 
-namespace GhostPanel.Core.Notifications
+namespace GhostPanel.Core.Handlers.Notifications
 {
     public class ServerInstallStatusNotificationHandler : INotificationHandler<ServerInstallStatusNotification>
     {

@@ -1,8 +1,10 @@
 ﻿
+using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Rcon;
 using GhostPanel.Rcon.Steam;
 using Microsoft.Extensions.Logging;
+using Moq;
 using Xunit;
 
 namespace UnitTests.Rcon
@@ -13,7 +15,8 @@ namespace UnitTests.Rcon
         public void GetQueryProtocolSteam()
         {
             var gameServer = GetGameServer();
-            var result = new GameQueryFactory(new LoggerFactory()).GetQueryProtocol(gameServer);
+            var mockRepo = new Mock<IRepository>();
+            var result = new GameQueryFactory(new LoggerFactory(), mockRepo.Object).GetQueryProtocol(gameServer);
             Assert.IsType<SteamQueryProtocol>(result);
 
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GhostPanel.Rcon
+namespace GhostPanel.Communication.Query
 {
     public class ServerPlayersBase
     {
