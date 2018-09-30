@@ -3,7 +3,7 @@ using MediatR;
 
 namespace GhostPanel.Core.Commands
 {
-    public class UpdateServerStatusCommand : IRequest<CommandResponse>
+    public class UpdateServerStatusCommand : IRequest<CommandResponseBase>
     {
         public UpdateServerStatusCommand(int gameServerId, ServerStatusStates newState)
         {

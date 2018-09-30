@@ -4,9 +4,9 @@ using System.Text;
 
 namespace GhostPanel.Core.Commands
 {
-    public class CommandResponse
+    public enum CommandResponseStatusEnum
     {
-        public string status { get; set; }
-        public string payload { get; set; }
+        Success,
+        Error
     }
 }

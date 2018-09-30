@@ -21,6 +21,12 @@ namespace GhostPanel.Db
             return _db.Set<T>().SingleOrDefault(spec.Criteria);
         }
 
+        public GameServer GsTest(int id)
+        {
+            var result = _db.GameServers.Include(gs => gs.GameServerCurrentStats).SingleOrDefault(gs => gs.Id == id);
+            return result;
+        }
+
         public List<T> List<T>(ISpecification<T> spec) where T : DataEntity
         {
             DbSet<T> dbSet = _db.Set<T>();

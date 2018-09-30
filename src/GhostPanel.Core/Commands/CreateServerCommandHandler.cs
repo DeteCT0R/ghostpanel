@@ -12,7 +12,7 @@ using GhostPanel.Core.Data.Specifications;
 
 namespace GhostPanel.Core.Commands
 {
-    public class CreateServerCommandHandler : IRequestHandler<CreateServerCommand, CommandResponse>
+    public class CreateServerCommandHandler : IRequestHandler<CreateServerCommand, CommandResponseGameServer>
     {
         private readonly IMediator _mediator;
         private readonly IGameServerManager _serverManager;
@@ -33,15 +33,15 @@ namespace GhostPanel.Core.Commands
             _repository = repository;
         }
 
-        public Task<CommandResponse> Handle(CreateServerCommand request, CancellationToken cancellationToken)
+        public Task<CommandResponseGameServer> Handle(CreateServerCommand request, CancellationToken cancellationToken)
         {
-            var response = new CommandResponse();
+            var response = new CommandResponseGameServer() ;
             var gameServer = request.gameServer;
             var game = _repository.Single(DataItemPolicy<Game>.ById(gameServer.GameId));
             if (game == null)
             {
-                response.status = "error";
-                response.payload = $"Unable to locate game with ID {gameServer.GameId}";
+                response.status = CommandResponseStatusEnum.Error;
+                response.message = $"Unable to locate game with ID {gameServer.GameId}";
                 _mediator.Publish(new ServerInstallStatusNotification("error", $"Unable to locate game with ID {gameServer.GameId}"));
                 return Task.FromResult(response);
             }
@@ -50,6 +50,7 @@ namespace GhostPanel.Core.Commands
             gameServer.QueryPort = _portProvider.GetNextAvailablePort(game.QueryPort, gameServer.IpAddress, game.PortIncrement);
             gameServer.HomeDirectory = Path.Combine(_dirProvider.GetBaseInstallDirectory(), gameServer.Guid.ToString());
             gameServer.GameServerCurrentStats = new GameServerCurrentStats();
+            
             gameServer.GameServerCurrentStats.Status = ServerStatusStates.Installing;
             try
             {
@@ -58,8 +59,8 @@ namespace GhostPanel.Core.Commands
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                response.status = "error";
-                response.payload = e.ToString();
+                response.status = CommandResponseStatusEnum.Success;
+                response.message = e.ToString();
                 _mediator.Publish(new ServerInstallStatusNotification("error", e.ToString()));
                 return Task.FromResult(response);
             }
@@ -68,13 +69,14 @@ namespace GhostPanel.Core.Commands
             {
                 _serverManager.InstallGameServer(gameServer);
                 _mediator.Publish(new ServerInstallStatusNotification("installing", $"Game server install started for server {gameServer.Guid}"));
-                response.status = "installing";
+                response.status = CommandResponseStatusEnum.Success;
+                response.message = "Game server now installing";
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                response.status = "Error";
-                response.payload = e.ToString();
+                response.status = CommandResponseStatusEnum.Error;
+                response.message = e.ToString();
                 _mediator.Publish(new ServerInstallStatusNotification("error", e.ToString()));
             }
 

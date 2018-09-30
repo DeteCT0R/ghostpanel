@@ -107,20 +107,22 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<string>("StartDirectory");
 
+                    b.Property<int?>("UserId");
+
                     b.Property<string>("Version");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("GameServers");
                 });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStats", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("Id");
 
                     b.Property<int>("CurrentPlayers");
 
@@ -134,16 +136,30 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<int>("RestartAttempts");
 
-                    b.Property<int>("ServerId");
-
                     b.Property<int>("Status");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServerId")
-                        .IsUnique();
-
                     b.ToTable("GameServerCurrentStats");
+                });
+
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<int>("GameServerId");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.Game", b =>
@@ -159,13 +175,17 @@ namespace GhostPanel.Db.Migrations
                         .WithMany("GameServers")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("GhostPanel.Core.Data.Model.User", "User")
+                        .WithMany("GameServers")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStats", b =>
                 {
                     b.HasOne("GhostPanel.Core.Data.Model.GameServer", "GameServer")
                         .WithOne("GameServerCurrentStats")
-                        .HasForeignKey("GhostPanel.Core.Data.Model.GameServerCurrentStats", "ServerId")
+                        .HasForeignKey("GhostPanel.Core.Data.Model.GameServerCurrentStats", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

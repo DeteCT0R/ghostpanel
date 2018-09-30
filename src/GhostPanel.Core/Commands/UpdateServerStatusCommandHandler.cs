@@ -11,7 +11,7 @@ using GhostPanel.Core.Data.Model;
 
 namespace GhostPanel.Core.Commands
 {
-    class UpdateServerStatusCommandHandler: IRequestHandler<UpdateServerStatusCommand, CommandResponse>
+    class UpdateServerStatusCommandHandler: IRequestHandler<UpdateServerStatusCommand, CommandResponseBase>
     {
         private readonly IMediator _mediator;
         private readonly IRepository _repository;
@@ -24,22 +24,22 @@ namespace GhostPanel.Core.Commands
             _logger = logger;
         }
 
-        public Task<CommandResponse> Handle(UpdateServerStatusCommand request, CancellationToken cancellationToken)
+        public Task<CommandResponseBase> Handle(UpdateServerStatusCommand request, CancellationToken cancellationToken)
         {
-            var response = new CommandResponse();
+            var response = new CommandResponseBase();
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(request.gameServerId));
             if (gameServer == null)
             {
-                response.status = "error";
-                response.payload = $"Unable to locate game server with ID {request.gameServerId}";
+                response.status = CommandResponseStatusEnum.Error;
+                response.message = $"Unable to locate game server with ID {request.gameServerId}";
                 return Task.FromResult(response);
             }
 
             gameServer.GameServerCurrentStats.Status = request.newState;
             _repository.Update(gameServer);
 
-            response.status = "complete";
-            response.payload = "Game server status updated";
+            response.status = CommandResponseStatusEnum.Success;
+            response.message = "Game server status updated";
 
             return Task.FromResult(response);
         }

@@ -3,13 +3,13 @@ using MediatR;
 
 namespace GhostPanel.Core.Commands
 {
-    public class StopServerCommand : IRequest<CommandResponse>
+    public class StopServerCommand : IRequest<CommandResponseGameServer>
     {
-        public GameServer gameServer { get; private set; }
+        public int gameServerId { get; private set; }
 
-        public StopServerCommand(GameServer gameServer)
+        public StopServerCommand(int gameServerId)
         {
-            this.gameServer = gameServer ?? throw new System.ArgumentNullException(nameof(gameServer));
+            this.gameServerId = gameServerId;
         }
     }
 }

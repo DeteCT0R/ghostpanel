@@ -21,7 +21,14 @@ namespace GhostPanel.Core.Providers
         public List<GameServer> GetGameServers()
         {
             _logger.LogDebug("Returning all game servers from GameServerProvider");
-            return _repository.List(DataItemPolicy<GameServer>.All());
+            var result = _repository.List(DataItemPolicy<GameServer>.All());
+            // Force stats nav prop to be loaded
+            foreach (var gameServer in result)
+            {
+                _repository.Single(DataItemPolicy<GameServerCurrentStats>.ById(gameServer.Id));
+            }
+
+            return result;
         }
     }
 }

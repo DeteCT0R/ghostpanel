@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using GhostPanel.Core.Commands;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
@@ -61,35 +62,43 @@ namespace GhostPanel.Web.Controllers
 
 
         [HttpGet("{id:int}/{command}")]
-        public void Get(int id, string command)
+        public async Task<CommandResponseBase> Get(int id, string command)
         {
 
             _logger.LogInformation("Running GameServer action with ID {id} and action {action}", id, command);
+
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(id));
-            Console.WriteLine(gameServer.GameServerCurrentStats.CurrentPlayers.ToString());
-            //var gameServerstats = _repository.Single(DataItemPolicy<GameServerCurrentStats>.ById(id));
+            
             if (gameServer != null)
             {
 
                 switch (command.ToLower())
                 {
                     case "start":
-                        _mediator.Send(new RestartServerCommand(gameServer));
-                        break;
+                        return await _mediator.Send(new RestartServerCommand(id));
                     case "stop":
-                        _mediator.Send(new StopServerCommand(gameServer));
-                        break;
+                        return await _mediator.Send(new StopServerCommand(id));
                     case "restart":
-                        _mediator.Send(new RestartServerCommand(gameServer));
-                        break;
-                    case "reinstall":
-                        _serverManager.ReinstallGameServer(gameServer);
-                        break;
+                        return await _mediator.Send(new RestartServerCommand(id));
+
+                    default:
+                        var result =  new CommandResponseBase()
+                        {
+                            status = CommandResponseStatusEnum.Error,
+                            message = $"Unknown command {command}"
+                        };
+                        return result;
                 }
                 
             }
 
+            var errorResult = new CommandResponseBase()
+            {
+                status = CommandResponseStatusEnum.Error,
+                message = $"Unable to locate server with ID {id}"
+            };
 
+            return errorResult;
         }
 
         // POST api/<controller>

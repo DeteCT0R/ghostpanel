@@ -34,9 +34,6 @@ namespace GhostPanel.Core.Management
             {
                 Process proc = Process.GetProcessById((int)gameServer.GameServerCurrentStats.Pid);
                 proc.Kill();
-                gameServer.GameServerCurrentStats.Pid = null;
-                _repository.Update(gameServer);
-                gameServer.GameServerCurrentStats.Status = ServerStatusStates.Stopped;
                 _logger.LogInformation("Killed game server with pid {pid}", gameServer.GameServerCurrentStats.Pid);
                 return;
             }
@@ -70,18 +67,16 @@ namespace GhostPanel.Core.Management
             start.FileName = Path.Combine(gameServer.HomeDirectory, gameServer.Game.ExeName);
             start.WindowStyle = ProcessWindowStyle.Hidden;
             Process proc = Process.Start(start);
-            gameServer.GameServerCurrentStats.Pid = proc.Id;
-            _repository.Update(gameServer);
             // TODO: Add check to see if process actually started
 
             return proc;
 
         }
 
-        public void RestartServer(GameServer gameServer)
+        public Process RestartServer(GameServer gameServer)
         {
             StopServer(gameServer);
-            StartServer(gameServer);
+            return StartServer(gameServer);
         }
 
         public bool IsRunning(int? pid)
@@ -116,6 +111,7 @@ namespace GhostPanel.Core.Management
         /// <param name="gameServer"></param>
         public GameServer HandleCrashedServer(GameServer gameServer)
         {
+            // TODO : Remove this method
             if (gameServer.GameServerCurrentStats.Status != ServerStatusStates.Crashed)
             {
                 _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);

@@ -43,8 +43,10 @@ namespace GhostPanel.Db
             modelBuilder.Entity<GameServer>()
                 .HasOne(s => s.GameServerCurrentStats)
                 .WithOne(c => c.GameServer)
-                .HasForeignKey<GameServerCurrentStats>(gs => gs.ServerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey<GameServerCurrentStats>(gs => gs.Id)
+                .IsRequired();
+
+
         }
 
         public class AppDataContextFactory : IDesignTimeDbContextFactory<AppDataContext>

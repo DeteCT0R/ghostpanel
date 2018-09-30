@@ -10,6 +10,7 @@ using GhostPanel.Core.Providers;
 
 namespace GhostPanel.Core.Background
 {
+    // TODO: We should be able to remove this
     public class ServerStatusUpdateService : IBackgroundService
     {
         private readonly ILogger _logger;
@@ -64,7 +65,7 @@ namespace GhostPanel.Core.Background
                         }
 
                         // If we get here there's a PID but server is not running
-                        _procManager.HandleCrashedServer(gameServer);
+                        //_procManager.HandleCrashedServer(gameServer);
                     }
 
 

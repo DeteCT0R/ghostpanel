@@ -23,9 +23,7 @@ namespace GhostPanel.Core.Data.Model
         public Dictionary<string, string> CustomCommandLineArgs { get; set; }
         public Game Game { get; set; }
         public GameServerCurrentStats GameServerCurrentStats { get; set; }
-        
-
-
+        public User User { get; set; }
 
     }
 }

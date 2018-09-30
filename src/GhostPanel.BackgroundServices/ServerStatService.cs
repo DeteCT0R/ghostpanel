@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
 using System.Threading.Tasks;
+using GhostPanel.Core.Commands;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Management;
 using GhostPanel.Core.Providers;
 using GhostPanel.Rcon;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.BackgroundServices
@@ -15,13 +17,19 @@ namespace GhostPanel.BackgroundServices
         private readonly IServerProcessManager _procManager;
         private readonly IRepository _repository;
         private readonly IGameQueryFactory _gameQueryFactory;
+        private readonly IMediator _mediator;
 
-        public ServerStatService(ILoggerFactory logger, IServerProcessManagerProvider procManager, IRepository repository, IGameQueryFactory gameQueryFactory)
+        public ServerStatService(ILoggerFactory logger, 
+            IServerProcessManagerProvider procManager, 
+            IRepository repository, 
+            IGameQueryFactory gameQueryFactory,
+            IMediator mediator)
         {
             _logger = logger.CreateLogger<ServerStatService>();
             _procManager = procManager.GetProcessManagerProvider();
             _repository = repository;
             _gameQueryFactory = gameQueryFactory;
+            _mediator = mediator;
         }
 
         public GameServer CheckServerProc(GameServer gameServer)
@@ -54,7 +62,8 @@ namespace GhostPanel.BackgroundServices
 
 
             // If we get here there's a PID but server is not running
-            _procManager.HandleCrashedServer(gameServer);
+
+            _mediator.Send(new ProcessCrashedServerCommand(gameServer.Id));
             return gameServer;
         }
 

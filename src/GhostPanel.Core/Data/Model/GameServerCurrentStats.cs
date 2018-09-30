@@ -16,7 +16,7 @@ namespace GhostPanel.Core.Data.Model
         [JsonConverter(typeof(StringEnumConverter))]
         public ServerStatusStates Status { get; set; }
         public int RestartAttempts { get; set; } = 0;
-        public int ServerId { get; set; }
+        //public int GameServerId { get; set; }
         public GameServer GameServer { get; set; }
     }
 }

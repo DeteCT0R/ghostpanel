@@ -13,5 +13,6 @@ namespace GhostPanel.Core.Data
         void Update<T>(List<T> dataItemList) where T : DataEntity;
         void Create<T>(List<T> dataItemList) where T : DataEntity;
         void Remove<T>(T dataItem) where T : DataEntity;
+        GameServer GsTest(int id);
     }
 }

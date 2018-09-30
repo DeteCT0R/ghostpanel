@@ -3,7 +3,7 @@ using MediatR;
 
 namespace GhostPanel.Core.Commands
 {
-    public class CreateServerCommand : IRequest<CommandResponse>
+    public class CreateServerCommand : IRequest<CommandResponseGameServer>
     {
         public GameServer gameServer { get; private set; }
 
