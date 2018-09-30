@@ -36,7 +36,7 @@ namespace GhostPanel.Core.Management
                 proc.Kill();
                 gameServer.GameServerCurrentStats.Pid = null;
                 _repository.Update(gameServer);
-                gameServer.Status = ServerStatusStates.Stopped;
+                gameServer.GameServerCurrentStats.Status = ServerStatusStates.Stopped;
                 _logger.LogInformation("Killed game server with pid {pid}", gameServer.GameServerCurrentStats.Pid);
                 return;
             }
@@ -44,11 +44,16 @@ namespace GhostPanel.Core.Management
             {
                 _logger.LogError("Unable to locate PID {pid}", gameServer.GameServerCurrentStats.Pid);
                 return;
-            }
+            } 
         }
 
         public Process StartServer(GameServer gameServer)
         {
+            if (!gameServer.IsEnabled)
+            {
+                _logger.LogError("Game server {id} is not enabled.  Cannot start", gameServer.Id);
+                return null;
+            }
             if (IsRunning(gameServer.GameServerCurrentStats.Pid))
             {
                 _logger.LogDebug("Server {id} is already running with PID {pid}", gameServer.Id, gameServer.GameServerCurrentStats.Pid);
@@ -111,10 +116,10 @@ namespace GhostPanel.Core.Management
         /// <param name="gameServer"></param>
         public GameServer HandleCrashedServer(GameServer gameServer)
         {
-            if (gameServer.Status != ServerStatusStates.Crashed)
+            if (gameServer.GameServerCurrentStats.Status != ServerStatusStates.Crashed)
             {
                 _logger.LogDebug("Game server {id} has a PID set but is not running.  Marking as crashed", gameServer.Id);
-                gameServer.Status = ServerStatusStates.Crashed;
+                gameServer.GameServerCurrentStats.Status = ServerStatusStates.Crashed;
                 _repository.Update(gameServer);
 
             }
@@ -129,7 +134,7 @@ namespace GhostPanel.Core.Management
             else
             {
                 _logger.LogDebug("Server {id} has hit the max restart attempts.  Stopping server", gameServer.Id);
-                gameServer.Status = ServerStatusStates.Stopped;
+                gameServer.GameServerCurrentStats.Status = ServerStatusStates.Stopped;
                 gameServer.GameServerCurrentStats.Pid = null;
                 StopServer(gameServer);
                 _repository.Update(gameServer);

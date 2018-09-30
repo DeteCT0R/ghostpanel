@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using GhostPanel.Core.Commands;
 using GhostPanel.Core.Data;
@@ -65,6 +66,8 @@ namespace GhostPanel.Web.Controllers
 
             _logger.LogInformation("Running GameServer action with ID {id} and action {action}", id, command);
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(id));
+            Console.WriteLine(gameServer.GameServerCurrentStats.CurrentPlayers.ToString());
+            //var gameServerstats = _repository.Single(DataItemPolicy<GameServerCurrentStats>.ById(id));
             if (gameServer != null)
             {
 

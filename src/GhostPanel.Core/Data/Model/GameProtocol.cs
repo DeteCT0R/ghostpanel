@@ -7,6 +7,6 @@ namespace GhostPanel.Core.Data.Model
         public string FullTypeName { get; set; }
         public string Name { get; set; }
         public string ServerInfoType { get; set; }
-        public ICollection<GameServer> GameServers { get; set; }
+        public ICollection<Game> Games { get; set; }
     }
 }

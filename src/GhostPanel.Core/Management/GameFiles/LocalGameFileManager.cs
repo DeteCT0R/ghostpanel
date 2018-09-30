@@ -35,7 +35,7 @@ namespace GhostPanel.Core.Management.GameFiles
                 {
                     ZipFile.ExtractToDirectory(fullSourcePath, gameServer.HomeDirectory);
                     _logger.LogInformation("Completed extracting files for game server {id}", gameServer.Id);
-                    gameServer.Status = ServerStatusStates.Stopped;
+                    gameServer.GameServerCurrentStats.Status = ServerStatusStates.Stopped;
                 }
                 catch (Exception e)
                 {

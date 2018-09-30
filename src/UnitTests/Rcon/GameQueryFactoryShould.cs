@@ -25,11 +25,15 @@ namespace UnitTests.Rcon
                 FullTypeName = "GhostPanel.Rcon.Steam.SteamQueryProtocol"
             };
 
+            var game = new Game()
+            {
+                GameProtocol = protocol
+            };
+
             return new GameServer()
             {
                 IpAddress = "192.168.1.1",
                 QueryPort = 27015,
-                GameProtocol = protocol
             };
         }
     }

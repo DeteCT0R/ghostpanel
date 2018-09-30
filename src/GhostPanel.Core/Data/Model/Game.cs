@@ -19,6 +19,7 @@ namespace GhostPanel.Core.Data.Model
         public int GamePort { get; set; }
         public int QueryPort { get; set; }
         public int PortIncrement { get; set; }
+        public GameProtocol GameProtocol { get; set; }
         public ICollection<GameServer> GameServers { get; set; }
 
 

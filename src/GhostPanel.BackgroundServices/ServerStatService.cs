@@ -29,10 +29,10 @@ namespace GhostPanel.BackgroundServices
             _logger.LogDebug("Updating server status for server {id}", gameServer.Id);
             if (gameServer.GameServerCurrentStats.Pid == null)
             {
-                if (gameServer.Status != ServerStatusStates.Stopped)
+                if (gameServer.GameServerCurrentStats.Status != ServerStatusStates.Stopped)
                 {
                     _logger.LogDebug("Game server {id} has no PID and state is not stopped.  Setting state to stopped", gameServer.Id);
-                    gameServer.Status = ServerStatusStates.Stopped;
+                    gameServer.GameServerCurrentStats.Status = ServerStatusStates.Stopped;
                     _repository.Update(gameServer);
                 }
 
@@ -41,11 +41,11 @@ namespace GhostPanel.BackgroundServices
 
             if (_procManager.IsRunning(gameServer.GameServerCurrentStats.Pid))
             {
-                if (gameServer.Status != ServerStatusStates.Running)
+                if (gameServer.GameServerCurrentStats.Status != ServerStatusStates.Running)
                 {
                     _logger.LogDebug("Game server {id} is running but status doesn't match.  Setting status to running", gameServer.Id);
                     gameServer.GameServerCurrentStats.RestartAttempts = 0;
-                    gameServer.Status = ServerStatusStates.Running;
+                    gameServer.GameServerCurrentStats.Status = ServerStatusStates.Running;
                     _repository.Update(gameServer);
                 }
 

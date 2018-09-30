@@ -20,11 +20,10 @@ namespace GhostPanel.Core.Data.Model
         public int Slots { get; set; }
         public string RconPassword { get; set; }
         public Guid Guid { get; set; } = Guid.NewGuid();
-        public ServerStatusStates Status { get; set; }
         public Dictionary<string, string> CustomCommandLineArgs { get; set; }
         public Game Game { get; set; }
-        public GameServerCurrentStat GameServerCurrentStats { get; set; }
-        public GameProtocol GameProtocol { get; set; }
+        public GameServerCurrentStats GameServerCurrentStats { get; set; }
+        
 
 
 

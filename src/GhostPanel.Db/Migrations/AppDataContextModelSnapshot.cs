@@ -35,6 +35,8 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<int>("GamePort");
 
+                    b.Property<int?>("GameProtocolId");
+
                     b.Property<int>("MaxSlots");
 
                     b.Property<int>("MinSlots");
@@ -50,6 +52,8 @@ namespace GhostPanel.Db.Migrations
                     b.Property<string>("SteamUrl");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameProtocolId");
 
                     b.ToTable("Games");
                 });
@@ -85,8 +89,6 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<int>("GamePort");
 
-                    b.Property<int?>("GameProtocolId");
-
                     b.Property<Guid>("Guid");
 
                     b.Property<string>("HomeDirectory");
@@ -105,28 +107,22 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<string>("StartDirectory");
 
-                    b.Property<int>("Status");
-
                     b.Property<string>("Version");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
 
-                    b.HasIndex("GameProtocolId");
-
                     b.ToTable("GameServers");
                 });
 
-            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStat", b =>
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStats", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CurrentPlayers");
-
-                    b.Property<int?>("GameServerId");
 
                     b.Property<string>("Map");
 
@@ -144,12 +140,17 @@ namespace GhostPanel.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GameServerId");
-
                     b.HasIndex("ServerId")
                         .IsUnique();
 
-                    b.ToTable("GameServerCurrentStat");
+                    b.ToTable("GameServerCurrentStats");
+                });
+
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.Game", b =>
+                {
+                    b.HasOne("GhostPanel.Core.Data.Model.GameProtocol", "GameProtocol")
+                        .WithMany("Games")
+                        .HasForeignKey("GameProtocolId");
                 });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServer", b =>
@@ -158,21 +159,13 @@ namespace GhostPanel.Db.Migrations
                         .WithMany("GameServers")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("GhostPanel.Core.Data.Model.GameProtocol", "GameProtocol")
-                        .WithMany("GameServers")
-                        .HasForeignKey("GameProtocolId");
                 });
 
-            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStat", b =>
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStats", b =>
                 {
                     b.HasOne("GhostPanel.Core.Data.Model.GameServer", "GameServer")
-                        .WithMany()
-                        .HasForeignKey("GameServerId");
-
-                    b.HasOne("GhostPanel.Core.Data.Model.GameServer", "Server")
                         .WithOne("GameServerCurrentStats")
-                        .HasForeignKey("GhostPanel.Core.Data.Model.GameServerCurrentStat", "ServerId")
+                        .HasForeignKey("GhostPanel.Core.Data.Model.GameServerCurrentStats", "ServerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

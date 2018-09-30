@@ -48,13 +48,21 @@ namespace GhostPanel.Web
                 new Game
                 {
                     Name = "Counter Strike Global Offensive",
-                    SteamAppId = 740,
+                    //SteamAppId = 740,
+                    ArchiveName = "csgo.zip",
                     ExeName = "srcds.exe",
                     MaxSlots = 32,
                     MinSlots = 8,
                     DefaultSlots = 8,
                     PortIncrement = 10,
-                    GamePort = 27015
+                    GamePort = 27015,
+                    QueryPort = 27015,
+                    GameProtocol = new GameProtocol()
+                    {
+                        FullTypeName = "GhostPanel.Rcon.Steam.SteamQueryProtocol",
+                        Name = "Steam"
+                    }
+                    
                 }
             };
         }

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GhostPanel.Db.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,11 +40,18 @@ namespace GhostPanel.Db.Migrations
                     DefaultPath = table.Column<string>(nullable: true),
                     GamePort = table.Column<int>(nullable: false),
                     QueryPort = table.Column<int>(nullable: false),
-                    PortIncrement = table.Column<int>(nullable: false)
+                    PortIncrement = table.Column<int>(nullable: false),
+                    GameProtocolId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Games", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Games_GameProtocol_GameProtocolId",
+                        column: x => x.GameProtocolId,
+                        principalTable: "GameProtocol",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,9 +72,8 @@ namespace GhostPanel.Db.Migrations
                     CommandLine = table.Column<string>(nullable: true),
                     Slots = table.Column<int>(nullable: false),
                     RconPassword = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    CustomCommandLineArgs = table.Column<string>(nullable: true),
-                    GameProtocolId = table.Column<int>(nullable: true)
+                    Guid = table.Column<Guid>(nullable: false),
+                    CustomCommandLineArgs = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,16 +84,10 @@ namespace GhostPanel.Db.Migrations
                         principalTable: "Games",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GameServers_GameProtocol_GameProtocolId",
-                        column: x => x.GameProtocolId,
-                        principalTable: "GameProtocol",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "GameServerCurrentStat",
+                name: "GameServerCurrentStats",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -98,20 +99,13 @@ namespace GhostPanel.Db.Migrations
                     Name = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     RestartAttempts = table.Column<int>(nullable: false),
-                    ServerId = table.Column<int>(nullable: false),
-                    GameServerId = table.Column<int>(nullable: true)
+                    ServerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GameServerCurrentStat", x => x.Id);
+                    table.PrimaryKey("PK_GameServerCurrentStats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GameServerCurrentStat_GameServers_GameServerId",
-                        column: x => x.GameServerId,
-                        principalTable: "GameServers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_GameServerCurrentStat_GameServers_ServerId",
+                        name: "FK_GameServerCurrentStats_GameServers_ServerId",
                         column: x => x.ServerId,
                         principalTable: "GameServers",
                         principalColumn: "Id",
@@ -119,13 +113,13 @@ namespace GhostPanel.Db.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GameServerCurrentStat_GameServerId",
-                table: "GameServerCurrentStat",
-                column: "GameServerId");
+                name: "IX_Games_GameProtocolId",
+                table: "Games",
+                column: "GameProtocolId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GameServerCurrentStat_ServerId",
-                table: "GameServerCurrentStat",
+                name: "IX_GameServerCurrentStats_ServerId",
+                table: "GameServerCurrentStats",
                 column: "ServerId",
                 unique: true);
 
@@ -133,17 +127,12 @@ namespace GhostPanel.Db.Migrations
                 name: "IX_GameServers_GameId",
                 table: "GameServers",
                 column: "GameId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GameServers_GameProtocolId",
-                table: "GameServers",
-                column: "GameProtocolId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GameServerCurrentStat");
+                name: "GameServerCurrentStats");
 
             migrationBuilder.DropTable(
                 name: "GameServers");

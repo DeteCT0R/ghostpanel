@@ -71,7 +71,7 @@ namespace UnitTests.Core.Management
             var gameServer = GetGameServer();
             var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
             var result = statService.CheckServerProc(gameServer);
-            Assert.Equal(ServerStatusStates.Stopped, result.Status);
+            Assert.Equal(ServerStatusStates.Stopped, result.GameServerCurrentStats.Status);
 
         }
 
@@ -82,16 +82,16 @@ namespace UnitTests.Core.Management
             gameServer.GameServerCurrentStats.Pid = 111;
             var statService = new ServerStatService(_logger, _mockProcManagerProvider.Object, _mockRepo.Object, _mockGameQueryFact.Object);
             var result = statService.CheckServerProc(gameServer);
-            Assert.Equal(ServerStatusStates.Running, result.Status);
+            Assert.Equal(ServerStatusStates.Running, result.GameServerCurrentStats.Status);
 
         }
 
         private GameServer GetGameServer()
         {
             var gameServer = new GameServer();
-            gameServer.Status = ServerStatusStates.Running;
-            gameServer.GameServerCurrentStats = new GameServerCurrentStat();
-            gameServer.GameProtocol = new GameProtocol()
+            gameServer.GameServerCurrentStats.Status = ServerStatusStates.Running;
+            gameServer.GameServerCurrentStats = new GameServerCurrentStats();
+            gameServer.Game.GameProtocol = new GameProtocol()
             {
                 FullTypeName = "GhostPanel.Rcon.Steam.SteamQueryProtocol"
             };

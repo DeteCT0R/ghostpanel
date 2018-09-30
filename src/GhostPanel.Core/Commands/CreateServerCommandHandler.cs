@@ -47,10 +47,10 @@ namespace GhostPanel.Core.Commands
             }
 
             gameServer.GamePort = _portProvider.GetNextAvailablePort(game.GamePort, gameServer.IpAddress, game.PortIncrement);
-            gameServer.GamePort = _portProvider.GetNextAvailablePort(game.QueryPort, gameServer.IpAddress, game.PortIncrement);
-            gameServer.Status = ServerStatusStates.Installing;
+            gameServer.QueryPort = _portProvider.GetNextAvailablePort(game.QueryPort, gameServer.IpAddress, game.PortIncrement);
             gameServer.HomeDirectory = Path.Combine(_dirProvider.GetBaseInstallDirectory(), gameServer.Guid.ToString());
-            gameServer.GameServerCurrentStats = new GameServerCurrentStat();
+            gameServer.GameServerCurrentStats = new GameServerCurrentStats();
+            gameServer.GameServerCurrentStats.Status = ServerStatusStates.Installing;
             try
             {
                 _repository.Create(gameServer);

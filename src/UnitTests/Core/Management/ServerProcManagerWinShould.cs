@@ -36,7 +36,7 @@ namespace UnitTests.Core.Management
             var procManager = new ServerProcessManagerWin(_logger, _mockRepo.Object, _clProces.Object);
             gameServer.GameServerCurrentStats.Pid = Process.GetCurrentProcess().Id; ; // TODO: This is hacky and just prevnts the it attempting to start the server
             var result = procManager.HandleCrashedServer(gameServer);
-            Assert.Equal(ServerStatusStates.Crashed, result.Status);
+            Assert.Equal(ServerStatusStates.Crashed, result.GameServerCurrentStats.Status);
         }
         
         [Fact]
@@ -46,14 +46,14 @@ namespace UnitTests.Core.Management
             var procManager = new ServerProcessManagerWin(_logger, _mockRepo.Object, _clProces.Object);
             gameServer.GameServerCurrentStats.RestartAttempts = 3;
             var result = procManager.HandleCrashedServer(gameServer);
-            Assert.Equal(ServerStatusStates.Stopped, result.Status);
+            Assert.Equal(ServerStatusStates.Stopped, result.GameServerCurrentStats.Status);
         }
 
         private GameServer GetGameServer()
         {
             var gameServer = new GameServer();
-            gameServer.Status = ServerStatusStates.Running;
-            gameServer.GameServerCurrentStats = new GameServerCurrentStat();
+            gameServer.GameServerCurrentStats.Status = ServerStatusStates.Running;
+            gameServer.GameServerCurrentStats = new GameServerCurrentStats();
             return gameServer;
         }
     }
