@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GhostPanel.Core.Commands;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.GameServerUtils;
-using GhostPanel.Core.Managment;
 using GhostPanel.Core.Providers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -58,7 +55,6 @@ namespace GhostPanel.Web.Controllers
             var result = _repository.Single(DataItemPolicy<GameServer>.ById(id));
             return result;
         }
-
 
 
         [HttpGet("{id:int}/{command}")]

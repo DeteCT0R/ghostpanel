@@ -6,7 +6,6 @@ using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Management;
 using GhostPanel.Core.Providers;
-using GhostPanel.Rcon;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -68,26 +67,21 @@ namespace GhostPanel.BackgroundServices
             return gameServer;
         }
 
-        public async Task<GameServer> UpdateServerQueryStatsAsync(GameServer gameServer)
+        /// <summary>
+        /// Query the game server and get the server info and players
+        /// </summary>
+        /// <param name="gameServer"></param>
+        /// <returns></returns>
+        public async Task<ServerStatsWrapper> UpdateServerQueryStatsAsync(GameServer gameServer)
         {
 
             _logger.LogDebug("Updating query stats for server {id}", gameServer.Id);
             var query = _gameQueryFactory.GetQueryProtocol(gameServer);
             var players = await query.GetServerPlayersAsync();
             var serverInfo = await query.GetServerInfoAsync();
-            var statsWrapper = new ServerStatsWrapper(serverInfo, players);
+            var statsWrapper = new ServerStatsWrapper(serverInfo, players, gameServer.Id);
             _mediator.Publish(new ServerStatsUpdateNotification(statsWrapper));
-            foreach (PropertyInfo serverInfoProp in serverInfo.GetType().GetProperties())
-            {
-                var currentStatsProp = gameServer.GameServerCurrentStats.GetType().GetProperty(serverInfoProp.Name);
-                if (currentStatsProp != null)
-                {
-                    currentStatsProp.SetValue(gameServer.GameServerCurrentStats, serverInfoProp.GetValue(serverInfo));
-                }
-            }
-
-            _repository.Update(gameServer);
-            return gameServer;
+            return statsWrapper;
         }
     }
 }

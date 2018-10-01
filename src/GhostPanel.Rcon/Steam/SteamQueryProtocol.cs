@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -51,12 +52,12 @@ namespace GhostPanel.Communication.Query.Steam
                 var result = await ServerQuery.Players(_endpoint);
                 return ConvertPlayerResponse(result);
             }
-            catch (SocketException e)
+            catch (Exception e)
             {
                 _logger.LogError($"Socket exception trying to get players from {_endpoint.Address}:{_endpoint.Port}");
                 return null;
             }
-            
+
             
         }
 

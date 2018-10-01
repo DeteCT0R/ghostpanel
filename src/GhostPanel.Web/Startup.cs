@@ -14,8 +14,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using GhostPanel.Web.Background;
-using GhostPanel.Core.Managment;
-using GhostPanel.Core;
 using GhostPanel.Core.GameServerUtils;
 using GhostPanel.Core.Providers;
 using GhostPanel.Core.Config;
@@ -24,8 +22,8 @@ using GhostPanel.Core.Managment.GameFiles;
 using GhostPanel.Core.Background;
 using GhostPanel.Core.Management;
 using GhostPanel.Core.Management.Server;
-using GhostPanel.Rcon;
 using GhostPanel.Web.Modules;
+using GhostPanel.Communication.Query;
 
 namespace GhostPanel.Web
 {

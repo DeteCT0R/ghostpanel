@@ -5,7 +5,7 @@ using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
 using Microsoft.Extensions.Logging;
 
-namespace GhostPanel.Rcon
+namespace GhostPanel.Communication.Query
 {
     public class GameQueryFactory : IGameQueryFactory
     {

@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using GhostPanel.Communication.Query.Steam;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Rcon.Steam;
 

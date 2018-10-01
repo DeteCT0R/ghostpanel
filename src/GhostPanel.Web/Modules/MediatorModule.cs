@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Autofac;
+using GhostPanel.Communication.Query;
 using GhostPanel.Core.Commands;
 using GhostPanel.Core.Handlers.Commands;
 using GhostPanel.Core.Handlers.Notifications;
@@ -11,6 +12,7 @@ namespace GhostPanel.Web.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
+
             builder.Register<ServiceFactory>(ctx =>
             {
                 var c = ctx.Resolve<IComponentContext>();
@@ -27,6 +29,8 @@ namespace GhostPanel.Web.Modules
             // Notifications
 
             builder.RegisterAssemblyTypes(typeof(ServerInstallStatusNotificationHandler).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(INotificationHandler<>));
+            builder.RegisterAssemblyTypes(typeof(ServerStatsUpdateNotificationHandler).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(INotificationHandler<>));
 
 

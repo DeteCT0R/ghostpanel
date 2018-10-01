@@ -1,7 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using GhostPanel.BackgroundServices;
+using GhostPanel.Communication.Query;
 using GhostPanel.Core.Providers;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.Web.Background
@@ -11,12 +13,14 @@ namespace GhostPanel.Web.Background
         private readonly ILogger _logger;
         private readonly IServerStatService _statService;
         private readonly IGameServerProvider _gameServerProvider;
+        private readonly IMediator _mediator;
 
-        public ServerStatsRefresh(ILogger<ServerStatsRefresh> logger, IServerStatService statService, IGameServerProvider gameServerProvider)
+        public ServerStatsRefresh(ILogger<ServerStatsRefresh> logger, IServerStatService statService, IGameServerProvider gameServerProvider, IMediator mediator)
         {
             _logger = logger;
             _statService = statService;
             _gameServerProvider = gameServerProvider;
+            _mediator = mediator;
             _logger.LogDebug("-------> Starting Server Stat Background Service");
         }
 
@@ -29,7 +33,8 @@ namespace GhostPanel.Web.Background
                 {
                     _logger.LogDebug("Updating stats for server {id}", gameServer.Id);
                     _statService.CheckServerProc(gameServer);
-                    await _statService.UpdateServerQueryStatsAsync(gameServer);
+                    var serverStats = await _statService.UpdateServerQueryStatsAsync(gameServer);
+                    //_mediator.Publish(new ServerStatsUpdateNotification(serverStats));
                     await Task.Delay(5000); // TODO: Set in config
 
                 }

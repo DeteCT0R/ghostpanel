@@ -1,6 +1,6 @@
 ﻿using GhostPanel.Core.Data.Model;
 
-namespace GhostPanel.Rcon
+namespace GhostPanel.Communication.Query
 {
     public interface IGameQueryFactory
     {
