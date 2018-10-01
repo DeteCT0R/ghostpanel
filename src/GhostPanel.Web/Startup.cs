@@ -8,6 +8,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using GhostPanel.Core.Data;
 using System;
+using System.Reflection;
 using GhostPanel.BackgroundServices;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,9 @@ using GhostPanel.Core.Management;
 using GhostPanel.Core.Management.Server;
 using GhostPanel.Web.Modules;
 using GhostPanel.Communication.Query;
+using MediatR;
+using GhostPanel.Core.Handlers.Commands;
+using GhostPanel.Communication.Mediator.Handlers.Commands;
 
 namespace GhostPanel.Web
 {
@@ -46,6 +50,9 @@ namespace GhostPanel.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
+
+            services.AddMediatR(typeof(CreateServerCommandHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(QueryServerCommandHandler).GetTypeInfo().Assembly);
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
@@ -92,7 +99,7 @@ namespace GhostPanel.Web
             //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
             //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
 
-            builder.RegisterModule(new MediatorModule());
+            //builder.RegisterModule(new MediatorModule());
 
             ApplicationContainer = builder.Build();
 

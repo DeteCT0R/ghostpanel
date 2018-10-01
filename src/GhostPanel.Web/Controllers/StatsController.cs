@@ -18,7 +18,7 @@ namespace GhostPanel.Web.Controllers
         private readonly ILogger _logger;
         private readonly IMediator _mediator;
 
-        public StatsController(ILogger logger, IMediator mediator)
+        public StatsController(ILogger<StatsController> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;
