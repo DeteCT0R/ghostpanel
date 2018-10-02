@@ -21,7 +21,7 @@ namespace UnitTests.Core.GameServerUtils
                 expected = reader.ReadToEnd();
             }
 
-            var result = ConfigFileUtils.InterpolateConfig(gameServer);
+            var result = ConfigFileUtils.InterpolateConfigFromGameServer(gameServer);
             Assert.Equal(expected, result);
         }
     }

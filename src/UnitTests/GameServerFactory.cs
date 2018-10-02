@@ -11,6 +11,7 @@ namespace UnitTests
             return new GameServer
             {
                 IpAddress = "192.168.1.50",
+                RconPassword = "password",
                 GamePort = 29365,
                 ServerName = "Test Server",
                 IsEnabled = true,
