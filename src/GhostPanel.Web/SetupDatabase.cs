@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Db;
@@ -61,7 +62,8 @@ namespace GhostPanel.Web
                     {
                         FullTypeName = "GhostPanel.Rcon.Steam.SteamQueryProtocol",
                         Name = "Steam"
-                    }
+                    },
+                    GameDefaultConfigFile = GetconfigFile()
                     
                 }
             };
@@ -81,6 +83,24 @@ namespace GhostPanel.Web
                     HomeDirectory = @"C:\dev\Server1",
                     CommandLine = "-game csgo -console -usercon"
                 }
+            };
+        }
+
+        private static GameDefaultConfigFile GetconfigFile()
+        {
+            FileStream fileStream = new FileStream("csgoconfig.cfg", FileMode.Open);
+            string content;
+            using (StreamReader reader = new StreamReader(fileStream))
+            {
+                content = reader.ReadToEnd();
+            }
+
+            return new GameDefaultConfigFile()
+            {
+                Template = content,
+                Description = "Main config",
+                FilePath = @"csgo\cfg\server.cfg",
+                
             };
         }
 

@@ -25,7 +25,10 @@ namespace GhostPanel.Communication.Mediator.Handlers.Commands
 
         public async Task<ServerStatsWrapper> Handle(QueryServerCommand request, CancellationToken cancellationToken)
         {
-            var statsWrapper = new ServerStatsWrapper();
+            var statsWrapper = new ServerStatsWrapper()
+            {
+                gameServerId = request.gameServerId
+            };
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(request.gameServerId));
             if (gameServer == null)
             {

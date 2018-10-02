@@ -16,5 +16,6 @@
         public ServerInfoBase serverInfo { get; set; }
         public ServerPlayersBase[] players { get; set; }
         public int gameServerId { get; set; }
+        public object GameServerCurrentStats { get; set; }
     }
 }

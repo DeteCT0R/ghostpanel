@@ -1,7 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using GhostPanel.Core.GameServerUtils;
+
 
 namespace GhostPanel.Core.Data.Model
 {
@@ -24,6 +24,8 @@ namespace GhostPanel.Core.Data.Model
         public Game Game { get; set; }
         public GameServerCurrentStats GameServerCurrentStats { get; set; }
         public User User { get; set; }
+        public ICollection<GameServerConfigFile> GameConfigFiles { get; set; }
+        public ICollection<CustomVariable> CustomVariables { get; set; }
 
     }
 }

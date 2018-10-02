@@ -6,6 +6,6 @@ namespace GhostPanel.Communication.Query
 {
     public class ServerPlayersBase
     {
-        internal string Name { get; set; }
+        public string Name { get; set; }
     }
 }

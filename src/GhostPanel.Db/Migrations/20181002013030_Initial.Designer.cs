@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GhostPanel.Db.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20180930162514_Initial")]
+    [Migration("20181002013030_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,21 @@ namespace GhostPanel.Db.Migrations
                 .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.CustomVariable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("GameServerId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameServerId");
+
+                    b.ToTable("CustomVariable");
+                });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.Game", b =>
                 {
@@ -37,7 +52,7 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<int>("GamePort");
 
-                    b.Property<int?>("GameProtocolId");
+                    b.Property<int>("GameProtocolId");
 
                     b.Property<int>("MaxSlots");
 
@@ -58,6 +73,28 @@ namespace GhostPanel.Db.Migrations
                     b.HasIndex("GameProtocolId");
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameDefaultConfigFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<int>("GameId");
+
+                    b.Property<string>("Template");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId")
+                        .IsUnique();
+
+                    b.ToTable("GameDefaultConfigFile");
                 });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameProtocol", b =>
@@ -122,6 +159,27 @@ namespace GhostPanel.Db.Migrations
                     b.ToTable("GameServers");
                 });
 
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerConfigFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<int?>("GameServerId");
+
+                    b.Property<string>("Template");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameServerId");
+
+                    b.ToTable("GameServerConfigFile");
+                });
+
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStats", b =>
                 {
                     b.Property<int>("Id");
@@ -164,11 +222,27 @@ namespace GhostPanel.Db.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.CustomVariable", b =>
+                {
+                    b.HasOne("GhostPanel.Core.Data.Model.GameServer", "GameServer")
+                        .WithMany("CustomVariables")
+                        .HasForeignKey("GameServerId");
+                });
+
             modelBuilder.Entity("GhostPanel.Core.Data.Model.Game", b =>
                 {
                     b.HasOne("GhostPanel.Core.Data.Model.GameProtocol", "GameProtocol")
                         .WithMany("Games")
-                        .HasForeignKey("GameProtocolId");
+                        .HasForeignKey("GameProtocolId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameDefaultConfigFile", b =>
+                {
+                    b.HasOne("GhostPanel.Core.Data.Model.Game", "Game")
+                        .WithOne("GameDefaultConfigFile")
+                        .HasForeignKey("GhostPanel.Core.Data.Model.GameDefaultConfigFile", "GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServer", b =>
@@ -181,6 +255,13 @@ namespace GhostPanel.Db.Migrations
                     b.HasOne("GhostPanel.Core.Data.Model.User", "User")
                         .WithMany("GameServers")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerConfigFile", b =>
+                {
+                    b.HasOne("GhostPanel.Core.Data.Model.GameServer", "GameServer")
+                        .WithMany("GameConfigFiles")
+                        .HasForeignKey("GameServerId");
                 });
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerCurrentStats", b =>

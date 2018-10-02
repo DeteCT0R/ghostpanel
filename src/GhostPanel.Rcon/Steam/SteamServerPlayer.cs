@@ -6,7 +6,7 @@ namespace GhostPanel.Communication.Query.Steam
 {
     class SteamServerPlayer : ServerPlayersBase
     {
-        internal float Duration { get; set; }
-        internal int Score { get; set; }
+        public float Duration { get; set; }
+        public int Score { get; set; }
     }
 }

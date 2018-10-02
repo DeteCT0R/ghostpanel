@@ -1,4 +1,6 @@
 ﻿
+using GhostPanel.Communication.Query;
+using GhostPanel.Communication.Query.Steam;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Rcon;

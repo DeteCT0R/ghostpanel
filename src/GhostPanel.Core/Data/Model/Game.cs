@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace GhostPanel.Core.Data.Model
 {
@@ -21,6 +18,7 @@ namespace GhostPanel.Core.Data.Model
         public int PortIncrement { get; set; }
         public int GameProtocolId { get; set; }
         public GameProtocol GameProtocol { get; set; }
+        public GameDefaultConfigFile GameDefaultConfigFile {get; set; }
         public ICollection<GameServer> GameServers { get; set; }
 
 

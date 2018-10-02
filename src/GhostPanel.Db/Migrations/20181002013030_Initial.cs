@@ -57,7 +57,7 @@ namespace GhostPanel.Db.Migrations
                     GamePort = table.Column<int>(nullable: false),
                     QueryPort = table.Column<int>(nullable: false),
                     PortIncrement = table.Column<int>(nullable: false),
-                    GameProtocolId = table.Column<int>(nullable: true)
+                    GameProtocolId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,7 +67,29 @@ namespace GhostPanel.Db.Migrations
                         column: x => x.GameProtocolId,
                         principalTable: "GameProtocol",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameDefaultConfigFile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FilePath = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Template = table.Column<string>(nullable: true),
+                    GameId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameDefaultConfigFile", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameDefaultConfigFile_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,6 +132,47 @@ namespace GhostPanel.Db.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CustomVariable",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    GameServerId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomVariable", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomVariable_GameServers_GameServerId",
+                        column: x => x.GameServerId,
+                        principalTable: "GameServers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameServerConfigFile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FilePath = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Template = table.Column<string>(nullable: true),
+                    GameServerId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameServerConfigFile", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameServerConfigFile_GameServers_GameServerId",
+                        column: x => x.GameServerId,
+                        principalTable: "GameServers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GameServerCurrentStats",
                 columns: table => new
                 {
@@ -134,9 +197,25 @@ namespace GhostPanel.Db.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CustomVariable_GameServerId",
+                table: "CustomVariable",
+                column: "GameServerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameDefaultConfigFile_GameId",
+                table: "GameDefaultConfigFile",
+                column: "GameId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Games_GameProtocolId",
                 table: "Games",
                 column: "GameProtocolId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameServerConfigFile_GameServerId",
+                table: "GameServerConfigFile",
+                column: "GameServerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GameServers_GameId",
@@ -151,6 +230,15 @@ namespace GhostPanel.Db.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CustomVariable");
+
+            migrationBuilder.DropTable(
+                name: "GameDefaultConfigFile");
+
+            migrationBuilder.DropTable(
+                name: "GameServerConfigFile");
+
             migrationBuilder.DropTable(
                 name: "GameServerCurrentStats");
 
