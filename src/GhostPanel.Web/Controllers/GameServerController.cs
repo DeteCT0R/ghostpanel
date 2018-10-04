@@ -71,7 +71,7 @@ namespace GhostPanel.Web.Controllers
                 switch (command.ToLower())
                 {
                     case "start":
-                        return await _mediator.Send(new RestartServerCommand(id));
+                        return await _mediator.Send(new StartServerCommand(id));
                     case "stop":
                         return await _mediator.Send(new StopServerCommand(id));
                     case "restart":

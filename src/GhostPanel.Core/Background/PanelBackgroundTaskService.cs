@@ -35,7 +35,7 @@ namespace GhostPanel.Core.Background
 
         private void RunPendingTasks()
         {
-            _logger.LogDebug("Running Pending Tasks");
+            //_logger.LogDebug("Running Pending Tasks");
             foreach (var task in _tasks)
             {
                 task.Invoke();

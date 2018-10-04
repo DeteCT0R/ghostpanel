@@ -10,6 +10,7 @@ using System.IO;
 using GhostPanel.Core.Notifications;
 using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.Commands;
+using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.Core.Handlers.Commands
 {
@@ -20,22 +21,26 @@ namespace GhostPanel.Core.Handlers.Commands
         private readonly IPortAndIpProvider _portProvider;
         private readonly IDefaultDirectoryProvider _dirProvider;
         private readonly IRepository _repository;
+        private readonly ILogger _logger;
 
         public CreateServerCommandHandler(IMediator mediator, 
             IGameServerManager serverManager, 
             IPortAndIpProvider portProvider,
             IDefaultDirectoryProvider dirProvider,
-            IRepository repository)
+            IRepository repository,
+            ILogger<CreateServerCommandHandler> logger)
         {
             _mediator = mediator;
             _serverManager = serverManager;
             _portProvider = portProvider;
             _dirProvider = dirProvider;
             _repository = repository;
+            _logger = logger;
         }
 
         public Task<CommandResponseGameServer> Handle(CreateServerCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogDebug($"Running Handler CreateServerCommandHandler");
             var response = new CommandResponseGameServer() ;
             var gameServer = request.gameServer;
             var game = _repository.Single(DataItemPolicy<Game>.ById(gameServer.GameId));
@@ -46,6 +51,8 @@ namespace GhostPanel.Core.Handlers.Commands
                 _mediator.Publish(new ServerInstallStatusNotification("error", $"Unable to locate game with ID {gameServer.GameId}"));
                 return Task.FromResult(response);
             }
+
+            gameServer.GameConfigFiles.Add();
 
             gameServer.GamePort = _portProvider.GetNextAvailablePort(game.GamePort, gameServer.IpAddress, game.PortIncrement);
             gameServer.QueryPort = _portProvider.GetNextAvailablePort(game.QueryPort, gameServer.IpAddress, game.PortIncrement);
@@ -81,7 +88,10 @@ namespace GhostPanel.Core.Handlers.Commands
                 _mediator.Publish(new ServerInstallStatusNotification("error", e.ToString()));
             }
 
+
+
             return Task.FromResult(response);
+
 
         }
     }

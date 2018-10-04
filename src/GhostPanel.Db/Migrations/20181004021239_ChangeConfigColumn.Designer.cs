@@ -4,14 +4,16 @@ using GhostPanel.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GhostPanel.Db.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20181004021239_ChangeConfigColumn")]
+    partial class ChangeConfigColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,13 +175,9 @@ namespace GhostPanel.Db.Migrations
 
                     b.Property<string>("FilePath");
 
-                    b.Property<int?>("GameDefaultConfigFileId");
-
                     b.Property<int?>("GameServerId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameDefaultConfigFileId");
 
                     b.HasIndex("GameServerId");
 
@@ -265,10 +263,6 @@ namespace GhostPanel.Db.Migrations
 
             modelBuilder.Entity("GhostPanel.Core.Data.Model.GameServerConfigFile", b =>
                 {
-                    b.HasOne("GhostPanel.Core.Data.Model.GameDefaultConfigFile", "GameDefaultConfigFile")
-                        .WithMany()
-                        .HasForeignKey("GameDefaultConfigFileId");
-
                     b.HasOne("GhostPanel.Core.Data.Model.GameServer", "GameServer")
                         .WithMany("GameConfigFiles")
                         .HasForeignKey("GameServerId");

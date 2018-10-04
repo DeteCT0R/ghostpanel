@@ -99,7 +99,7 @@ namespace GhostPanel.Web
             //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
             //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
 
-            //builder.RegisterModule(new MediatorModule());
+            builder.RegisterModule(new MediatorModule());
 
             ApplicationContainer = builder.Build();
 

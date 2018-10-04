@@ -39,6 +39,11 @@ namespace GhostPanel.Web
                 repository.Create(GetInitialGame());
             }
 
+            if (!repository.List<GameDefaultConfigFile>().Any())
+            {
+                repository.Create(GetconfigFile());
+            }
+
 
         }
 
@@ -63,7 +68,6 @@ namespace GhostPanel.Web
                         FullTypeName = "GhostPanel.Rcon.Steam.SteamQueryProtocol",
                         Name = "Steam"
                     },
-                    GameDefaultConfigFile = GetconfigFile()
                     
                 }
             };
@@ -100,6 +104,7 @@ namespace GhostPanel.Web
                 Template = content,
                 Description = "Main config",
                 FilePath = @"csgo\cfg\server.cfg",
+                GameId = 1
                 
             };
         }

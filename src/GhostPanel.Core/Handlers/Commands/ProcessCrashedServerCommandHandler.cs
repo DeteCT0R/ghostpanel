@@ -25,6 +25,7 @@ namespace GhostPanel.Core.Handlers.Commands
 
         public Task<CommandResponseGameServer> Handle(ProcessCrashedServerCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogDebug($"Running Handler ProcessCrashedServerCommandHandler");
             var response = new CommandResponseGameServer();
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(request.gameServerId));
             _repository.Single(DataItemPolicy<GameServerCurrentStats>.ById(request.gameServerId));

@@ -4,6 +4,7 @@ using GhostPanel.Communication.Query;
 using GhostPanel.Core.Commands;
 using GhostPanel.Core.Handlers.Commands;
 using GhostPanel.Core.Handlers.Notifications;
+using GhostPanel.Core.Mediator.Behaviors;
 using MediatR;
 
 namespace GhostPanel.Web.Modules
@@ -12,7 +13,7 @@ namespace GhostPanel.Web.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-
+            /*
             builder.Register<ServiceFactory>(ctx =>
             {
                 var c = ctx.Resolve<IComponentContext>();
@@ -32,10 +33,12 @@ namespace GhostPanel.Web.Modules
                 .AsClosedTypesOf(typeof(INotificationHandler<>));
             builder.RegisterAssemblyTypes(typeof(ServerStatsUpdateNotificationHandler).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(INotificationHandler<>));
-
+            */
 
             builder.RegisterGeneric(typeof(LoggingBehavior<,>)).
                 As(typeof(IPipelineBehavior<,>));
+
+            builder.RegisterGeneric(typeof(BeforeStartedBehavior<,>)).As(typeof(IPipelineBehavior<,>));
         }
     }
 }

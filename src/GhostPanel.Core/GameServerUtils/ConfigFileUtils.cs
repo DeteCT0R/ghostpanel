@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using GhostPanel.Core.Data.Model;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace GhostPanel.Core.GameServerUtils
 {
@@ -26,7 +23,7 @@ namespace GhostPanel.Core.GameServerUtils
                     {
                         key = custVar.GetType().GetProperty("VariableName").GetValue(custVar).ToString();
                         value = custVar.GetType().GetProperty("VariableValue").GetValue(custVar).ToString();
-                        replacements.Add(key, value);
+                        replacements.Add(string.Format("![{0}]", key), value);
                     }
 
                     continue;
@@ -34,17 +31,28 @@ namespace GhostPanel.Core.GameServerUtils
 
                 key = prop.Name.ToString();
                 value = prop.GetValue(gameServer).ToString();
-                replacements.Add(key, value);
+                replacements.Add(string.Format("![{0}]", key), value);
 
             }
 
-            foreach (KeyValuePair<string, string> entry in replacements)
+            return InterpolateConfigFromDict(replacements, finalConfig);
+
+        }
+
+        /// <summary>
+        /// Take a config template and a dict of replacement values.  Insert the values into the config template
+        /// </summary>
+        /// <param name="values">Dict of tokens and values</param>
+        /// <param name="config">Config template</param>
+        /// <returns>config template</returns>
+        public static string InterpolateConfigFromDict(Dictionary<string, string> values, string config)
+        {
+            foreach (KeyValuePair<string, string> entry in values)
             {
-                var replaceToken = string.Format("![{0}]", entry.Key);
-                finalConfig = finalConfig.Replace(replaceToken, entry.Value);
+                config = config.Replace(entry.Key, entry.Value);
             }
 
-            return finalConfig;
+            return config;
         }
     }
 }

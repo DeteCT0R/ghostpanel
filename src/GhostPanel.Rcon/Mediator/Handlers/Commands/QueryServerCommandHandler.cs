@@ -25,6 +25,7 @@ namespace GhostPanel.Communication.Mediator.Handlers.Commands
 
         public async Task<ServerStatsWrapper> Handle(QueryServerCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogDebug($"Running Handler QueryGameServerHandler");
             var statsWrapper = new ServerStatsWrapper()
             {
                 gameServerId = request.gameServerId

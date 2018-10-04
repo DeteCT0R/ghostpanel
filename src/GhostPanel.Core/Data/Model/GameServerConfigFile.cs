@@ -4,7 +4,8 @@
     {
         public string FilePath { get; set; }
         public string Description { get; set; }
-        public string Template { get; set; }
+        public string FileContent { get; set; }
         public GameServer GameServer { get; set; }
+        public GameDefaultConfigFile GameDefaultConfigFile { get; set; }
     }
 }

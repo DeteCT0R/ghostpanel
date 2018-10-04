@@ -8,6 +8,7 @@ using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.Commands;
+using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.Core.Handlers.Commands
 {
@@ -16,16 +17,19 @@ namespace GhostPanel.Core.Handlers.Commands
         private readonly IMediator _mediator;
         private readonly IServerProcessManager _procManager;
         private readonly IRepository _repository;
+        private readonly ILogger _logger;
 
-        public StopServerCommandHandler(IMediator mediator, IServerProcessManagerProvider procProvider, IRepository repository)
+        public StopServerCommandHandler(IMediator mediator, IServerProcessManagerProvider procProvider, IRepository repository, ILogger<StopServerCommandHandler> logger)
         {
             _mediator = mediator;
             _repository = repository;
+            _logger = logger;
             _procManager = procProvider.GetProcessManagerProvider();
         }
 
         public Task<CommandResponseGameServer> Handle(StopServerCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogDebug($"Running Handler StopServerCommandHandler");
             var response = new CommandResponseGameServer();
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(request.gameServerId));
             _repository.Single(DataItemPolicy<GameServerCurrentStats>.ById(request.gameServerId));

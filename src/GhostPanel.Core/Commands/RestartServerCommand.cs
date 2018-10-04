@@ -1,5 +1,4 @@
-﻿using GhostPanel.Core.Data.Model;
-using MediatR;
+﻿using MediatR;
 
 namespace GhostPanel.Core.Commands
 {

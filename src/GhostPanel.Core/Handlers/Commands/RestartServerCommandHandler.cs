@@ -8,24 +8,28 @@ using GhostPanel.Core.Data.Specifications;
 using GhostPanel.Core.Management;
 using GhostPanel.Core.Providers;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace GhostPanel.Core.Handlers.Commands
 {
-    public class RestartServerCommandHandler : IRequestHandler<RestartServerCommand, CommandResponseGameServer>
+    public class RestartServerCommandHandler : IRequestHandler<StartServerCommand, CommandResponseGameServer>
     {
         private readonly IMediator _mediator;
         private readonly IServerProcessManager _procManager;
         private readonly IRepository _repository;
+        private readonly ILogger _logger;
 
-        public RestartServerCommandHandler(IMediator mediator, IServerProcessManagerProvider procProvider, IRepository repository)
+        public RestartServerCommandHandler(IMediator mediator, IServerProcessManagerProvider procProvider, IRepository repository, ILogger<RestartServerCommandHandler> logger)
         {
             _mediator = mediator;
             _repository = repository;
+            _logger = logger;
             _procManager = procProvider.GetProcessManagerProvider();
         }
 
-        public Task<CommandResponseGameServer> Handle(RestartServerCommand request, CancellationToken cancellationToken)
+        public Task<CommandResponseGameServer> Handle(StartServerCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogDebug($"Running Handler RestartServerCommandHandler");
             var response = new CommandResponseGameServer();
             var gameServer = _repository.Single(DataItemPolicy<GameServer>.ById(request.gameServerId));
             _repository.Single(DataItemPolicy<GameServerCurrentStats>.ById(request.gameServerId));
