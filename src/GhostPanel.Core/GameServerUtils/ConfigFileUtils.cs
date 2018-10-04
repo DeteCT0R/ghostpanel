@@ -6,38 +6,6 @@ namespace GhostPanel.Core.GameServerUtils
 {
     public static class ConfigFileUtils
     {
-        public static string InterpolateConfigFromGameServer(GameServer gameServer)
-        {
-            var replacements = new Dictionary<string, string>();
-            string key;
-            string value;
-            string finalConfig = gameServer.Game.GameDefaultConfigFile.Template;
-            foreach (PropertyInfo prop in gameServer.GetType().GetProperties())
-            {
-                
-                var propValue = prop.GetValue(gameServer);
-                if (propValue == null) continue;
-                if (propValue is List<CustomVariable>)
-                {
-                    foreach (var custVar in propValue as List<CustomVariable>)
-                    {
-                        key = custVar.GetType().GetProperty("VariableName").GetValue(custVar).ToString();
-                        value = custVar.GetType().GetProperty("VariableValue").GetValue(custVar).ToString();
-                        replacements.Add(string.Format("![{0}]", key), value);
-                    }
-
-                    continue;
-                }
-
-                key = prop.Name.ToString();
-                value = prop.GetValue(gameServer).ToString();
-                replacements.Add(string.Format("![{0}]", key), value);
-
-            }
-
-            return InterpolateConfigFromDict(replacements, finalConfig);
-
-        }
 
         /// <summary>
         /// Take a config template and a dict of replacement values.  Insert the values into the config template
@@ -53,6 +21,42 @@ namespace GhostPanel.Core.GameServerUtils
             }
 
             return config;
+        }
+
+        /// <summary>
+        /// Take a game server and convert it's properties to config variables
+        /// </summary>
+        /// <param name="gameServer">Game Server</param>
+        /// <returns></returns>
+        public static Dictionary<string, string> GetVariablesFromGameServer(GameServer gameServer)
+        {
+            string key;
+            string value;
+            var variables = new Dictionary<string, string>();
+            foreach (PropertyInfo prop in gameServer.GetType().GetProperties())
+            {
+
+                var propValue = prop.GetValue(gameServer);
+                if (propValue == null) continue;
+                if (propValue is List<CustomVariable>)
+                {
+                    foreach (var custVar in propValue as List<CustomVariable>)
+                    {
+                        key = custVar.GetType().GetProperty("VariableName").GetValue(custVar).ToString();
+                        value = custVar.GetType().GetProperty("VariableValue").GetValue(custVar).ToString();
+                        variables.Add(string.Format("![{0}]", key), value);
+                    }
+
+                    continue;
+                }
+
+                key = prop.Name.ToString();
+                value = prop.GetValue(gameServer).ToString();
+                variables.Add(string.Format("![{0}]", key), value);
+
+            }
+
+            return variables;
         }
     }
 }

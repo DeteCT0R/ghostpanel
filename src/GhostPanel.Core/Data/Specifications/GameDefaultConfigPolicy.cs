@@ -4,7 +4,7 @@ using GhostPanel.Core.Data.Model;
 
 namespace GhostPanel.Core.Data.Specifications
 {
-    class GameDefaultConfigPolicy : DataItemPolicy<GameDefaultConfigFile>
+    public class GameDefaultConfigPolicy : DataItemPolicy<GameDefaultConfigFile>
     {
         protected GameDefaultConfigPolicy(Expression<Func<GameDefaultConfigFile, bool>> expression) : base(expression)
         {

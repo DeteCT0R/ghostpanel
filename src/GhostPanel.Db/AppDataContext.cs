@@ -46,6 +46,10 @@ namespace GhostPanel.Db
                 .HasForeignKey<GameServerCurrentStats>(gs => gs.Id)
                 .IsRequired();
 
+            modelBuilder.Entity<GameServer>()
+                .HasMany(cf => cf.GameConfigFiles)
+                .WithOne(c => c.GameServer)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
 

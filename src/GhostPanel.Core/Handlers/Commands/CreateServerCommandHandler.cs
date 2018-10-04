@@ -1,6 +1,7 @@
 ﻿using GhostPanel.Core.GameServerUtils;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using GhostPanel.Core.Data;
@@ -52,7 +53,22 @@ namespace GhostPanel.Core.Handlers.Commands
                 return Task.FromResult(response);
             }
 
-            gameServer.GameConfigFiles.Add();
+            var configFiles = _repository.List(GameDefaultConfigPolicy.ByGameId(game.Id));
+            gameServer.GameConfigFiles = new List<GameServerConfigFile>();
+            var variables = ConfigFileUtils.GetVariablesFromGameServer(gameServer);
+            foreach (var configFile in configFiles)
+            {
+                gameServer.GameConfigFiles.Add(new GameServerConfigFile()
+                {
+                    Description = configFile.Description,
+                    FileContent = configFile.Template,
+                    FilePath = configFile.FilePath,
+                    GameServer = gameServer,
+                    GameDefaultConfigFile = configFile
+
+                });
+            }
+            
 
             gameServer.GamePort = _portProvider.GetNextAvailablePort(game.GamePort, gameServer.IpAddress, game.PortIncrement);
             gameServer.QueryPort = _portProvider.GetNextAvailablePort(game.QueryPort, gameServer.IpAddress, game.PortIncrement);

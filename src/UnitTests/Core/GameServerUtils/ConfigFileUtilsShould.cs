@@ -8,18 +8,28 @@ namespace UnitTests.Core.GameServerUtils
     public class ConfigFileUtilsShould
     {
         [Fact]
-        public void InterpolateConfigReplaceVars()
+        public void GetVariablesFromGameServerShould()
         {
             var gameServer = new GameServerFactory().GetGameServer();
-            string expected;
-            FileStream fileStream = new FileStream("expectedconfig.cfg", FileMode.Open);
-
-            using (StreamReader reader = new StreamReader(fileStream))
+            var expected = new Dictionary<string, string>()
             {
-                expected = reader.ReadToEnd();
-            }
+                {"![GameId]","0" },
+                {"![IpAddress]","192.168.1.50" },
+                {"![GamePort]","29365" },
+                {"![QueryPort]","0" },
+                {"![ServerName]", "Test Server" },
+                {"![IsEnabled]","True" },
+                {"![HomeDirectory]",@"C:\dev\Server1" },
+                {"![CommandLine]","-game csgo -console -usercon" },
+                {"![Slots]","0" },
+                {"![RconPassword]", "password" },
+                {"![TestVar1]", "thing1" },
+                {"![TestVar2]", "thing2" },
+                {"![TestVar3]", "thing3" }
+            };
 
-            var result = ConfigFileUtils.InterpolateConfigFromGameServer(gameServer);
+            var result = ConfigFileUtils.GetVariablesFromGameServer(gameServer);
+
             Assert.Equal(expected, result);
         }
 

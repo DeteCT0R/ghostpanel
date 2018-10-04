@@ -63,7 +63,7 @@ namespace UnitTests
                     FullTypeName = "GhostPanel.Rcon.Steam.SteamQueryProtocol",
                     Name = "Steam"
                 },
-                GameDefaultConfigFile = GetconfigFile()
+                //GameDefaultConfigFile = GetconfigFile()
 
             };
         }
