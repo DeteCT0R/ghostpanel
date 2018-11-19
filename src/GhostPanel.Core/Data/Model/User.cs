@@ -9,7 +9,7 @@ namespace GhostPanel.Core.Data.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }
-        public int GameServerId { get; set; }
         public ICollection<GameServer> GameServers { get; set; }
+
     }
 }

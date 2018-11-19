@@ -28,6 +28,8 @@ using GhostPanel.Communication.Query;
 using MediatR;
 using GhostPanel.Core.Handlers.Commands;
 using GhostPanel.Communication.Mediator.Handlers.Commands;
+using GhostPanel.Core.Automation.StartProcess;
+using Hangfire;
 
 namespace GhostPanel.Web
 {
@@ -50,25 +52,30 @@ namespace GhostPanel.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
+            services.AddCors();
 
             services.AddMediatR(typeof(CreateServerCommandHandler).GetTypeInfo().Assembly);
             services.AddMediatR(typeof(QueryServerCommandHandler).GetTypeInfo().Assembly);
+
+            GhostPanelConfig fullConfig = Configuration.Get<GhostPanelConfig>();
+
+
+            services.AddHangfire(x => x.UseSqlServerStorage(fullConfig.HangFireDatabaseConnectionString));
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
             builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>));
 
-            GhostPanelConfig fullConfig = Configuration.Get<GhostPanelConfig>();
+            
+
             builder.RegisterInstance(fullConfig).AsSelf().SingleInstance();
             IRepository repository = SetUpDatabase.SetUpRepository(fullConfig.DatabaseConnectionString);
 
             builder.RegisterType<SteamCredentialProvider>().As<ISteamCredentialProvider>().SingleInstance();
             builder.RegisterType<DefaultDirectoryProvider>().As<IDefaultDirectoryProvider>().SingleInstance();
             builder.RegisterType<PortAndIpProvider>().As<IPortAndIpProvider>().SingleInstance();
-            //builder.RegisterType<SteamCredentialWrapper>().As<SteamCredentialWrapper>().SingleInstance();
-            //builder.RegisterType<GameServerManager>().As<IGameServerManager>();
-            //builder.RegisterType<GameServerManagerFactory>().As<GameServerManagerFactory>().SingleInstance();
+
 
             // Game File Managers
             builder.RegisterType<LocalGameFileManager>().As<IGameFileManager>();
@@ -76,28 +83,30 @@ namespace GhostPanel.Web
             builder.RegisterType<GameFileManagerProvider>().As<IGameFileManagerProvider>().SingleInstance();
 
             builder.RegisterInstance(repository).SingleInstance();
-            //builder.RegisterType<ServerManagerContainer>().SingleInstance();
+
             builder.RegisterType<PanelBackgroundTaskService>().As<IBackgroundService>().SingleInstance();
-            //builder.RegisterType<ServerStatusUpdateService>().As<IBackgroundService>().SingleInstance();
+
 
             builder.RegisterType<BackgroundManager>().AsSelf().SingleInstance();
             builder.RegisterType<ServerProcessManagerWin>().As<IServerProcessManager>().SingleInstance();
             builder.RegisterType<ServerProcessManagerProvider>().As<IServerProcessManagerProvider>().SingleInstance();
-            //builder.RegisterType<ServerStatusBackgroundManager>().AsSelf().SingleInstance();
+
             builder.RegisterType<GameServerProvider>().As<IGameServerProvider>().SingleInstance();
             builder.RegisterType<GameQueryFactory>().As<IGameQueryFactory>().SingleInstance();
             builder.RegisterType<ServerStatService>().As<IServerStatService>().SingleInstance();
             builder.RegisterType<ServerStatsRefresh>().As<IHostedService>();
+            builder.RegisterType<ScheduledTaskService>().As<IScheduledTaskService>().SingleInstance();
+            builder.RegisterType<ScheduledTaskWorker>().As<IHostedService>();
+
+
             builder.RegisterType<PanelBackgroundWorker>().As<IHostedService>();
-            //builder.RegisterType<ServerStatusBackgroundWorker>().As<IHostedService>();
+
 
             builder.RegisterType<CommandlineProcessor>().As<ICommandlineProcessor>().SingleInstance();
             builder.RegisterType<GameServerManagerRefac>().As<IGameServerManager>().SingleInstance();
-            
 
-            
-            //ServerManagerContainer serverManagerContainer = new ServerManagerContainer(repository);
-            //builder.RegisterInstance(serverManagerContainer).As<ServerManagerContainer>();
+            // Before started actions
+            builder.RegisterType<ProcessConfigFilesBeforeStarted>().As<IBeforeStartedAction>();
 
             builder.RegisterModule(new MediatorModule());
 
@@ -121,6 +130,10 @@ namespace GhostPanel.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()
+            );
+
             app.UseMvc();
         }
     }

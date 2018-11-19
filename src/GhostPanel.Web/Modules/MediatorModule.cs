@@ -38,7 +38,7 @@ namespace GhostPanel.Web.Modules
             builder.RegisterGeneric(typeof(LoggingBehavior<,>)).
                 As(typeof(IPipelineBehavior<,>));
 
-            builder.RegisterGeneric(typeof(BeforeStartedBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(ServerStartBehavior<,>)).As(typeof(IPipelineBehavior<,>));
         }
     }
 }

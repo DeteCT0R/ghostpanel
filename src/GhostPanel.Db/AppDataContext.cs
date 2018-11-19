@@ -47,10 +47,50 @@ namespace GhostPanel.Db
                 .IsRequired();
 
             modelBuilder.Entity<GameServer>()
+                .HasOne(o => o.Owner)
+                .WithMany(u => u.GameServers);
+
+
+            modelBuilder.Entity<GameServer>()
                 .HasMany(cf => cf.GameConfigFiles)
                 .WithOne(c => c.GameServer)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<ScheduledTask>()
+                .HasOne(cb => cb.CreatedBy);
+
+            modelBuilder.Entity<ScheduledTask>()
+                .HasOne(mb => mb.ModifiedBy);
+
+            modelBuilder.Entity<GameServer>()
+                .HasOne(cb => cb.CreatedBy);
+
+            modelBuilder.Entity<GameServer>()
+                .HasOne(mb => mb.ModifiedBy);
+
+            modelBuilder.Entity<ScheduledTask>()
+                .Property(s => s.Second)
+                .HasDefaultValue("*");
+
+            modelBuilder.Entity<ScheduledTask>()
+                .Property(s => s.Minute)
+                .HasDefaultValue("*");
+
+            modelBuilder.Entity<ScheduledTask>()
+                .Property(s => s.Hour)
+                .HasDefaultValue("*");
+
+            modelBuilder.Entity<ScheduledTask>()
+                .Property(s => s.DayOfMonth)
+                .HasDefaultValue("*");
+
+            modelBuilder.Entity<ScheduledTask>()
+                .Property(s => s.DayOfWeek)
+                .HasDefaultValue("*");
+
+            modelBuilder.Entity<ScheduledTask>()
+                .Property(s => s.Month)
+                .HasDefaultValue("*");
         }
 
         public class AppDataContextFactory : IDesignTimeDbContextFactory<AppDataContext>

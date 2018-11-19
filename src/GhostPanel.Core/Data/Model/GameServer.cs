@@ -21,11 +21,17 @@ namespace GhostPanel.Core.Data.Model
         public string RconPassword { get; set; }
         public Guid Guid { get; set; } = Guid.NewGuid();
         public Dictionary<string, string> CustomCommandLineArgs { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
+        public User CreatedBy { get; set; }
+        public User ModifiedBy { get; set; }
         public Game Game { get; set; }
+        public int OwnerId { get; set; }
         public GameServerCurrentStats GameServerCurrentStats { get; set; }
-        public User User { get; set; }
+        public User Owner { get; set; }
         public ICollection<GameServerConfigFile> GameConfigFiles { get; set; }
         public ICollection<CustomVariable> CustomVariables { get; set; }
+        public ICollection<ScheduledTask> ScheduledTasks { get; set; }
 
     }
 }

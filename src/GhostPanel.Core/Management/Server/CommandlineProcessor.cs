@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using GhostPanel.Core.GameServerUtils;
 
 namespace GhostPanel.Core.Management.Server
 {
@@ -17,17 +18,12 @@ namespace GhostPanel.Core.Management.Server
 
         public string InterpolateCommandline(GameServer gameServer)
         {
-            string outputCommandline = gameServer.CommandLine.ToLower();
-
-            foreach (PropertyInfo prop in gameServer.GetType().GetProperties())
+            string outputCommandline = gameServer.CommandLine;
+            var variables = ConfigFileUtils.GetVariablesFromGameServer(gameServer);
+            foreach (KeyValuePair<string, string> kv in variables)
             {
-                if (prop.GetValue(gameServer) == null)
-                {
-                    continue;
-                }
-                var propString = string.Format("{{{0}}}", prop.Name.ToString().ToLower());
-                outputCommandline = outputCommandline.Replace(propString, prop.GetValue(gameServer).ToString());
-
+                _logger.LogDebug($"Attempting to insert {kv.Key} into commandline with value {kv.Value}");
+                outputCommandline = outputCommandline.Replace(kv.Key, kv.Value);
             }
 
             return outputCommandline;

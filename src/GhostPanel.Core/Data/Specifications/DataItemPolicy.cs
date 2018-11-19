@@ -22,5 +22,10 @@ namespace GhostPanel.Core.Data.Specifications
         }
 
         public Expression<Func<T, bool>> Criteria { get; }
+
+        internal static ISpecification<GameServer> ById(object gameServerId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

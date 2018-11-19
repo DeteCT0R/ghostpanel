@@ -34,10 +34,24 @@ namespace GhostPanel.Web
         private static void EnsureInitialData(IRepository repository)
         {
             var test = repository.List<Game>();
+            if (!repository.List<User>().Any())
+            {
+                repository.Create(GetInitialUser());
+            }
             if (!repository.List<Game>().Any())
             {
                 repository.Create(GetInitialGame());
             }
+            if (!repository.List<GameServer>().Any())
+            {
+                repository.Create(GetInitialGameServer());
+            }
+            
+            if (!repository.List<ScheduledTask>().Any())
+            {
+                repository.Create(GetInitialScheduledTask());
+            }
+            
 
             if (!repository.List<GameDefaultConfigFile>().Any())
             {
@@ -47,6 +61,27 @@ namespace GhostPanel.Web
 
         }
 
+        private static ScheduledTask GetInitialScheduledTask()
+        {
+            return new ScheduledTask()
+            {
+                TaskName = "Test message",
+                Minute = "*/3",
+                TaskType = ScheduledTaskType.Message,
+                GameServerId = 1
+            };
+        }
+
+        private static User GetInitialUser()
+        {
+            return new User()
+            {
+                Username = "BarryCarey",
+                FirstName = "Barry",
+                LastName = "Carey"
+            };
+        }
+
         private static List<Game> GetInitialGame()
         {
             return new List<Game>
@@ -54,7 +89,7 @@ namespace GhostPanel.Web
                 new Game
                 {
                     Name = "Counter Strike Global Offensive",
-                    //SteamAppId = 740,
+                    SteamAppId = 740,
                     ArchiveName = "csgo.zip",
                     ExeName = "srcds.exe",
                     MaxSlots = 32,
@@ -63,31 +98,33 @@ namespace GhostPanel.Web
                     PortIncrement = 10,
                     GamePort = 27015,
                     QueryPort = 27015,
+                    DefaultCommandline = "-game csgo -console -usercon -rcon_password ![RconPassword] +game_type 0 +game_mode 0 -maxplayers_override ![Slots] +maxplayers ![Slots] +exec server.cfg +mapgroup mg_bomb +map de_dust -ip ![IpAddress] -port ![GamePort]",
                     GameProtocol = new GameProtocol()
                     {
                         FullTypeName = "GhostPanel.Rcon.Steam.SteamQueryProtocol",
                         Name = "Steam"
                     },
                     
+                    
                 }
             };
         }
 
-        private static List<GameServer> GetInitialGameServer()
+        private static GameServer GetInitialGameServer()
         {
-            return new List<GameServer>
+
+            return new GameServer
             {
-                new GameServer
-                {
-                    GameId = 1,
-                    IpAddress = "192.168.1.50",
-                    GamePort = 29365,
-                    ServerName = "Test Server",
-                    IsEnabled = true,
-                    HomeDirectory = @"C:\dev\Server1",
-                    CommandLine = "-game csgo -console -usercon"
-                }
+                GameId = 1,
+                IpAddress = "192.168.1.10",
+                GamePort = 27015,
+                ServerName = "Test Server",
+                IsEnabled = true,
+                HomeDirectory = @"C:\dev\gservers\server1",
+                CommandLine = "-game csgo -console -usercon",
+                OwnerId = 1
             };
+
         }
 
         private static GameDefaultConfigFile GetconfigFile()

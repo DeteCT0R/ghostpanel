@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using GhostPanel.Core.Commands;
 using GhostPanel.Core.Data;
@@ -76,7 +77,8 @@ namespace GhostPanel.Web.Controllers
                         return await _mediator.Send(new StopServerCommand(id));
                     case "restart":
                         return await _mediator.Send(new RestartServerCommand(id));
-
+                    case "update":
+                        return await _mediator.Send(new UpdateServerCommand(id));
                     default:
                         var result =  new CommandResponseBase()
                         {
@@ -128,6 +130,8 @@ namespace GhostPanel.Web.Controllers
             }
             
         }
+
+        
     }
 }
 

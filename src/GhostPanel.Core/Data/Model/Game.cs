@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace GhostPanel.Core.Data.Model
 {
     public class Game : DataEntity
     {
         public string Name { get; set; }
+        public string FriendlyName { get; set; }
         public int? SteamAppId { get; set; }
         public string ArchiveName { get; set; }
         public string SteamUrl { get; set; }
@@ -17,8 +19,10 @@ namespace GhostPanel.Core.Data.Model
         public int QueryPort { get; set; }
         public int PortIncrement { get; set; }
         public int GameProtocolId { get; set; }
+        public string DefaultCommandline { get; set; }
         public GameProtocol GameProtocol { get; set; }
         public ICollection<GameDefaultConfigFile> GameDefaultConfigFiles {get; set; }
+        [JsonIgnore]
         public ICollection<GameServer> GameServers { get; set; }
 
 

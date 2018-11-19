@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cronos" Version="0.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GhostPanel.Core\GhostPanel.Core.csproj" />
     <ProjectReference Include="..\GhostPanel.Rcon\GhostPanel.Communication.csproj" />
   </ItemGroup>

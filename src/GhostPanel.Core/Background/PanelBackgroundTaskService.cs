@@ -24,6 +24,7 @@ namespace GhostPanel.Core.Background
             {
                 while (true)
                 {
+                    _logger.LogDebug("Background loop");
                     RunPendingTasks();
                     removeCompleteTasks();
                     await Task.Delay(TimeSpan.FromSeconds(2));
@@ -44,7 +45,7 @@ namespace GhostPanel.Core.Background
 
         private void removeCompleteTasks()
         {
-            foreach (var task in _tasks)
+            foreach (var task in _tasks.ToList())
             {
                 if (task.IsDone())
                 {

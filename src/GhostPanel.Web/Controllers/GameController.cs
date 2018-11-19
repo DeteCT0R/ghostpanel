@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using GhostPanel.Core.Data;
 using GhostPanel.Core.Data.Model;
 using GhostPanel.Core.Data.Specifications;
+using System.Net.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,6 +39,8 @@ namespace GhostPanel.Web.Controllers
             Game result = _repository.Single(DataItemPolicy<Game>.ById(id));
             return result;
         }
+
+        
 
         // POST api/<controller>
         [HttpPost]

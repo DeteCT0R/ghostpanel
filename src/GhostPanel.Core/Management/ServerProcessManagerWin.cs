@@ -52,9 +52,9 @@ namespace GhostPanel.Core.Management
             if (IsRunning(gameServer.GameServerCurrentStats.Pid))
             {
                 _logger.LogDebug("Server {id} is already running with PID {pid}", gameServer.Id, gameServer.GameServerCurrentStats.Pid);
-                return null;
+                return Process.GetProcessById((int)gameServer.GameServerCurrentStats.Pid);
             }
-
+            
             ProcessStartInfo start = new ProcessStartInfo();
             start.Arguments = _commandlineProcessor.InterpolateCommandline(gameServer);
             if (gameServer.CustomCommandLineArgs != null)
